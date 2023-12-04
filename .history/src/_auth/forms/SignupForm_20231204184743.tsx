@@ -35,7 +35,7 @@ const SignupForm = () => {
 
   return (
     <Form {...form}>
-      <div className="sm:w-420 flex-center flex-col">
+      <div className="sm:w-120 flex-center flex-col">
         <img
           src="https://i.ibb.co/MhwkbxQ/Wechat-IMG6088.png"
           alt="Wechat-IMG6088"

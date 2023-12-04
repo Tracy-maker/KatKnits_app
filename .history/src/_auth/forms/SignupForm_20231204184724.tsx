@@ -36,10 +36,7 @@ const SignupForm = () => {
   return (
     <Form {...form}>
       <div className="sm:w-420 flex-center flex-col">
-        <img
-          src="https://i.ibb.co/MhwkbxQ/Wechat-IMG6088.png"
-          alt="Wechat-IMG6088"
-        />
+      <img src="https://i.ibb.co/MhwkbxQ/Wechat-IMG6088.png" alt="Wechat-IMG6088" />
       </div>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
