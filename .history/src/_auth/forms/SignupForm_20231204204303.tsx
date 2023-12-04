@@ -12,8 +12,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { SignupValidation } from "@/lib/validation";
 import { z } from "zod";
-import Loader from "@/components/shared/Loader";
-import { Link } from "react-router-dom";
 
 const SignupForm = () => {
   const isLoading = true;
@@ -40,7 +38,7 @@ const SignupForm = () => {
     <Form {...form}>
       <div className="sm:w-420 flex-center flex-col">
         <img
-          className="h-2/6"
+          className="h-3/6"
           src="https://i.ibb.co/6Yc7HG4/catlogo.png"
           alt="catlogo"
         />
@@ -53,7 +51,7 @@ const SignupForm = () => {
       </div>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-3 w-6/12 mt-1"
+        className="flex flex-col gap-4 w-6/12 mt-2"
       >
         <FormField
           control={form.control}
@@ -108,18 +106,12 @@ const SignupForm = () => {
           )}
         />
         <Button type="submit" className="shad-button_primary">
-          {isLoading ? <Loader /> : "Sign Up"}
+          {isLoading ? (
+            <div className="flex-center gap-2">Loading...</div>
+          ) : (
+            "Sign Up"
+          )}
         </Button>
-
-        <p className="text-small-regular text-light-2 text-center">
-          Already have an account?
-          <Link
-            to="/sign-in"
-            className="text-primary-500 text-small-semibold ml-1"
-          >
-            Log in
-          </Link>
-        </p>
       </form>
     </Form>
   );

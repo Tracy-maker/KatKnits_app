@@ -53,7 +53,7 @@ const SignupForm = () => {
       </div>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-3 w-6/12 mt-1"
+        className="flex flex-col gap-4 w-6/12 mt-2"
       >
         <FormField
           control={form.control}
@@ -116,9 +116,7 @@ const SignupForm = () => {
           <Link
             to="/sign-in"
             className="text-primary-500 text-small-semibold ml-1"
-          >
-            Log in
-          </Link>
+          ></Link>
         </p>
       </form>
     </Form>

@@ -40,7 +40,7 @@ const SignupForm = () => {
     <Form {...form}>
       <div className="sm:w-420 flex-center flex-col">
         <img
-          className="h-2/6"
+          className="h-3/6"
           src="https://i.ibb.co/6Yc7HG4/catlogo.png"
           alt="catlogo"
         />
@@ -53,7 +53,7 @@ const SignupForm = () => {
       </div>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-3 w-6/12 mt-1"
+        className="flex flex-col gap-4 w-6/12 mt-2"
       >
         <FormField
           control={form.control}
@@ -111,14 +111,9 @@ const SignupForm = () => {
           {isLoading ? <Loader /> : "Sign Up"}
         </Button>
 
-        <p className="text-small-regular text-light-2 text-center">
+        <p className="text-small-regular text-light-2 text-center mt-1">
           Already have an account?
-          <Link
-            to="/sign-in"
-            className="text-primary-500 text-small-semibold ml-1"
-          >
-            Log in
-          </Link>
+          <Link to="/sign-in" className></Link>
         </p>
       </form>
     </Form>

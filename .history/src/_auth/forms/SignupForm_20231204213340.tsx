@@ -116,9 +116,7 @@ const SignupForm = () => {
           <Link
             to="/sign-in"
             className="text-primary-500 text-small-semibold ml-1"
-          >
-            Log in
-          </Link>
+          ></Link>
         </p>
       </form>
     </Form>

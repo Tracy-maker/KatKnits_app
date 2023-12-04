@@ -12,8 +12,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { SignupValidation } from "@/lib/validation";
 import { z } from "zod";
-import Loader from "@/components/shared/Loader";
-import { Link } from "react-router-dom";
 
 const SignupForm = () => {
   const isLoading = true;
@@ -40,7 +38,7 @@ const SignupForm = () => {
     <Form {...form}>
       <div className="sm:w-420 flex-center flex-col">
         <img
-          className="h-2/6"
+          className="h-3/6"
           src="https://i.ibb.co/6Yc7HG4/catlogo.png"
           alt="catlogo"
         />
@@ -48,12 +46,13 @@ const SignupForm = () => {
           Create a new account
         </h2>
         <p className="text-light-3 small-medium md:base-regular mt-2">
-          Add vibrant hues to your life's canvas
+          Infuse a touch of vibrant energy into the details of your colorful
+          life
         </p>
       </div>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-3 w-6/12 mt-1"
+        className="flex flex-col gap-5 w-6/12 mt-4"
       >
         <FormField
           control={form.control}
@@ -108,18 +107,8 @@ const SignupForm = () => {
           )}
         />
         <Button type="submit" className="shad-button_primary">
-          {isLoading ? <Loader /> : "Sign Up"}
+          Submit
         </Button>
-
-        <p className="text-small-regular text-light-2 text-center">
-          Already have an account?
-          <Link
-            to="/sign-in"
-            className="text-primary-500 text-small-semibold ml-1"
-          >
-            Log in
-          </Link>
-        </p>
       </form>
     </Form>
   );
