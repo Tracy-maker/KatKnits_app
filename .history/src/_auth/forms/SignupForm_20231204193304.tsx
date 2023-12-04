@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -99,13 +100,12 @@ const SignupForm = () => {
               <FormControl>
                 <Input type="text" className="shad-input" {...field} />
               </FormControl>
+
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="shad-button_primary">
-          Submit
-        </Button>
+        <Button type="submit">Submit</Button>
       </form>
     </Form>
   );
