@@ -23,7 +23,7 @@ import { useUserContext } from "@/context/AuthContext";
 
 const SignupForm = () => {
   const { toast } = useToast();
-  const navigate = useNavigate();
+  const navigate= useNavigate();
 
   const { mutateAsync: createUserAccount, isPending: isCreatingUser } =
     useCreateUserAccount();
@@ -61,13 +61,6 @@ const SignupForm = () => {
     }
 
     const isLoggedIn = await checkAuthUser();
-
-    if (isLoggedIn) {
-      form.reset();
-      navigate("/");
-    } else {
-      return toast({ title: "Sign up failed. Please try again." });
-    }
   }
 
   return (

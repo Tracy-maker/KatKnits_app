@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { SignupValidation } from "@/lib/validation";
 import { z } from "zod";
 import Loader from "@/components/shared/Loader";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import {
   useCreateUserAccount,
@@ -23,7 +23,6 @@ import { useUserContext } from "@/context/AuthContext";
 
 const SignupForm = () => {
   const { toast } = useToast();
-  const navigate = useNavigate();
 
   const { mutateAsync: createUserAccount, isPending: isCreatingUser } =
     useCreateUserAccount();
@@ -61,13 +60,6 @@ const SignupForm = () => {
     }
 
     const isLoggedIn = await checkAuthUser();
-
-    if (isLoggedIn) {
-      form.reset();
-      navigate("/");
-    } else {
-      return toast({ title: "Sign up failed. Please try again." });
-    }
   }
 
   return (
