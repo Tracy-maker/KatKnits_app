@@ -4,8 +4,7 @@ import {
   useInfiniteQuery,
   useQuery,
 } from "@tanstack/react-query";
-
-import { createUserAccount, signInAccount } from "../appwrite/api";
+import { createUserAccount } from "../appwrite/api";
 import { INewUser } from "@/types";
 
 export const useCreateUserAccount = () => {
@@ -17,6 +16,6 @@ export const useCreateUserAccount = () => {
 export const useSignInAccount = () => {
   return useMutation({
     mutationFn: (user: { email: string; password: string }) =>
-      signInAccount(user),
+      createUserAccount(user),
   });
 };

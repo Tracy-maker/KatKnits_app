@@ -1,4 +1,5 @@
 import { ID, Query } from "appwrite";
+
 import { appwriteConfig, account, databases, storage, avatars } from "./config";
 import { IUpdatePost, INewPost, INewUser, IUpdateUser } from "@/types";
 
@@ -61,7 +62,7 @@ export async function signInAccount(user: { email: string; password: string }) {
 
 export async function getCurrentUser() {
   try {
-    const currentAccount = await account.get();
+    const currentAccount = await getAccount();
 
     if (!currentAccount) throw Error;
 
@@ -79,3 +80,4 @@ export async function getCurrentUser() {
     return null;
   }
 }
+

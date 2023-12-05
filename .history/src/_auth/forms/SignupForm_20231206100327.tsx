@@ -55,8 +55,6 @@ const SignupForm = () => {
       toast({ title: "Sign up failed. Please try again." });
       return;
     }
-
-    const isLoggedIn = await checkAuthUser();
   }
 
   return (

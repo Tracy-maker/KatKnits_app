@@ -23,10 +23,10 @@ import {
 const SignupForm = () => {
   const { toast } = useToast();
 
-  const { mutateAsync: createUserAccount, isPending: isCreatingUser } =
+  const { mutateAsync: createUserAccount, isLoading: isCreatingUser } =
     useCreateUserAccount();
 
-  const { mutateAsync: signInAccount, isPending: isSigningIn } =
+  const { mutateAsync: signInAccount, isLoading: isSigningIn } =
     useSignInAccount();
 
   // 1. Define your form.
@@ -51,12 +51,10 @@ const SignupForm = () => {
       email: values.email,
       password: values.password,
     });
-    if (!session) {
+    if(!session){
       toast({ title: "Sign up failed. Please try again." });
       return;
     }
-
-    const isLoggedIn = await checkAuthUser();
   }
 
   return (

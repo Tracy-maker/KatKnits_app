@@ -56,7 +56,7 @@ const SignupForm = () => {
       return;
     }
 
-    const isLoggedIn = await checkAuthUser();
+    const isLoggedIn = await checkAuthUser()
   }
 
   return (
