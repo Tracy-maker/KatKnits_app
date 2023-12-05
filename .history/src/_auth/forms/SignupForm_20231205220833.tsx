@@ -21,7 +21,7 @@ const SignupForm = () => {
   const { toast } = useToast();
 
   const { mutateAsync: createUserAccount, isLoading: isCreatingUser } =
-    useCreateUserAccount();
+    useCreateUserAccountMutation();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof SignupValidation>>({
