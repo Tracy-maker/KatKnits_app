@@ -14,7 +14,6 @@ import { SignupValidation } from "@/lib/validation";
 import { z } from "zod";
 import Loader from "@/components/shared/Loader";
 import { Link } from "react-router-dom";
-import { createUserAccount } from "@/lib/appwrite/api";
 
 const SignupForm = () => {
   const isLoading = true;
@@ -31,9 +30,8 @@ const SignupForm = () => {
   });
 
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof SignupValidation>) {
+  function onSubmit(values: z.infer<typeof SignupValidation>) {
     const newUser = await createUserAccount(values);
-    console.log(newUser);
   }
 
   return (
@@ -101,14 +99,14 @@ const SignupForm = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input type="password" className="shad-input" {...field} />
+                <Input type="text" className="shad-input" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <Button type="submit" className="shad-button_primary">
-          {isLoading ? "Sign Up" : <Loader />}
+          {isLoading ? <Loader /> : "Sign Up"}
         </Button>
 
         <p className="text-small-regular text-light-2 text-center">

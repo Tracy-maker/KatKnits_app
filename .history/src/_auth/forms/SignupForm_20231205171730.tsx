@@ -101,14 +101,14 @@ const SignupForm = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input type="password" className="shad-input" {...field} />
+                <Input type="text" className="shad-input" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <Button type="submit" className="shad-button_primary">
-          {isLoading ? "Sign Up" : <Loader />}
+          {isLoading ? <Loader /> : "Sign Up"}
         </Button>
 
         <p className="text-small-regular text-light-2 text-center">

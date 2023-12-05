@@ -108,7 +108,7 @@ const SignupForm = () => {
           )}
         />
         <Button type="submit" className="shad-button_primary">
-          {isLoading ? "Sign Up" : <Loader />}
+          {isLoading ? <Loader /> : "Sign Up"}
         </Button>
 
         <p className="text-small-regular text-light-2 text-center">
