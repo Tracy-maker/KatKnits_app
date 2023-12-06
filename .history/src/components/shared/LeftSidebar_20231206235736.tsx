@@ -64,7 +64,7 @@ const LeftSidebar = () => {
       </div>
       <Button
         variant="ghost"
-        className="shad-button_ghost py-11"
+        className="shad-button_ghost p-2"
         onClick={() => signOut()}
       >
         <img

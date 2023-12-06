@@ -15,9 +15,9 @@ const Bottombar = () => {
             to={link.route}
             className={`${
               isActive && "rounded-[10px] bg-purple-200 "
-            } flex-center flex-col gap-1 p-0.5 transition`}
+            } flex-center flex-col  p-2 transition`}
           >
-            <img src={link.imgURL} alt={link.label} width={35} height={35} />
+            <img src={link.imgURL} alt={link.label} width={30} height={30} />
 
             <p className="tiny-medium text-light-2">{link.label}</p>
           </Link>
