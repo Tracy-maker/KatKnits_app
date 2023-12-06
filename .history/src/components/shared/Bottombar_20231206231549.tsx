@@ -17,7 +17,7 @@ const Bottombar = () => {
               isActive && "rounded-[10px] bg-purple-200 "
             } flex-center flex-col gap-1 p-2 transition`}
           >
-            <img src={link.imgURL} alt={link.label} width={30} height={30} />
+            <img src={link.imgURL} alt={link.label} width={40} height={40} />
 
             <p className="tiny-medium text-light-2">{link.label}</p>
           </Link>
