@@ -2,7 +2,6 @@ import {
   BookmarkIcon,
   GlobeAltIcon,
   HomeIcon,
-  PlusIcon,
   UsersIcon,
 } from "@heroicons/react/24/outline";
 import React from "react";
@@ -29,7 +28,7 @@ export const sidebarLinks = [
     label: "Saved",
   },
   {
-    icon: React.createElement(PlusIcon),
+    icon: "/assets/icons/gallery-add.svg",
     route: "/create-post",
     label: "Create Post",
   },
@@ -37,23 +36,23 @@ export const sidebarLinks = [
 
 export const bottombarLinks = [
   {
-    icon: React.createElement(HomeIcon),
+    icon: "/assets/icons/home.svg",
     route: "/",
     label: "Home",
   },
   {
-    icon: React.createElement(GlobeAltIcon),
+    imgURL: "/assets/icons/wallpaper.svg",
     route: "/explore",
     label: "Explore",
   },
   {
-    icon: React.createElement(BookmarkIcon),
+    imgURL: "/assets/icons/bookmark.svg",
     route: "/saved",
     label: "Saved",
   },
   {
-    icon: React.createElement(PlusIcon),
+    imgURL: "/assets/icons/gallery-add.svg",
     route: "/create-post",
-    label: "Create Post",
+    label: "Create",
   },
 ];

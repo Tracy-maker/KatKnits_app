@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import {
+  ArrowLongUpIcon,
   ArrowRightOnRectangleIcon,
 } from "@heroicons/react/24/outline";
 import { useSignOutAccount } from "@/lib/react-query/queriesAndMutations";
@@ -12,7 +13,7 @@ const Topbar = () => {
   const navigate = useNavigate();
   const { user } = useUserContext();
 
-  //refresh the page
+  //refresh the webpage
   useEffect(() => {
     if (isSuccess) navigate(0);
   }, [isSuccess]);
@@ -36,7 +37,7 @@ const Topbar = () => {
           >
             <ArrowRightOnRectangleIcon width={50} height={50} />
           </Button>
-          <Link to={`/profile/${user.id}`} className="flex-center gap-3">
+          <Link to={`/profile/${user.id}`} className="flex-center gap-3 items-center">
             <img
               src={
                 user.imageUrl ||

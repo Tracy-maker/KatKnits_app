@@ -38,9 +38,8 @@ const LeftSidebar = () => {
             alt="profile"
             className="h-10 w-10 rounded-full"
           />
-          <div className="flex flex-col gap-1">
-            <p className="body-bold">{user.name}</p>
-            <p className="small-regular text-light-3">@{user.username}</p>
+          <div className="flex flex-col">
+            <p className="body-bold"></p>
           </div>
         </Link>
       </div>

@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import {
+  ArrowLongUpIcon,
   ArrowRightOnRectangleIcon,
 } from "@heroicons/react/24/outline";
 import { useSignOutAccount } from "@/lib/react-query/queriesAndMutations";

@@ -36,7 +36,7 @@ export const sidebarLinks = [
 ];
 
 export const bottombarLinks = [
-  {
+ {
     icon: React.createElement(HomeIcon),
     route: "/",
     label: "Home",
@@ -45,6 +45,11 @@ export const bottombarLinks = [
     icon: React.createElement(GlobeAltIcon),
     route: "/explore",
     label: "Explore",
+  },
+  {
+    icon: React.createElement(UsersIcon),
+    route: "/all-users",
+    label: "People",
   },
   {
     icon: React.createElement(BookmarkIcon),
