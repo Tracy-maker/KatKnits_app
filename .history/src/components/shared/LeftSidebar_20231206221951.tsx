@@ -52,7 +52,7 @@ const LeftSidebar = () => {
                   <img
                     src={link.imgURL}
                     alt={link.label}
-                    className="w-8 h-8"
+                    className="bg-white"
                   />
                   {link.label}
                 </NavLink>

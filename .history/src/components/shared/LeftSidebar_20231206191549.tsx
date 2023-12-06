@@ -5,7 +5,6 @@ import { useUserContext } from "@/context/AuthContext";
 import { sidebarLinks } from "@/constants";
 import { INavLink } from "@/types";
 
-
 const LeftSidebar = () => {
   const { mutate: signOut, isSuccess } = useSignOutAccount();
   const navigate = useNavigate();
@@ -43,21 +42,7 @@ const LeftSidebar = () => {
         </Link>
         <ul className="flex flex-col gap-6">
           {sidebarLinks.map((link: INavLink) => {
-            return (
-              <li key={link.label} className="leftsidebar-link">
-                <NavLink
-                  to={link.route}
-                  className="flex gap-4 items-center p-4"
-                >
-                  <img
-                    src={link.imgURL}
-                    alt={link.label}
-                    className="w-8 h-8"
-                  />
-                  {link.label}
-                </NavLink>
-              </li>
-            );
+            return <li key={link.label} className="left"><NavLink></NavLink></li>;
           })}
         </ul>
       </div>

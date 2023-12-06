@@ -43,8 +43,8 @@ export const bottombarLinks = [
     label: "Saved",
   },
   {
-    imgURL: "https://img.icons8.com/?size=64&id=43150&format=png",
+    imgURL: "/assets/icons/gallery-add.svg",
     route: "/create-post",
-    label: "Create Post",
+    label: "Create",
   },
 ];

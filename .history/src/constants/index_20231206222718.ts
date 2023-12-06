@@ -38,13 +38,13 @@ export const bottombarLinks = [
     label: "Explore",
   },
   {
-    imgURL: "https://img.icons8.com/?size=80&id=109688&format=png",
+    imgURL: "/assets/icons/bookmark.svg",
     route: "/saved",
     label: "Saved",
   },
   {
-    imgURL: "https://img.icons8.com/?size=64&id=43150&format=png",
+    imgURL: "/assets/icons/gallery-add.svg",
     route: "/create-post",
-    label: "Create Post",
+    label: "Create",
   },
 ];
