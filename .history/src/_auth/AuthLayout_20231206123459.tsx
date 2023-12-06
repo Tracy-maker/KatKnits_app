@@ -21,7 +21,7 @@ const AuthLayout = () => {
             className="hidden xl:block h-screen w-1/2 object-cover bg-no-repeat"
           >
             <source
-              src="https://player.vimeo.com/external/513373860.hd.mp4?s=3aa9a256b9e4eea8b6ed071af5cf6052c3d88c69&profile_id=174&oauth2_token_id=57447761"
+              src="https://player.vimeo.com/external/494507540.sd.mp4?s=f3e814646e86a5597d7e3307f5a5f41a72594fd6&profile_id=165&oauth2_token_id=57447761"
               type="video/mp4"
             />
             Your browser does not support the video tag.

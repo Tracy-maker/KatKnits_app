@@ -18,10 +18,10 @@ const AuthLayout = () => {
             loop
             muted
             controls={false}
-            className="hidden xl:block h-screen w-1/2 object-cover bg-no-repeat"
+            className="hidden xl:block h-screen w-2/4 object-cover bg-no-repeat"
           >
             <source
-              src="https://player.vimeo.com/external/513373860.hd.mp4?s=3aa9a256b9e4eea8b6ed071af5cf6052c3d88c69&profile_id=174&oauth2_token_id=57447761"
+              src="https://player.vimeo.com/progressive_redirect/playback/785976610/rendition/540p/file.mp4?loc=external&oauth2_token_id=57447761&signature=1a7bf04cee4eda62824128bd5af9796de9d60b961ae62418278a81323b278875"
               type="video/mp4"
             />
             Your browser does not support the video tag.
