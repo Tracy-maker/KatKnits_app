@@ -53,7 +53,7 @@ const LeftSidebar = () => {
               >
                 <NavLink
                   to={link.route}
-                  className="flex gap-3 items-center p-4"
+                  className="flex gap-4 items-center p-4"
                 >
                   <img src={link.imgURL} alt={link.label} className="w-8 h-8" />
                   {link.label}
@@ -70,7 +70,7 @@ const LeftSidebar = () => {
       >
         <img
           src="https://img.icons8.com/?size=64&id=46650&format=png"
-          className="w-6 h-6"
+          className="w-7 h-7"
           alt="logout"
         />
         <p>Logout</p>

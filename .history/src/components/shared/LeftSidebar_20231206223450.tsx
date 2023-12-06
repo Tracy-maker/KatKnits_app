@@ -4,8 +4,6 @@ import { useEffect } from "react";
 import { useUserContext } from "@/context/AuthContext";
 import { sidebarLinks } from "@/constants";
 import { INavLink } from "@/types";
-import { Button } from "../ui/button";
-import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
 
 const LeftSidebar = () => {
   const { pathname } = useLocation();
@@ -43,17 +41,14 @@ const LeftSidebar = () => {
             <p className="small-regular text-light-3">@{user.username}</p>
           </div>
         </Link>
-        <ul className="flex flex-col gap-5">
+        <ul className="flex flex-col gap-6">
           {sidebarLinks.map((link: INavLink) => {
             const isActive = pathname === link.route;
             return (
-              <li
-                key={link.label}
-                className={`leftsidebar-link ${isActive && "bg-purple-200"} `}
-              >
+              <li key={link.label} className={`leftsidebar-link ${isActive && 'bg-purple-200'} `}>
                 <NavLink
                   to={link.route}
-                  className="flex gap-3 items-center p-4"
+                  className="flex gap-4 items-center p-4"
                 >
                   <img src={link.imgURL} alt={link.label} className="w-8 h-8" />
                   {link.label}
@@ -63,18 +58,6 @@ const LeftSidebar = () => {
           })}
         </ul>
       </div>
-      <Button
-        variant="ghost"
-        className="shad-button_ghost"
-        onClick={() => signOut()}
-      >
-        <img
-          src="https://img.icons8.com/?size=64&id=46650&format=png"
-          className="w-6 h-6"
-          alt="logout"
-        />
-        <p>Logout</p>
-      </Button>
     </nav>
   );
 };

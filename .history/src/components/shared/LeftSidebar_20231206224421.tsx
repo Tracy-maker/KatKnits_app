@@ -43,7 +43,7 @@ const LeftSidebar = () => {
             <p className="small-regular text-light-3">@{user.username}</p>
           </div>
         </Link>
-        <ul className="flex flex-col gap-5">
+        <ul className="flex flex-col gap-6">
           {sidebarLinks.map((link: INavLink) => {
             const isActive = pathname === link.route;
             return (
@@ -53,7 +53,7 @@ const LeftSidebar = () => {
               >
                 <NavLink
                   to={link.route}
-                  className="flex gap-3 items-center p-4"
+                  className="flex gap-4 items-center p-4"
                 >
                   <img src={link.imgURL} alt={link.label} className="w-8 h-8" />
                   {link.label}
@@ -73,7 +73,6 @@ const LeftSidebar = () => {
           className="w-6 h-6"
           alt="logout"
         />
-        <p>Logout</p>
       </Button>
     </nav>
   );

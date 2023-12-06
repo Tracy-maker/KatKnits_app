@@ -70,7 +70,7 @@ const LeftSidebar = () => {
       >
         <img
           src="https://img.icons8.com/?size=64&id=46650&format=png"
-          className="w-6 h-6"
+          className="w-7 h-7"
           alt="logout"
         />
         <p>Logout</p>
