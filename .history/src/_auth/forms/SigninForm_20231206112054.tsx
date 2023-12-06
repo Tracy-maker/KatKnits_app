@@ -10,23 +10,19 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { SignupValidation } from "@/lib/validation";
+import { SigninValidation, SignupValidation } from "@/lib/validation";
 import { z } from "zod";
 import Loader from "@/components/shared/Loader";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import {
-  useCreateUserAccount,
   useSignInAccount,
 } from "@/lib/react-query/queriesAndMutations";
 import { useUserContext } from "@/context/AuthContext";
 
-const SignupForm = () => {
+const SigninForm = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
-
-  const { mutateAsync: createUserAccount, isPending: isCreatingAccount } =
-    useCreateUserAccount();
 
   const { mutateAsync: signInAccount, isPending: isSigningIn } =
     useSignInAccount();
@@ -34,11 +30,9 @@ const SignupForm = () => {
   const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
 
   // 1. Define your form.
-  const form = useForm<z.infer<typeof SignupValidation>>({
-    resolver: zodResolver(SignupValidation),
+  const form = useForm<z.infer<typeof SigninValidation>>({
+    resolver: zodResolver(SigninValidation),
     defaultValues: {
-      name: "",
-      username: "",
       email: "",
       password: "",
     },
@@ -46,11 +40,7 @@ const SignupForm = () => {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof SignupValidation>) {
-    const newUser = await createUserAccount(values);
-    if (!newUser) {
-      toast({ title: "Sign up failed. Please try again." });
-      return;
-    }
+
     const session = await signInAccount({
       email: values.email,
       password: values.password,
@@ -79,42 +69,16 @@ const SignupForm = () => {
           alt="catlogo"
         />
         <h2 className="h3-bold md:h2-bold pt-2 sm:pt-4">
-          Create a new account
+          Log in to your account
         </h2>
         <p className="text-light-3 small-medium md:base-regular mt-2">
-          " Add vibrant hues to your life's canvas "
+        "Welcome back! Ready for some wordy fun?"
         </p>
       </div>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-3 w-6/12 "
+        className="flex flex-col gap-3 w-6/12 mt-1"
       >
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input type="text" className="shad-input" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>User Name</FormLabel>
-              <FormControl>
-                <Input type="text" className="shad-input" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <FormField
           control={form.control}
           name="email"
@@ -152,7 +116,7 @@ const SignupForm = () => {
         </Button>
 
         <p className="text-small-regular text-light-2 text-center">
-          Returning? Log in for more fun!
+          Already have an account?
           <Link
             to="/sign-in"
             className="text-primary-500 text-small-semibold ml-1"
@@ -165,4 +129,4 @@ const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+export default SigninForm;

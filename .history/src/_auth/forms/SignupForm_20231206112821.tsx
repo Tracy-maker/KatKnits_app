@@ -82,12 +82,12 @@ const SignupForm = () => {
           Create a new account
         </h2>
         <p className="text-light-3 small-medium md:base-regular mt-2">
-          " Add vibrant hues to your life's canvas "
+          Add vibrant hues to your life's canvas
         </p>
       </div>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-3 w-6/12 "
+        className="flex flex-col gap-3 w-6/12 mt-1"
       >
         <FormField
           control={form.control}
@@ -152,7 +152,7 @@ const SignupForm = () => {
         </Button>
 
         <p className="text-small-regular text-light-2 text-center">
-          Returning? Log in for more fun!
+        No account? Time to join the party!
           <Link
             to="/sign-in"
             className="text-primary-500 text-small-semibold ml-1"
