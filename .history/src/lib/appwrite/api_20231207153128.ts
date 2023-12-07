@@ -98,7 +98,7 @@ export async function createPost(post: INewPost) {
     const fileURl = getFilePreview(uploadedFile.$id);
     if (!fileURl) {
      
-     await deleteFile(uploadedFile.$id);
+      deleteFile(uploadedFile.$id);
       throw Error;
     }
 
@@ -111,7 +111,7 @@ export async function createPost(post: INewPost) {
       {
         creator: post.userId,
         caption: post.caption,
-        imageUrl: fileURl,
+        ImageURL: fileURl,
         imageId: uploadedFile.$id,
         location: post.location,
         tags: tags,
@@ -151,7 +151,7 @@ export async function getFilePreview(fileId: string) {
       "top",
       100
     );
-    if (!fileURl) throw Error;
+    if (!fileUrl) throw Error;
     return fileURl;
   } catch (error) {
     console.log(error);

@@ -22,7 +22,7 @@ const LeftSidebar = () => {
         <Link to="/" className="flex gap-3 items-center">
           <img
             width={200}
-            height={300}
+            height={330}
             src="https://i.ibb.co/6Yc7HG4/catlogo.png"
             alt="catLogo"
           />

@@ -19,7 +19,7 @@ import { useCreatePost } from "@/lib/react-query/queriesAndMutations";
 import { useUserContext } from "@/context/AuthContext";
 import { useToast } from "../ui/use-toast";
 import { useNavigate } from "react-router-dom";
-
+import Loader from "../shared/Loader";
 
 type PostFormProps = {
   post?: Models.Document;
@@ -42,7 +42,7 @@ const PostForm = ({ post }: PostFormProps) => {
     defaultValues: {
       caption: post ? post?.caption : "",
       file: [],
-      location: post ? post?.location : "",
+      location: post ? post.location : "",
       tags: post ? post.tags.join(",") : "",
     },
   });

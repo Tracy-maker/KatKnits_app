@@ -19,14 +19,14 @@ import { useCreatePost } from "@/lib/react-query/queriesAndMutations";
 import { useUserContext } from "@/context/AuthContext";
 import { useToast } from "../ui/use-toast";
 import { useNavigate } from "react-router-dom";
-
+import Loader from "../shared/Loader";
 
 type PostFormProps = {
   post?: Models.Document;
 };
 
 const PostForm = ({ post }: PostFormProps) => {
-  const { mutateAsync: createPost, isPending: isLoadingCreate } =
+  const { mutateAsync: createPost, isLoading: isLoadingCreate } =
     useCreatePost();
 
   // const { mutateAsync: updatePost, isPending: isLoadingUpdate } =
@@ -42,13 +42,13 @@ const PostForm = ({ post }: PostFormProps) => {
     defaultValues: {
       caption: post ? post?.caption : "",
       file: [],
-      location: post ? post?.location : "",
+      location: post ? post.location : "",
       tags: post ? post.tags.join(",") : "",
     },
   });
 
   // 2. Define a submit handler.
-  const handleSubmit = async (values: z.infer<typeof PostValidation>) => {
+  async function onSubmit(values: z.infer<typeof PostValidation>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     const newPost = await createPost({
@@ -65,7 +65,7 @@ const PostForm = ({ post }: PostFormProps) => {
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(handleSubmit)}
+        onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-9 w-full  max-w-5xl"
       >
         <FormField
