@@ -26,14 +26,14 @@ const Topbar = () => {
             alt="catlogo"
           />
         </Link>
-        <div className="flex gap-2">
+        <div className="flex gap-4">
           <Button
             variant="ghost"
             className="shad-button_ghost"
             onClick={() => signOut()}
           >
             <img
-              src="https://img.icons8.com/?size=64&id=42924&format=png"
+              src="https://img.icons8.com/?size=64&id=42924&format=pnge"
               alt="logout"
               className="w-8 h-8"
             />

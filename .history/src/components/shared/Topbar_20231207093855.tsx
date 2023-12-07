@@ -26,7 +26,7 @@ const Topbar = () => {
             alt="catlogo"
           />
         </Link>
-        <div className="flex gap-2">
+        <div className="flex gap-4">
           <Button
             variant="ghost"
             className="shad-button_ghost"

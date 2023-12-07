@@ -9,10 +9,10 @@ type FileUploaderProps = {
 
 const FileUploader = ({ fieldChange, mediaUrl }: FileUploaderProps) => {
   const [fileUrl, setFileUrl] = useState("");
-  const [file, setFile] = useState<File[]>([]);
+  const [file, setFile] = useState([]);
 
   const onDrop = useCallback(
-    (acceptedFiles: FileWithPath[]) => {
+    (acceptedFiles: FileWithPath) => {
       setFile(acceptedFiles);
       fieldChange(acceptedFiles);
       setFileUrl(URL.createObjectURL(acceptedFiles[0]));
@@ -31,12 +31,7 @@ const FileUploader = ({ fieldChange, mediaUrl }: FileUploaderProps) => {
     >
       <input {...getInputProps()} className="cursor-pointer" />
       {fileUrl ? (
-        <>
-          <div className="flex flex-1 justify-center w-full p-5 lg:p-10">
-            <img src={fileUrl} alt="image" className="file_uploader-img" />
-          </div>
-          <p className="file_uploader-label"> Click or drag photo to replace</p>
-        </>
+        <div>t1</div>
       ) : (
         <div className="file_uploader-box">
           <img

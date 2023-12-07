@@ -63,10 +63,9 @@ const PostForm = ({ post }) => {
             <FormItem>
               <FormLabel className="shad-form_label">Add Photos</FormLabel>
               <FormControl>
-                <FileUploader
-                  fieldChange={field.onChange}
-                  mediaUrl={post?.imageUrl}
-                />
+                <FileUploader 
+                fieldChange={field.onChange}
+                mediaUrl= {post?.imageUrl}/>
               </FormControl>
               <FormMessage className="shad-form_message" />
             </FormItem>
