@@ -40,7 +40,7 @@ export const bottombarLinks = [
   {
     imgURL: "https://img.icons8.com/?size=80&id=109688&format=png",
     route: "/saved",
-    label: "Saved Posts",
+    label: "Saved",
   },
   {
     imgURL: "https://img.icons8.com/?size=64&id=43150&format=png",

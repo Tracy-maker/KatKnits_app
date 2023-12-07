@@ -20,6 +20,7 @@ import { useUserContext } from "@/context/AuthContext";
 import { useToast } from "../ui/use-toast";
 import { useNavigate } from "react-router-dom";
 
+
 type PostFormProps = {
   post?: Models.Document;
 };
@@ -57,10 +58,10 @@ const PostForm = ({ post }: PostFormProps) => {
     if (!newPost) {
       toast({
         title: "Please try again",
-      });
+      })
     }
     navigate("/");
-  };
+  }
   return (
     <Form {...form}>
       <form
@@ -125,7 +126,7 @@ const PostForm = ({ post }: PostFormProps) => {
               </FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Cat, Food, Healthy care"
+                  placeholder="Art, Expression, Learn"
                   type="text"
                   className="shad-input"
                   {...field}
@@ -140,7 +141,9 @@ const PostForm = ({ post }: PostFormProps) => {
           <Button
             type="submit"
             className="shad-button_primary whitespace-nowrap"
+          
           >
+           
             Post
           </Button>
           <Button type="button" className="shad-button_dark_4">

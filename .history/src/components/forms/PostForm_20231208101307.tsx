@@ -125,7 +125,7 @@ const PostForm = ({ post }: PostFormProps) => {
               </FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Cat, Food, Healthy care"
+                  placeholder="Cat,Pet Food,Pet care"
                   type="text"
                   className="shad-input"
                   {...field}
