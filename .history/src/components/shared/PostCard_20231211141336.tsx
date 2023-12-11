@@ -47,8 +47,8 @@ const PostCard = ({ post }: PostCardProps) => {
           <img
             src="https://img.icons8.com/?size=50&id=FM7OHrqvInFE&format=png"
             alt="edit"
-            width={35}
-            height={35}
+            width={30}
+            height={30}
           />
         </Link>
       </div>

@@ -47,30 +47,16 @@ const PostCard = ({ post }: PostCardProps) => {
           <img
             src="https://img.icons8.com/?size=50&id=FM7OHrqvInFE&format=png"
             alt="edit"
-            width={35}
-            height={35}
+            width={40}
+            height={40}
           />
         </Link>
       </div>
       <Link to={`/posts/${post.$id}`}>
         <div className="small-medium lg:base-medium py-5">
           <p>{post.caption}</p>
-          <ul className="flex gap-1 mt-2">
-            {post.tags.map((tag: string) => (
-              <li key={tag} className="text-light-3">
-                #{tag}
-              </li>
-            ))}
-          </ul>
+          <ul></ul>
         </div>
-        <img
-          src={
-            post.imageUrl ||
-            "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="
-          }
-          className="post-card_img"
-          alt="post image"
-        />
       </Link>
     </div>
   );
