@@ -9,7 +9,6 @@ import {
   createPost,
   createUserAccount,
   deleteSavedPost,
-  getCurrentUser,
   getRecentPosts,
   likePost,
   savePost,
@@ -107,7 +106,7 @@ export const useSavePost = () => {
 export const useDeleteSavedPost = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (savedRecordId: string) => deleteSavedPost(savedRecordId),
+    mutationFn: (savedRecordId:string) => deleteSavedPost(savedRecordId),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
@@ -119,12 +118,5 @@ export const useDeleteSavedPost = () => {
         queryKey: [QUERY_KEYS.GET_CURRENT_USER],
       });
     },
-  });
-};
-
-export const useGetCurrentUser = () => {
-  return useQuery({
-    queryKey: [QUERY_KEYS.GET_CURRENT_USER],
-    queryFn: getCurrentUser,
   });
 };

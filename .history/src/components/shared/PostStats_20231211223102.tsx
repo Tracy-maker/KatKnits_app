@@ -1,7 +1,6 @@
 import { getCurrentUser } from "@/lib/appwrite/api";
 import {
   useDeleteSavedPost,
-  useGetCurrentUser,
   useGetRecentPosts,
   useLikePost,
   useSavePost,
@@ -58,6 +57,13 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
       setIsSaved(true);
     }
   };
+
+  export const useGetCurrentUser = ()=> {
+    return useQuery({
+        queryKey:[QUERY_KEYS.GET_CURRENT_USER],
+        queryFn:getCurrentUser
+    })
+  }
 
   return (
     <div className="flex justify-between items-center z-20">

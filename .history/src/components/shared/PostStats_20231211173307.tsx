@@ -1,14 +1,10 @@
-import { getCurrentUser } from "@/lib/appwrite/api";
+import { useUserContext } from "@/context/AuthContext";
 import {
   useDeleteSavedPost,
-  useGetCurrentUser,
-  useGetRecentPosts,
   useLikePost,
   useSavePost,
 } from "@/lib/react-query/queriesAndMutations";
-import { QUERY_KEYS } from "@/lib/react-query/queryKeys";
 import { checkIsLiked } from "@/lib/utils";
-import { useQuery } from "@tanstack/react-query";
 import { Models } from "appwrite";
 import React, { useState } from "react";
 import { record } from "zod";
@@ -28,7 +24,7 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
   const { mutate: savePost } = useSavePost();
   const { mutate: deleteSavedPost } = useDeleteSavedPost();
 
-  const { data: currentUser } = useGetCurrentUser();
+  const { data: currentUser } = useUserContext();
 
   const handleLikePost = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -46,17 +42,12 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
   };
   const handleSavePost = (e: React.MouseEvent) => {
     e.stopPropagation();
-    const savedPostRecord = currentUser?.save.find(
-      (record: Models.Document) => record.$id === post.$id
-    );
-
-    if (savedPostRecord) {
-      setIsSaved(false);
-      deleteSavedPost(savedPostRecord.$id);
-    } else {
-      savePost({ postId: post.$id, userId });
-      setIsSaved(true);
-    }
+    const savedPost = currentUser?.save.find(
+      (record: Models.Document) => record.$id
+     );
+     if(savedPostRecord) {
+        setIsSaved(false);
+        deleteSavedPost(savedPostRecord.$id, likesArray:newLikes);
   };
 
   return (
@@ -69,8 +60,8 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
               : "https://img.icons8.com/?size=64&id=44018&format=png"
           }
           alt="like"
-          width={45}
-          height={45}
+          width={25}
+          height={25}
           onClick={handleLikePost}
           className="cursor-pointer"
         />
@@ -84,8 +75,8 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
               : "https://img.icons8.com/?size=50&id=MQbD24yFM0I0&format=png"
           }
           alt="save"
-          width={35}
-          height={35}
+          width={20}
+          height={20}
           onClick={handleSavePost}
           className="cursor-pointer"
         />

@@ -1,14 +1,10 @@
-import { getCurrentUser } from "@/lib/appwrite/api";
+import { useUserContext } from "@/context/AuthContext";
 import {
   useDeleteSavedPost,
-  useGetCurrentUser,
-  useGetRecentPosts,
   useLikePost,
   useSavePost,
 } from "@/lib/react-query/queriesAndMutations";
-import { QUERY_KEYS } from "@/lib/react-query/queryKeys";
 import { checkIsLiked } from "@/lib/utils";
-import { useQuery } from "@tanstack/react-query";
 import { Models } from "appwrite";
 import React, { useState } from "react";
 import { record } from "zod";
@@ -28,7 +24,7 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
   const { mutate: savePost } = useSavePost();
   const { mutate: deleteSavedPost } = useDeleteSavedPost();
 
-  const { data: currentUser } = useGetCurrentUser();
+  const { data: currentUser } = useUserContext();
 
   const handleLikePost = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -53,12 +49,10 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
     if (savedPostRecord) {
       setIsSaved(false);
       deleteSavedPost(savedPostRecord.$id);
-    } else {
-      savePost({ postId: post.$id, userId });
-      setIsSaved(true);
     }
+    savePost({ postId: post.$id, userId });
+    setIsSaved(true);
   };
-
   return (
     <div className="flex justify-between items-center z-20">
       <div className="flex gap-2 mr-5">

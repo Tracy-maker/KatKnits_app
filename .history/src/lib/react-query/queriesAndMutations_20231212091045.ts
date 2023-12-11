@@ -9,7 +9,6 @@ import {
   createPost,
   createUserAccount,
   deleteSavedPost,
-  getCurrentUser,
   getRecentPosts,
   likePost,
   savePost,
