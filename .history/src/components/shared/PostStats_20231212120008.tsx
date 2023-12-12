@@ -1,5 +1,6 @@
 import { Models } from "appwrite";
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 import { checkIsLiked } from "@/lib/utils";
 import {
@@ -7,8 +8,7 @@ import {
   useSavePost,
   useDeleteSavedPost,
   useGetCurrentUser,
-} from "../../lib/react-query/queriesAndMutations";
-import Loader from "./Loader";
+} from "../../lib/react-query/queriesAndMutations"
 
 type PostStatsProps = {
   post: Models.Document;
@@ -32,14 +32,13 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
     (record: Models.Document) => record.post.$id === post.$id
   );
 
-  console.log(savedPostRecord);
-
   useEffect(() => {
     setIsSaved(!!savedPostRecord);
   }, [currentUser]);
 
   const handleLikePost = (e: React.MouseEvent) => {
     e.stopPropagation();
+
     let newLikes = [...likes];
     const hasLiked = newLikes.includes(userId);
 
@@ -51,10 +50,9 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
     setLikes(newLikes);
     likePost({ postId: post.$id, likesArray: newLikes });
   };
-
-
   const handleSavePost = (e: React.MouseEvent) => {
     e.stopPropagation();
+
     if (savedPostRecord) {
       setIsSaved(false);
       deleteSavedPost(savedPostRecord.$id);
@@ -82,10 +80,10 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
 
         <p className="small-medium lg:base-medium">{likes.length}</p>
       </div>
-      <div className="flex gap-2">
-        {isSavingPost || isDeletingSave ? (
-          <Loader />
-        ) : (
+      {isSavingPost || isDeletingSave ? (
+        <Loader />
+      ) : (
+        <div className="flex gap-2">
           <img
             src={
               isSaved
@@ -98,8 +96,8 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
             onClick={handleSavePost}
             className="cursor-pointer"
           />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

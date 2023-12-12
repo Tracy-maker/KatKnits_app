@@ -1,13 +1,16 @@
-import { Models } from "appwrite";
-import { useState, useEffect } from "react";
-
-import { checkIsLiked } from "@/lib/utils";
+import { getCurrentUser } from "@/lib/appwrite/api";
 import {
-  useLikePost,
-  useSavePost,
   useDeleteSavedPost,
   useGetCurrentUser,
-} from "../../lib/react-query/queriesAndMutations";
+  useGetRecentPosts,
+  useLikePost,
+  useSavePost,
+} from "@/lib/react-query/queriesAndMutations";
+import { QUERY_KEYS } from "@/lib/react-query/queryKeys";
+import { checkIsLiked } from "@/lib/utils";
+import { useQuery } from "@tanstack/react-query";
+import { Models } from "appwrite";
+import React, { useEffect, useState } from "react";
 import Loader from "./Loader";
 
 type PostStatsProps = {
@@ -32,14 +35,13 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
     (record: Models.Document) => record.post.$id === post.$id
   );
 
-  console.log(savedPostRecord);
-
   useEffect(() => {
     setIsSaved(!!savedPostRecord);
   }, [currentUser]);
 
   const handleLikePost = (e: React.MouseEvent) => {
     e.stopPropagation();
+
     let newLikes = [...likes];
     const hasLiked = newLikes.includes(userId);
 
@@ -51,10 +53,9 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
     setLikes(newLikes);
     likePost({ postId: post.$id, likesArray: newLikes });
   };
-
-
   const handleSavePost = (e: React.MouseEvent) => {
     e.stopPropagation();
+
     if (savedPostRecord) {
       setIsSaved(false);
       deleteSavedPost(savedPostRecord.$id);
@@ -67,38 +68,37 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
   return (
     <div className="flex justify-between items-center z-20">
       <div className="flex gap-2 mr-5">
-        <img
-          src={
-            checkIsLiked(likes, userId)
-              ? "https://img.icons8.com/?size=80&id=64452&format=png"
-              : "https://img.icons8.com/?size=64&id=44018&format=png"
-          }
-          alt="like"
-          width={45}
-          height={45}
-          onClick={handleLikePost}
-          className="cursor-pointer"
-        />
-
-        <p className="small-medium lg:base-medium">{likes.length}</p>
-      </div>
-      <div className="flex gap-2">
         {isSavingPost || isDeletingSave ? (
           <Loader />
         ) : (
           <img
             src={
-              isSaved
-                ? "https://img.icons8.com/?size=80&id=dWxbDidOXs9r&format=png"
-                : "https://img.icons8.com/?size=50&id=MQbD24yFM0I0&format=png"
+              checkIsLiked(likes, userId)
+                ? "https://img.icons8.com/?size=80&id=64452&format=png"
+                : "https://img.icons8.com/?size=64&id=44018&format=png"
             }
-            alt="save"
-            width={35}
-            height={35}
-            onClick={handleSavePost}
+            alt="like"
+            width={45}
+            height={45}
+            onClick={handleLikePost}
             className="cursor-pointer"
           />
         )}
+        <p className="small-medium lg:base-medium">{likes.length}</p>
+      </div>
+      <div className="flex gap-2">
+        <img
+          src={
+            isSaved
+              ? "https://img.icons8.com/?size=80&id=dWxbDidOXs9r&format=png"
+              : "https://img.icons8.com/?size=50&id=MQbD24yFM0I0&format=png"
+          }
+          alt="save"
+          width={35}
+          height={35}
+          onClick={handleSavePost}
+          className="cursor-pointer"
+        />
       </div>
     </div>
   );

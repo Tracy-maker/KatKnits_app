@@ -32,14 +32,13 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
     (record: Models.Document) => record.post.$id === post.$id
   );
 
-  console.log(savedPostRecord);
-
   useEffect(() => {
     setIsSaved(!!savedPostRecord);
   }, [currentUser]);
 
   const handleLikePost = (e: React.MouseEvent) => {
     e.stopPropagation();
+
     let newLikes = [...likes];
     const hasLiked = newLikes.includes(userId);
 

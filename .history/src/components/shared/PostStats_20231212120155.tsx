@@ -32,14 +32,13 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
     (record: Models.Document) => record.post.$id === post.$id
   );
 
-  console.log(savedPostRecord);
-
   useEffect(() => {
     setIsSaved(!!savedPostRecord);
   }, [currentUser]);
 
   const handleLikePost = (e: React.MouseEvent) => {
     e.stopPropagation();
+
     let newLikes = [...likes];
     const hasLiked = newLikes.includes(userId);
 
@@ -52,9 +51,10 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
     likePost({ postId: post.$id, likesArray: newLikes });
   };
 
-
+  
   const handleSavePost = (e: React.MouseEvent) => {
     e.stopPropagation();
+
     if (savedPostRecord) {
       setIsSaved(false);
       deleteSavedPost(savedPostRecord.$id);
