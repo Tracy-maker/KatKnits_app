@@ -158,8 +158,9 @@ const PostForm = ({ post, action }: PostFormProps) => {
             className="shad-button_primary whitespace-nowrap"
             disabled={isLoadingCreate || isLoadingUpdate}
           >
-            {isLoadingCreate || (isLoadingUpdate && "Loading...")}
-            {action} Submit
+            {isLoadingCreate || isLoadingUpdate&&'Loading...'}
+            {action}
+            Post
           </Button>
           <Button type="button" className="shad-button_dark_4">
             Cancel

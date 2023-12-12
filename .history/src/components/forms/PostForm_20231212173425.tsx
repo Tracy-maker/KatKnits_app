@@ -159,7 +159,8 @@ const PostForm = ({ post, action }: PostFormProps) => {
             disabled={isLoadingCreate || isLoadingUpdate}
           >
             {isLoadingCreate || (isLoadingUpdate && "Loading...")}
-            {action} Submit
+            {action}
+            Sumbit
           </Button>
           <Button type="button" className="shad-button_dark_4">
             Cancel

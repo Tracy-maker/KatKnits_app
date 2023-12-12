@@ -1,7 +1,6 @@
 import { ID, Query } from "appwrite";
 import { appwriteConfig, account, databases, storage, avatars } from "./config";
 import { IUpdatePost, INewPost, INewUser, IUpdateUser } from "@/types";
-import { error } from "console";
 
 export async function createUserAccount(user: INewUser) {
   try {
@@ -283,20 +282,28 @@ export async function updatePost(post: IUpdatePost) {
       }
     );
 
-    if (!updatedPost) {
-      if (hasFileToUpdate) {
-        await deleteFile(image.imageId);
+       // Failed to update
+       if (!updatedPost) {
+        // Delete new file that has been recently uploaded
+        if (hasFileToUpdate) {
+          await deleteFile(image.imageId);
+        }
+  
+        // If no new file uploaded, just throw error
+        throw Error;
       }
-      throw Error;
+  
+      // Safely delete old file after successful update
+      if (hasFileToUpdate) {
+        await deleteFile(post.imageId);
+      }
+  
+      return updatedPost;
+    } catch (error) {
+      console.log(error);
     }
-    if (hasFileToUpdate) {
-      await deleteFile(post.imageId);
-    }
-    return updatedPost;
-  } catch (error) {
-    console.log(error);
   }
-}
+  
 
 export async function deletePost(postId: string, imageId: string) {
   if (!postId || !imageId) throw Error;

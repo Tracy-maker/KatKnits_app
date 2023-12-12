@@ -15,10 +15,7 @@ import { Textarea } from "../ui/textarea";
 import FileUploader from "../shared/FileUploader";
 import { PostValidation } from "@/lib/validation";
 import { Models } from "appwrite";
-import {
-  useCreatePost,
-  useUpdatePost,
-} from "@/lib/react-query/queriesAndMutations";
+import { useCreatePost, useUpdatePost } from "@/lib/react-query/queriesAndMutations";
 import { useUserContext } from "@/context/AuthContext";
 import { useToast } from "../ui/use-toast";
 import { useNavigate } from "react-router-dom";
@@ -54,17 +51,13 @@ const PostForm = ({ post, action }: PostFormProps) => {
   const handleSubmit = async (values: z.infer<typeof PostValidation>) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    if (post && action === "Update") {
+    if(post&& action ==="Update"){
       const updatedPost = await updatePost({
-        ...values,
+        ...v,
         postId: post.$id,
-        imageId: post?.imageId,
-        imageUrl: post?.imageUrl,
-      });
-      if (!updatedPost) {
-        toast({ title: "please try again" });
-      }
-      return navigate(`/posts/${post.$id}`);
+        imageId:post?.imageId,
+        imageUrl:post?.imageUrl,
+      })
     }
     const newPost = await createPost({
       ...values,
@@ -156,10 +149,8 @@ const PostForm = ({ post, action }: PostFormProps) => {
           <Button
             type="submit"
             className="shad-button_primary whitespace-nowrap"
-            disabled={isLoadingCreate || isLoadingUpdate}
           >
-            {isLoadingCreate || (isLoadingUpdate && "Loading...")}
-            {action} Submit
+            Post
           </Button>
           <Button type="button" className="shad-button_dark_4">
             Cancel

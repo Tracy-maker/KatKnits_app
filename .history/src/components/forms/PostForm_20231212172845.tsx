@@ -61,10 +61,6 @@ const PostForm = ({ post, action }: PostFormProps) => {
         imageId: post?.imageId,
         imageUrl: post?.imageUrl,
       });
-      if (!updatedPost) {
-        toast({ title: "please try again" });
-      }
-      return navigate(`/posts/${post.$id}`);
     }
     const newPost = await createPost({
       ...values,
@@ -156,10 +152,8 @@ const PostForm = ({ post, action }: PostFormProps) => {
           <Button
             type="submit"
             className="shad-button_primary whitespace-nowrap"
-            disabled={isLoadingCreate || isLoadingUpdate}
           >
-            {isLoadingCreate || (isLoadingUpdate && "Loading...")}
-            {action} Submit
+            Post
           </Button>
           <Button type="button" className="shad-button_dark_4">
             Cancel

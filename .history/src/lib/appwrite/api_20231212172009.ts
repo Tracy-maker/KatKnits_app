@@ -287,12 +287,12 @@ export async function updatePost(post: IUpdatePost) {
       if (hasFileToUpdate) {
         await deleteFile(image.imageId);
       }
-      throw Error;
+      throw error;
     }
     if (hasFileToUpdate) {
       await deleteFile(post.imageId);
     }
-    return updatedPost;
+    return updatePost;
   } catch (error) {
     console.log(error);
   }
