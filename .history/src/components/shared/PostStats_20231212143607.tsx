@@ -9,7 +9,6 @@ import {
   useDeleteSavedPost,
   useGetCurrentUser,
 } from "../../lib/react-query/queriesAndMutations";
-import Loader from "./Loader";
 
 type PostStatsProps = {
   post: Models.Document;
@@ -24,8 +23,8 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
   const [isSaved, setIsSaved] = useState(false);
 
   const { mutate: likePost } = useLikePost();
-  const { mutate: savePost, isPending:isSavingPost } = useSavePost();
-  const { mutate: deleteSavePost, isPending:isDeletingSave } = useDeleteSavedPost();
+  const { mutate: savePost } = useSavePost();
+  const { mutate: deleteSavePost } = useDeleteSavedPost();
 
   const { data: currentUser } = useGetCurrentUser();
 
@@ -100,7 +99,7 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
             alt="save"
             width={35}
             height={35}
-            onClick={(e) => handleSavePost(e)}
+            onClick={handleSavePost}
             className="cursor-pointer"
           />
         )}

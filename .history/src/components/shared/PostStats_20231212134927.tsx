@@ -1,7 +1,6 @@
 import { Models } from "appwrite";
 import { useState, useEffect } from "react";
 
-
 import { checkIsLiked } from "@/lib/utils";
 import {
   useLikePost,
@@ -10,6 +9,7 @@ import {
   useGetCurrentUser,
 } from "../../lib/react-query/queriesAndMutations";
 import Loader from "./Loader";
+import { useUserContext } from "@/context/AuthContext";
 
 type PostStatsProps = {
   post: Models.Document;
@@ -17,15 +17,15 @@ type PostStatsProps = {
 };
 
 const PostStats = ({ post, userId }: PostStatsProps) => {
-
   const likesList = post.likes.map((user: Models.Document) => user.$id);
 
-  const [likes, setLikes] = useState<string[]>(likesList);
+  const [likes, setLikes] = useState(likesList);
   const [isSaved, setIsSaved] = useState(false);
 
   const { mutate: likePost } = useLikePost();
-  const { mutate: savePost, isPending:isSavingPost } = useSavePost();
-  const { mutate: deleteSavePost, isPending:isDeletingSave } = useDeleteSavedPost();
+  const { mutate: savePost, isPending: isSavingPost } = useSavePost();
+  const { mutate: deleteSavePost, isPending: isDeletingSave } =
+    useDeleteSavedPost();
 
   const { data: currentUser } = useGetCurrentUser();
 
@@ -33,41 +33,37 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
     (record: Models.Document) => record.post.$id === post.$id
   );
 
+  console.log(savedPostRecord);
+
   useEffect(() => {
     setIsSaved(!!savedPostRecord);
   }, [currentUser]);
 
-  const handleLikePost = (
-    e: React.MouseEvent<HTMLImageElement, MouseEvent>
-  ) => {
+  const handleLikePost = (e: React.MouseEvent) => {
     e.stopPropagation();
+    let newLikes = [...likes];
+    const hasLiked = newLikes.includes(userId);
 
-    let likesArray = [...likes];
-
-    if (likesArray.includes(userId)) {
-      likesArray = likesArray.filter((Id) => Id !== userId);
+    if (hasLiked) {
+      newLikes = newLikes.filter((id) => id !== userId);
     } else {
-      likesArray.push(userId);
+      newLikes.push(userId);
     }
-
-    setLikes(likesArray);
-    likePost({ postId: post.$id, likesArray });
+    setLikes(newLikes);
+    likePost({ postId: post.$id, likesArray: newLikes });
   };
 
-  const handleSavePost = (
-    e: React.MouseEvent<HTMLImageElement, MouseEvent>
-  ) => {
+  const handleSavePost = (e: React.MouseEvent) => {
     e.stopPropagation();
-
     if (savedPostRecord) {
       setIsSaved(false);
-      return deleteSavePost(savedPostRecord.$id);
+      deleteSavePost(savedPostRecord.$id);
+    } else {
+      savePost({   postId: post.$id ,userId});
+      setIsSaved(true);
     }
-
-    savePost({ userId: userId, postId: post.$id });
-    setIsSaved(true);
   };
-
+  console.log(handleSavePost);
 
   return (
     <div className="flex justify-between items-center z-20">
@@ -91,7 +87,7 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
         {isSavingPost || isDeletingSave ? (
           <Loader />
         ) : (
-          <img
+          <img    
             src={
               isSaved
                 ? "https://img.icons8.com/?size=80&id=dWxbDidOXs9r&format=png"
@@ -100,7 +96,7 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
             alt="save"
             width={35}
             height={35}
-            onClick={(e) => handleSavePost(e)}
+            onClick={handleSavePost}
             className="cursor-pointer"
           />
         )}

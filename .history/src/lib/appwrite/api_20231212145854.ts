@@ -202,7 +202,7 @@ export async function likePost(postId: string, likeArray: string[]) {
   }
 }
 
-export async function savePost(userId: string,postId: string) {
+export async function savePost(userId: string, postId: string) {
   try {
     const updatedPost = await databases.createDocument(
       appwriteConfig.databaseId,
@@ -213,7 +213,9 @@ export async function savePost(userId: string,postId: string) {
         post: postId,
       }
     );
+
     if (!updatedPost) throw Error;
+
     return updatedPost;
   } catch (error) {
     console.log(error);

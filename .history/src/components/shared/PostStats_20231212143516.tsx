@@ -1,6 +1,6 @@
 import { Models } from "appwrite";
 import { useState, useEffect } from "react";
-
+import { useLocation } from "react-router-dom";
 
 import { checkIsLiked } from "@/lib/utils";
 import {
@@ -8,8 +8,7 @@ import {
   useSavePost,
   useDeleteSavedPost,
   useGetCurrentUser,
-} from "../../lib/react-query/queriesAndMutations";
-import Loader from "./Loader";
+} from "@/lib/react-query/queries";
 
 type PostStatsProps = {
   post: Models.Document;
@@ -17,15 +16,15 @@ type PostStatsProps = {
 };
 
 const PostStats = ({ post, userId }: PostStatsProps) => {
-
+  const location = useLocation();
   const likesList = post.likes.map((user: Models.Document) => user.$id);
 
   const [likes, setLikes] = useState<string[]>(likesList);
   const [isSaved, setIsSaved] = useState(false);
 
   const { mutate: likePost } = useLikePost();
-  const { mutate: savePost, isPending:isSavingPost } = useSavePost();
-  const { mutate: deleteSavePost, isPending:isDeletingSave } = useDeleteSavedPost();
+  const { mutate: savePost } = useSavePost();
+  const { mutate: deleteSavePost } = useDeleteSavedPost();
 
   const { data: currentUser } = useGetCurrentUser();
 
@@ -100,7 +99,7 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
             alt="save"
             width={35}
             height={35}
-            onClick={(e) => handleSavePost(e)}
+            onClick={handleSavePost}
             className="cursor-pointer"
           />
         )}

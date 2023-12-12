@@ -25,7 +25,7 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
 
   const { mutate: likePost } = useLikePost();
   const { mutate: savePost, isPending:isSavingPost } = useSavePost();
-  const { mutate: deleteSavePost, isPending:isDeletingSave } = useDeleteSavedPost();
+  const { mutate: deleteSavePost } = useDeleteSavedPost();
 
   const { data: currentUser } = useGetCurrentUser();
 
@@ -100,7 +100,7 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
             alt="save"
             width={35}
             height={35}
-            onClick={(e) => handleSavePost(e)}
+            onClick={handleSavePost}
             className="cursor-pointer"
           />
         )}

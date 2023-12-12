@@ -100,7 +100,7 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
             alt="save"
             width={35}
             height={35}
-            onClick={(e) => handleSavePost(e)}
+            onClick={handleSavePost}
             className="cursor-pointer"
           />
         )}
