@@ -1,7 +1,7 @@
 import { ID, Query } from "appwrite";
 import { appwriteConfig, account, databases, storage, avatars } from "./config";
 import { IUpdatePost, INewPost, INewUser, IUpdateUser } from "@/types";
-
+import { error } from "console";
 
 export async function createUserAccount(user: INewUser) {
   try {
@@ -340,22 +340,6 @@ export async function getInfinitePosts({ pageParam }: { pageParam: number }) {
       queries
     );
     if (!posts) throw error;
-    return posts;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export async function searchPosts(searchTerm: string) {
-  try {
-    const posts = await databases.listDocuments(
-      appwriteConfig.databaseId,
-      appwriteConfig.postCollectionId,
-      [Query.search("caption", searchTerm)]
-    );
-
-    if (!posts) throw Error;
-
     return posts;
   } catch (error) {
     console.log(error);

@@ -188,7 +188,6 @@ export const useGetPosts = () => {
       // Ensure lastId is a number, or return null if undefined
       return lastId ? +lastId : null;
     },
-    initialPageParam: 1, // Add the initialPageParam property with a value of your choice
   });
 };
 

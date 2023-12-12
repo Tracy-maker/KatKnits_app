@@ -19,8 +19,6 @@ import {
   updatePost,
   deletePost,
   getUserPosts,
-  getInfinitePosts,
-  searchPosts,
 } from "../appwrite/api";
 import { INewPost, INewUser, IUpdatePost } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
@@ -178,24 +176,9 @@ export const useGetUserPosts = (userId?: string) => {
 export const useGetPosts = () => {
   return useInfiniteQuery({
     queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
-    queryFn: getInfinitePosts,
-    getNextPageParam: (lastPage) => {
-      if (lastPage && lastPage.documents.length === 0) {
-        return null;
-      }
-
-      const lastId = lastPage?.documents[lastPage?.documents.length - 1].$id;
-      // Ensure lastId is a number, or return null if undefined
-      return lastId ? +lastId : null;
-    },
-    initialPageParam: 1, // Add the initialPageParam property with a value of your choice
-  });
-};
-
-export const useSearchPosts = (searchTerm: string) => {
-  return useQuery({
-    queryKey:[QUERY_KEYS.SEARCH_POSTS],
-    queryFn:()=> searchPosts(searchTerm),
-    enabled:!!searchTerm
-  });
+    queryFn: getInfinitePosts as any,
+    getNextPageParam:()=>{
+      
+    }
+  })
 };

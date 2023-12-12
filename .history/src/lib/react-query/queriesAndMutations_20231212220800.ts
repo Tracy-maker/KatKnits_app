@@ -166,15 +166,6 @@ export const useDeletePost = () => {
     },
   });
 };
-
-export const useGetUserPosts = (userId?: string) => {
-  return useQuery({
-    queryKey: [QUERY_KEYS.GET_USER_POSTS, userId],
-    queryFn: () => getUserPosts(userId),
-    enabled: !!userId,
-  });
-};
-
 export const useGetPosts = () => {
   return useInfiniteQuery({
     queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
@@ -191,6 +182,7 @@ export const useGetPosts = () => {
     initialPageParam: 1, // Add the initialPageParam property with a value of your choice
   });
 };
+
 
 export const useSearchPosts = (searchTerm: string) => {
   return useQuery({

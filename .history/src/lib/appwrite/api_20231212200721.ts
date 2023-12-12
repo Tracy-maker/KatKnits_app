@@ -1,7 +1,7 @@
 import { ID, Query } from "appwrite";
 import { appwriteConfig, account, databases, storage, avatars } from "./config";
 import { IUpdatePost, INewPost, INewUser, IUpdateUser } from "@/types";
-
+import { error } from "console";
 
 export async function createUserAccount(user: INewUser) {
   try {
@@ -312,52 +312,6 @@ export async function deletePost(postId?: string, imageId?: string) {
   }
 }
 
-export async function getUserPosts(userId?: string) {
-  if (!userId) return;
-  try {
-    const post = await databases.listDocuments(
-      appwriteConfig.databaseId,
-      appwriteConfig.postCollectionId,
-      [Query.equal("creator", userId), Query.orderDesc("$createdAt")]
-    );
-    if (!post) throw error;
-  } catch (error) {
-    console.log(error);
-  }
-}
+export async function getUserPosts(userId?: string){
 
-export async function getInfinitePosts({ pageParam }: { pageParam: number }) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const queries: any[] = [Query.orderDesc("$updatedAt"), Query.limit(9)];
-
-  if (pageParam) {
-    queries.push(Query.cursorAfter(pageParam.toString()));
-  }
-  try {
-    const posts = await databases.listDocuments(
-      appwriteConfig.databaseId,
-      appwriteConfig.postCollectionId,
-      queries
-    );
-    if (!posts) throw error;
-    return posts;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export async function searchPosts(searchTerm: string) {
-  try {
-    const posts = await databases.listDocuments(
-      appwriteConfig.databaseId,
-      appwriteConfig.postCollectionId,
-      [Query.search("caption", searchTerm)]
-    );
-
-    if (!posts) throw Error;
-
-    return posts;
-  } catch (error) {
-    console.log(error);
-  }
 }
