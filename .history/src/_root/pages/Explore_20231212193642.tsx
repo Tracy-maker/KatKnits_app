@@ -1,4 +1,3 @@
-import GridPostList from "@/components/shared/GridPostList";
 import SearchResults from "@/components/shared/SearchResults";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
@@ -7,9 +6,8 @@ const Explore = () => {
   const [searchValue, setSearchValue] = useState("");
   const { data: posts, fetchNextPage, hasNextPage } = useGetPosts();
   const shouldShowSearchResults = searchValue !== "";
-  const shouldShowPosts =
-    !shouldShowSearchResults &&
-    posts.pages.every((item) => item.documents.length === 0);
+  const shouldShowPosts = !shouldShowSearchResults && 
+  posts.pages.every((item) => item.documents.length === 0);
 
   return (
     <div className="explore-container">
@@ -32,15 +30,7 @@ const Explore = () => {
         </div>
       </div>
       <div className="flex flex-wrap gap-9 w-full max-w-5xl">
-        {shouldShowSearchResults ? (
-          <SearchResults />
-        ) : shouldShowPosts ? (
-          <p className="text-light-4 mt-10 text-center w-full">End of posts</p>
-        ) : (
-          posts.pages.map((item, index) => (
-            <GridPostList key={`page-${index}`} posts={item.documents} />
-          ))
-        )}
+        {shouldShowSearchResults ? <SearchResults/>:show}
       </div>
     </div>
   );
