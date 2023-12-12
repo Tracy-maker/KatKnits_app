@@ -1,31 +1,11 @@
-import Loader from "@/components/shared/Loader";
-import PostStats from "@/components/shared/PostStats";
 import { Button } from "@/components/ui/button";
-import { useUserContext } from "@/context/AuthContext";
-import { useDeletePost, useGetPostById, useGetUserPosts } from "@/lib/react-query/queriesAndMutations";
-import { multiFormatDateString } from "@/lib/utils";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useGetPostById } from "@/lib/react-query/queriesAndMutations";
+import React from "react";
+import { Navigate, useParams } from "react-router-dom";
 
 const PostDetails = () => {
-  const navigate = useNavigate();
   const { id } = useParams();
-  const { user } = useUserContext();
   const { data: post, isPending } = useGetPostById(id || "");
-
-  const handleDeletePost = () => {
-    deletePost({ postId: id, imageId: post?.imageId });
-    navigate(-1);
-  };
-
-
-  const { data: userPosts, isLoading: isUserPostLoading } = useGetUserPosts(
-    post?.creator.$id
-  );
-  const { mutate: deletePost } = useDeletePost();
-
-  const relatedPosts = userPosts?.documents.filter(
-    (userPost) => userPost.$id !== id
-  );
 
   return (
     <div className="post_details-container">
@@ -36,16 +16,16 @@ const PostDetails = () => {
           className="shad-button_ghost"
         >
           <img
-            src="https://img.icons8.com/?size=64&id=46415&format=png"
+            src={"/assets/icons/back.svg"}
             alt="back"
-            width={50}
-            height={50}
+            width={24}
+            height={24}
           />
           <p className="small-medium lg:base-medium">Back</p>
         </Button>
       </div>
 
-      {isPending || !post ? (
+      {isLoading || !post ? (
         <Loader />
       ) : (
         <div className="post_details-card">
@@ -64,7 +44,7 @@ const PostDetails = () => {
                 <img
                   src={
                     post?.creator.imageUrl ||
-                    "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="
+                    "/assets/icons/profile-placeholder.svg"
                   }
                   alt="creator"
                   className="w-8 h-8 lg:w-12 lg:h-12 rounded-full"
@@ -91,10 +71,10 @@ const PostDetails = () => {
                   className={`${user.id !== post?.creator.$id && "hidden"}`}
                 >
                   <img
-                    src="https://img.icons8.com/?size=50&id=FM7OHrqvInFE&format=png"
+                    src={"/assets/icons/edit.svg"}
                     alt="edit"
-                    width={35}
-                    height={35}
+                    width={24}
+                    height={24}
                   />
                 </Link>
 
@@ -106,10 +86,10 @@ const PostDetails = () => {
                   }`}
                 >
                   <img
-                    src="https://img.icons8.com/?size=80&id=SNuQdHisifKK&format=png"
+                    src={"/assets/icons/delete.svg"}
                     alt="delete"
-                    width={30}
-                    height={30}
+                    width={24}
+                    height={24}
                   />
                 </Button>
               </div>

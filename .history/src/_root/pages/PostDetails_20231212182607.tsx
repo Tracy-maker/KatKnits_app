@@ -36,10 +36,10 @@ const PostDetails = () => {
           className="shad-button_ghost"
         >
           <img
-            src="https://img.icons8.com/?size=64&id=46415&format=png"
+            src="https://img.icons8.com/?size=80&id=DUXX2N9ctKj4&format=png"
             alt="back"
-            width={50}
-            height={50}
+            width={24}
+            height={24}
           />
           <p className="small-medium lg:base-medium">Back</p>
         </Button>
@@ -106,10 +106,10 @@ const PostDetails = () => {
                   }`}
                 >
                   <img
-                    src="https://img.icons8.com/?size=80&id=SNuQdHisifKK&format=png"
+                    src="https://img.icons8.com/?size=64&id=42794&format=png"
                     alt="delete"
-                    width={30}
-                    height={30}
+                    width={24}
+                    height={24}
                   />
                 </Button>
               </div>

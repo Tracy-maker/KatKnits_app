@@ -36,10 +36,10 @@ const PostDetails = () => {
           className="shad-button_ghost"
         >
           <img
-            src="https://img.icons8.com/?size=64&id=46415&format=png"
+            src="https://img.icons8.com/?size=80&id=108810&format=png"
             alt="back"
-            width={50}
-            height={50}
+            width={24}
+            height={24}
           />
           <p className="small-medium lg:base-medium">Back</p>
         </Button>

@@ -1,6 +1,7 @@
 import { Models } from "appwrite";
 import { useState, useEffect } from "react";
 
+
 import { checkIsLiked } from "@/lib/utils";
 import {
   useLikePost,
@@ -16,15 +17,15 @@ type PostStatsProps = {
 };
 
 const PostStats = ({ post, userId }: PostStatsProps) => {
+
   const likesList = post?.likes.map((user: Models.Document) => user.$id);
 
   const [likes, setLikes] = useState<string[]>(likesList);
   const [isSaved, setIsSaved] = useState(false);
 
   const { mutate: likePost } = useLikePost();
-  const { mutate: savePost, isPending: isSavingPost } = useSavePost();
-  const { mutate: deleteSavePost, isPending: isDeletingSave } =
-    useDeleteSavedPost();
+  const { mutate: savePost, isPending:isSavingPost } = useSavePost();
+  const { mutate: deleteSavePost, isPending:isDeletingSave } = useDeleteSavedPost();
 
   const { data: currentUser } = useGetCurrentUser();
 
@@ -50,7 +51,7 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
     }
 
     setLikes(likesArray);
-    likePost({ postId: post?.$id || "", likesArray });
+    likePost({ postId: post?.$id, likesArray });
   };
 
   const handleSavePost = (
@@ -63,9 +64,10 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
       return deleteSavePost(savedPostRecord.$id);
     }
 
-    savePost({ userId: userId, postId: post?.$id || "" });
+    savePost({ userId: userId, postId: post?.$id });
     setIsSaved(true);
   };
+
 
   return (
     <div className="flex justify-between items-center z-20">
