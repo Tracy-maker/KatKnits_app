@@ -339,7 +339,7 @@ export async function getInfinitePosts({ pageParam }: { pageParam: number }) {
       appwriteConfig.postCollectionId,
       queries
     );
-    if (!posts) throw Error;
+    if (!posts) throw error;
     return posts;
   } catch (error) {
     console.log(error);

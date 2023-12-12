@@ -33,22 +33,19 @@ const Explore = () => {
         </div>
       </div>
 
-      <div className="flex-between w-full max-w-5xl mt-16 mb-7">
-        <h3 className="body-bold md:h3-bold">Popular Today</h3>
-        
-      </div>
+      <div></div>
 
       <div className="flex flex-wrap gap-9 w-full max-w-5xl">
         {/* {shouldShowSearchResults ? ( */}
         <SearchResults />
         {/* ) : shouldShowPosts ? ( */}
-        <p className="text-light-4 mt-10 text-center w-full">End of posts</p>
-        {/* ) : */}
-        {/* ( */}
+        <p className="text-light-4 mt-10 text-center w-full">End of posts</p>) :
+        (
         {/* posts.pages.map((item, index) => (
             <GridPostList key={`page-${index}`} posts={item.documents} />
           ))
         )} */}
+        d
       </div>
     </div>
   );

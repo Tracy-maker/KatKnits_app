@@ -33,10 +33,7 @@ const Explore = () => {
         </div>
       </div>
 
-      <div className="flex-between w-full max-w-5xl mt-16 mb-7">
-        <h3 className="body-bold md:h3-bold">Popular Today</h3>
-        
-      </div>
+      <div></div>
 
       <div className="flex flex-wrap gap-9 w-full max-w-5xl">
         {/* {shouldShowSearchResults ? ( */}
@@ -49,6 +46,7 @@ const Explore = () => {
             <GridPostList key={`page-${index}`} posts={item.documents} />
           ))
         )} */}
+        
       </div>
     </div>
   );
