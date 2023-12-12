@@ -269,7 +269,7 @@ export async function updatePost(post: IUpdatePost) {
 
     const tags = post.tags?.replace(/ /g, "").split(",") || [];
 
-    const updatedPost = await databases.updateDocument(
+    const updatedPostPost = await databases.updateDocument(
       appwriteConfig.databaseId,
       appwriteConfig.postCollectionId,
       post.postId,
@@ -282,25 +282,11 @@ export async function updatePost(post: IUpdatePost) {
       }
     );
 
-    if (!updatedPost) {
-      await deleteFile(post.imageId);
+    if (!newPost) {
+      await deleteFile(uploadedFile.$id);
       throw Error;
     }
-    return updatePost;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export async function deletePost(postId: string, imageId: string) {
-  if (!postId || !imageId) throw Error;
-  try {
-    await databases.deleteDocument(
-      appwriteConfig.databaseId,
-      appwriteConfig.postCollectionId,
-      postId
-    );
-    return { status: "ok" };
+    return newPost;
   } catch (error) {
     console.log(error);
   }

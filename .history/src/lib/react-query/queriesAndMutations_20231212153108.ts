@@ -15,12 +15,11 @@ import {
   savePost,
   signInAccount,
   signOutAccount,
-  getPostById,
-  updatePost,
+  getPostById
 } from "../appwrite/api";
-import { INewPost, INewUser, IUpdatePost } from "@/types";
+import { INewPost, INewUser } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
-
+import { invalidData } from "@hookform/resolvers/ajv/src/__tests__/__fixtures__/data.js";
 
 export const useCreateUserAccount = () => {
   return useMutation({
@@ -136,18 +135,5 @@ export const useGetPostById = (postId: string) => {
     queryKey: [QUERY_KEYS.GET_POST_BY_ID, postId],
     queryFn: () => getPostById(postId),
     enabled: !!postId,
-  });
-};
-
-
-export const useUpdatePost = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: (post: IUpdatePost) => updatePost(post),
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_POST_BY_ID, data?.$id],
-      });
-    },
   });
 };

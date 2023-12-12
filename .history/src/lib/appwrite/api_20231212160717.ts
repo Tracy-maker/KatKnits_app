@@ -298,9 +298,8 @@ export async function deletePost(postId: string, imageId: string) {
     await databases.deleteDocument(
       appwriteConfig.databaseId,
       appwriteConfig.postCollectionId,
-      postId
-    );
-    return { status: "ok" };
+      postId,
+    )
   } catch (error) {
     console.log(error);
   }

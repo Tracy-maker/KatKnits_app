@@ -300,7 +300,7 @@ export async function deletePost(postId: string, imageId: string) {
       appwriteConfig.postCollectionId,
       postId
     );
-    return { status: "ok" };
+    return{status:'ok'}
   } catch (error) {
     console.log(error);
   }

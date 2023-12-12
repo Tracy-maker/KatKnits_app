@@ -22,7 +22,7 @@ import { useNavigate } from "react-router-dom";
 
 type PostFormProps = {
   post?: Models.Document;
-  action: "Create" | "Update";
+  action:'Create'|'Update';
 };
 
 const PostForm = ({ post, action }: PostFormProps) => {
