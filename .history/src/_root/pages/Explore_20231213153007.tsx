@@ -22,9 +22,9 @@ const Explore = () => {
     <div className="explore-container">
       <div className="explore-inner_container">
         <h2 className="h3-bold md:h2-bold w-full">Search Posts</h2>
-        <div className="flex gap-1 px-2 w-full rounded-lg bg-dark-4">
+        <div className="flex gap-1 px-4 w-full rounded-lg bg-dark-4">
           <img
-            src="https://img.icons8.com/?size=80&id=cCYNmfU9F2Yo&format=png"
+            src="https://img.icons8.com/?size=64&id=43165&format=png"
             width={60}
             height={30}
             alt="search"
