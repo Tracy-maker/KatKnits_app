@@ -21,7 +21,6 @@ import {
   getUserPosts,
   getInfinitePosts,
   searchPosts,
-  getUsers,
 } from "../appwrite/api";
 import { INewPost, INewUser, IUpdatePost } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
@@ -203,8 +202,7 @@ export const useSearchPosts = (searchTerm: string) => {
 
 export const useGetUsers = (limit?: number) => {
   return useQuery({
-    queryKey: [QUERY_KEYS.GET_USERS],
+    querykey: [QUERY_KEYS.GET_USER],
     queryFn: () => getUsers(limit),
   });
 };
-

@@ -21,7 +21,6 @@ import {
   getUserPosts,
   getInfinitePosts,
   searchPosts,
-  getUsers,
 } from "../appwrite/api";
 import { INewPost, INewUser, IUpdatePost } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
@@ -190,21 +189,23 @@ export const useGetPosts = () => {
       // Ensure lastId is a number, or return null if undefined
       return lastId;
     },
+   
   });
 };
 
 export const useSearchPosts = (searchTerm: string) => {
   return useQuery({
-    queryKey: [QUERY_KEYS.SEARCH_POSTS, searchTerm],
-    queryFn: () => searchPosts(searchTerm),
-    enabled: !!searchTerm,
+    queryKey:[QUERY_KEYS.SEARCH_POSTS, searchTerm],
+    queryFn:()=> searchPosts(searchTerm),
+    enabled:!!searchTerm
   });
 };
 
-export const useGetUsers = (limit?: number) => {
+export const useGetUsers = (limit?:number)=>{
   return useQuery({
-    queryKey: [QUERY_KEYS.GET_USERS],
-    queryFn: () => getUsers(limit),
+    querykey:[QUERY_KEYS.GET_USER],
+    queryFn:()=>getUsers(limit),
   });
-};
 
+
+}

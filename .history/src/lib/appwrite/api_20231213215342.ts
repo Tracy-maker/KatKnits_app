@@ -2,6 +2,7 @@ import { ID, Query } from "appwrite";
 import { appwriteConfig, account, databases, storage, avatars } from "./config";
 import { IUpdatePost, INewPost, INewUser, IUpdateUser } from "@/types";
 
+
 export async function createUserAccount(user: INewUser) {
   try {
     const newAccount = await account.create(
@@ -361,22 +362,21 @@ export async function searchPosts(searchTerm: string) {
   }
 }
 
-export async function getUsers(limit?: number) {
-  const queries: any[] = [Query.orderDesc("$createdAt")];
+export async function getUsers(limit?:number){
+  const queries:any[] = [Query.orderDesc("$createdAt")];
 
-  if (limit) {
+  if(limit){
     queries.push(Query.limit(limit));
   }
 
-  try {
+  try{
     const users = await databases.listDocuments(
       appwriteConfig.databaseId,
       appwriteConfig.userCollectionId,
       queries
     );
-    if (!users) throw Error;
+    if(!users)throw Error;
     return users;
-  } catch (error) {
+  }catch(error) {
     console.log(error);
-  }
-}
+}}
