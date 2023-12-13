@@ -186,9 +186,9 @@ export const useGetPosts = () => {
 
       const lastId = lastPage?.documents[lastPage?.documents.length - 1].$id;
       // Ensure lastId is a number, or return null if undefined
-      return lastId;
+      return lastId ? +lastId : null;
     },
-   
+    initialPageParam: 1, // Add the initialPageParam property with a value of your choice
   });
 };
 

@@ -71,7 +71,7 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
     <div className="flex justify-between items-center z-20">
       <div className="flex gap-2 mr-5">
         <img
-          src={`${
+          src={` ${
             checkIsLiked(likes, userId)
               ? "https://img.icons8.com/?size=80&id=64452&format=png"
               : "https://img.icons8.com/?size=64&id=44018&format=png"

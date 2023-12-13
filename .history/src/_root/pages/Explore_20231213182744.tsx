@@ -6,7 +6,6 @@ import {
   useGetPosts,
   useSearchPosts,
 } from "@/lib/react-query/queriesAndMutations";
-import { Loader } from "lucide-react";
 import { useState } from "react";
 
 const Explore = () => {
@@ -16,18 +15,16 @@ const Explore = () => {
   const { data: searchedPosts, isFetching: isSearchFetching } =
     useSearchPosts(debouncedValue);
 
-  if (!posts) {
-    return (
-      <div className="flex-center w-full h-full">
-        <Loader />
-      </div>
-    );
+  if(!posts){
+    return(
+      <div></div>
+    )
   }
 
   const shouldShowSearchResults = searchValue !== "";
   const shouldShowPosts =
     !shouldShowSearchResults &&
-    posts.pages.every((item) => item?.documents.length === 0);
+    posts.pages.every((item) => item.documents.length === 0);
 
   return (
     <div className="explore-container">
@@ -35,7 +32,7 @@ const Explore = () => {
         <h2 className="h3-bold md:h2-bold w-full">Search Posts</h2>
         <div className="flex gap-1 px-2 w-full rounded-lg bg-dark-4">
           <img
-            src="https://img.icons8.com/?size=80&id=uLyHjfzI4rLm&format=png"
+            src="https://img.icons8.com/?size=80&id=cCYNmfU9F2Yo&format=png"
             width={60}
             height={30}
             alt="search"
@@ -66,12 +63,13 @@ const Explore = () => {
       </div>
 
       <div className="flex flex-wrap gap-9 w-full max-w-5xl">
-        {shouldShowSearchResults ? (
-          <SearchResults  />
-        ) : shouldShowPosts ? (
-          <p className="text-light-4 mt-10 text-center w-full">End of posts</p>
-        ) : (
-          posts.pages.map((item, index) => (
+        {shouldShowSearchResults ? 
+        <SearchResults />
+      ) : shouldShowPosts ? ( 
+        <p className="text-light-4 mt-10 text-center w-full">End of posts</p>
+        ) : 
+        ( 
+       posts.pages.map((item, index) => (
             <GridPostList key={`page-${index}`} posts={item.documents} />
           ))
         )}

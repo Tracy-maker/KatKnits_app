@@ -3,6 +3,7 @@ import { Models } from "appwrite";
 import { Link } from "react-router-dom";
 import PostStats from "./PostStats";
 
+
 type GridPostListProps = {
   posts: Models.Document[];
 };
@@ -30,7 +31,7 @@ const GridPostList = ({
                 <img
                   src={post.creator.imageUrl}
                   alt="creator"
-                  className="h-10 w-10 rounded-full"
+                  className="h-8 w-8 rounded-full"
                 />
                 <p className="line-clamp-1">{post.creator.name}</p>
               </div>
