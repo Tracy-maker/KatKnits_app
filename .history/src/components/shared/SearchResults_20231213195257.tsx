@@ -1,15 +1,12 @@
 import { Models } from "appwrite";
+import React from "react";
 import Loader from "./Loader";
 import GridPostList from "./GridPostList";
 
-interface SearchResultsProps {
+type SearchResultsProps = {
   isSearchFetching: boolean;
-  searchedPosts:
-    | {
-        documents: Models.Document[];
-      }
-    | undefined;
-}
+  searchedPosts: Models.Document[];
+};
 
 const SearchResults = ({
   isSearchFetching,
@@ -19,9 +16,7 @@ const SearchResults = ({
   if (searchedPosts && searchedPosts.documents.length > 0) {
     return <GridPostList posts={searchedPosts.documents} />;
   }
-  return (
-    <p className="text-light-4 mt-10 text-center w-full">No results found</p>
-  );
+  return <p>No results found</p>;
 };
 
 export default SearchResults;

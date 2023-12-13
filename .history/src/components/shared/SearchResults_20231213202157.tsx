@@ -4,12 +4,11 @@ import GridPostList from "./GridPostList";
 
 interface SearchResultsProps {
   isSearchFetching: boolean;
-  searchedPosts:
-    | {
-        documents: Models.Document[];
-      }
-    | undefined;
+  searchedPosts: {
+    documents: Models.Document[]; 
+  } | undefined;
 }
+
 
 const SearchResults = ({
   isSearchFetching,

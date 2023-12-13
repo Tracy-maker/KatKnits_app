@@ -7,7 +7,7 @@ import {
   useSearchPosts,
 } from "@/lib/react-query/queriesAndMutations";
 import { Loader } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 const Explore = () => {
@@ -17,10 +17,6 @@ const Explore = () => {
   const debouncedValue = useDebounce(searchValue, 500);
   const { data: searchedPosts, isFetching: isSearchFetching } =
     useSearchPosts(debouncedValue);
-
-  useEffect(()=>{
-    if(inView && !searchValue) fetchNextPage();
-  },[fetchNextPage, inView, searchValue])  
 
   if (!posts) {
     return (
@@ -75,7 +71,7 @@ const Explore = () => {
         {shouldShowSearchResults ? (
           <SearchResults
             isSearchFetching={isSearchFetching}
-            searchedPosts={searchedPosts}
+            searchedPosts={searchedPosts || []}
           />
         ) : shouldShowPosts ? (
           <p className="text-light-4 mt-10 text-center w-full">End of posts</p>

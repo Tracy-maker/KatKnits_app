@@ -2,14 +2,10 @@ import { Models } from "appwrite";
 import Loader from "./Loader";
 import GridPostList from "./GridPostList";
 
-interface SearchResultsProps {
+type SearchResultsProps = {
   isSearchFetching: boolean;
-  searchedPosts:
-    | {
-        documents: Models.Document[];
-      }
-    | undefined;
-}
+  searchedPosts: Models.Document[];
+};
 
 const SearchResults = ({
   isSearchFetching,
