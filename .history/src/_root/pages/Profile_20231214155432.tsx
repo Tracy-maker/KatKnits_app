@@ -35,9 +35,7 @@ const Profile = () => {
               <h1 className="text-center xl:text-left h3-bold md:h1-semibold w-full">
                 {currentUser.name}
               </h1>
-              <p className="small-regular md:body-medium text-light-3 text-center xl:text-left">
-                @{currentUser.username}
-              </p>
+              <p></p>
             </div>
           </div>
         </div>

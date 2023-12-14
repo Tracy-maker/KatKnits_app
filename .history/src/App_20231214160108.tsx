@@ -11,12 +11,12 @@ import {
   Profile,
   Saved,
   UpdateProfile,
-  Chat,
 } from "./_root/pages";
 import SignupForm from "./_auth/forms/SignupForm";
 import AuthLayout from "./_auth/AuthLayout";
 import RootLayout from "./_root/RootLayout";
 import { Toaster } from "@/components/ui/toaster";
+import Chat from "./_root/pages/Chat";
 
 const App = () => {
   return (

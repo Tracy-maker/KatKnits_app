@@ -1,4 +1,3 @@
-import Loader from "@/components/shared/Loader";
 import { useUserContext } from "@/context/AuthContext";
 import { useGetUserById } from "@/lib/react-query/queriesAndMutations";
 import React from "react";
@@ -10,13 +9,6 @@ const Profile = () => {
   const { pathname } = useLocation();
 
   const { data: currentUser } = useGetUserById(id || "");
-  if (!currentUser) {
-    return (
-      <div className="flex-center w-full h-full">
-        <Loader />
-      </div>
-    );
-  }
 
   return (
     <div className="profile-container">
@@ -28,18 +20,8 @@ const Profile = () => {
               "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="
             }
             alt="creator"
-            className="w-28 h-28 lg:h-36 lg:w-36 rounded-full"
+            className="h-16 w-16 rounded-full"
           />
-          <div className="flex flex-col justify-between md:mt-2">
-            <div className="flex flex-col w-full">
-              <h1 className="text-center xl:text-left h3-bold md:h1-semibold w-full">
-                {currentUser.name}
-              </h1>
-              <p className="small-regular md:body-medium text-light-3 text-center xl:text-left">
-                @{currentUser.username}
-              </p>
-            </div>
-          </div>
         </div>
       </div>
     </div>

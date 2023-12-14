@@ -22,7 +22,6 @@ import {
   getInfinitePosts,
   searchPosts,
   getUsers,
-  getUserById,
 } from "../appwrite/api";
 import { INewPost, INewUser, IUpdatePost } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";

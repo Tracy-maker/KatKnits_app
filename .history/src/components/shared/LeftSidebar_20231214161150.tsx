@@ -18,8 +18,8 @@ const LeftSidebar = () => {
 
   return (
     <nav className="leftsidebar">
-      <div className="flex flex-col gap-6">
-        <Link to="/" className="flex items-center">
+      <div className="flex flex-col gap-8">
+        <Link to="/" className="flex gap-3 items-center">
           <img
             width={200}
             height={300}
@@ -28,7 +28,7 @@ const LeftSidebar = () => {
           />
         </Link>
 
-        <Link to={`/profile/${user.id}`} className="flex gap-4 items-center">
+        <Link to={`/profile/${user.id}`} className="flex gap-3 items-center">
           <img
             src={
               user.imageUrl ||

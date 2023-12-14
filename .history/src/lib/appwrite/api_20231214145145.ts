@@ -389,7 +389,7 @@ export async function getUserById(userId: string) {
       appwriteConfig.userCollectionId,
       userId
     );
-    if (!user) throw Error;
+if(!user) throw Error;
     return user;
   } catch (error) {
     console.log(error);

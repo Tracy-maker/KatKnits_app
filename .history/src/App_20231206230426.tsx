@@ -11,7 +11,6 @@ import {
   Profile,
   Saved,
   UpdateProfile,
-  Chat,
 } from "./_root/pages";
 import SignupForm from "./_auth/forms/SignupForm";
 import AuthLayout from "./_auth/AuthLayout";
@@ -37,7 +36,6 @@ const App = () => {
           <Route path="/posts/:id" element={<PostDetails />} />
           <Route path="/profile/:id/*" element={<Profile />} />
           <Route path="/update-profile/:id" element={<UpdateProfile />} />
-          <Route path="/chat" element={<Chat />} />
         </Route>
       </Routes>
 

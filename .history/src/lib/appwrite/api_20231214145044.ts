@@ -382,16 +382,14 @@ export async function getUsers(limit?: number) {
   }
 }
 
-export async function getUserById(userId: string) {
-  try {
-    const user = await databases.getDocument(
-      appwriteConfig.databaseId,
-      appwriteConfig.userCollectionId,
-      userId
-    );
-    if (!user) throw Error;
-    return user;
-  } catch (error) {
-    console.log(error);
-  }
+
+export async function getUserById(userId:string){
+try{
+  const user = await databases.getDocument(
+    appwriteConfig.databaseId,
+    appwriteConfig.userCollectionId,
+    userId
+  );
+}catch(error) {
+  console.log(error);
 }

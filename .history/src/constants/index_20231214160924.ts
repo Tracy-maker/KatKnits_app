@@ -43,11 +43,6 @@ export const bottombarLinks = [
     label: "Explore More",
   },
   {
-    imgURL: "https://img.icons8.com/?size=80&id=64478&format=png",
-    route: "/text-chat",
-    label: "Text Chat",
-  },
-  {
     imgURL: "https://img.icons8.com/?size=80&id=109688&format=png",
     route: "/saved",
     label: "Saved Posts",
