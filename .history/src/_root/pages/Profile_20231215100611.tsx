@@ -1,19 +1,9 @@
-import GridPostList from "@/components/shared/GridPostList";
 import Loader from "@/components/shared/Loader";
 import StatBlock from "@/components/shared/StatBlock";
 import { Button } from "@/components/ui/button";
 import { useUserContext } from "@/context/AuthContext";
 import { useGetUserById } from "@/lib/react-query/queriesAndMutations";
-import {
-  Link,
-  Outlet,
-  Route,
-  Routes,
-  useLocation,
-  useParams,
-} from "react-router-dom";
-import { LikedPosts } from ".";
-
+import { Link, Routes, useLocation, useParams } from "react-router-dom";
 
 const Profile = () => {
   const { id } = useParams();
@@ -87,51 +77,40 @@ const Profile = () => {
         </div>
       </div>
 
-      {currentUser.$id === user.id && (
-        <div className="flex max-w-5xl w-full">
-          <Link
-            to={`/profile/${id}`}
-            className={`profile-tab rounded-l-lg ${
-              pathname === `/profile/${id}` && "!bg-dark-3"
-            }`}
-          >
-      
-            <img
-              src="https://img.icons8.com/?size=80&id=91IOJmdT5Vif&format=png"
-              alt="posts"
-              width={30}
-              height={30}
-            />
-            Posts
-          </Link>
-          <Link
-            to={`/profile/${id}/liked-posts`}
-            className={`profile-tab rounded-r-lg ${
-              pathname === `/profile/${id}/liked-posts` && "!bg-dark-3"
-            }`}
-          >
-            <img
-              src="https://img.icons8.com/?size=80&id=DPS6PfiV3iLV&format=png"
-              alt="like"
-              width={30}
-              height={30}
-            />
-            Liked Posts
-          </Link>
-        </div>
-      )}
-
+      <div className="flex max-w-5xl w-full">
+        <Link
+          to={`/profile/${id}`}
+          className={`profile-tab rounded-l-lg ${
+            pathname === `/profile/${id}` && "!bg-dark-3"
+          }`}
+        >
+          {" "}
+          <img
+            src="https://img.icons8.com/?size=80&id=91IOJmdT5Vif&format=png"
+            alt="posts"
+            width={30}
+            height={30}
+          />
+          Posts
+        </Link>
+        <Link
+          to={`/profile/${id}/liked-posts`}
+          className={`profile-tab rounded-r-lg ${
+            pathname === `/profile/${id}/liked-posts` && "!bg-dark-3"
+          }`}
+        >
+          <img
+            src="https://img.icons8.com/?size=80&id=DPS6PfiV3iLV&format=png"
+            alt="like"
+            width={30}
+            height={30}
+          />
+          Liked Posts
+        </Link>
+      </div>
       <Routes>
-        <Route
-          index
-          element={<GridPostList posts={currentUser.posts} showUser={false} />}
-        />
-
-        {currentUser.$id === user.id && (
-          <Route path="/liked-posts" element={<LikedPosts />} />
-        )}
+        <Route></Route>
       </Routes>
-      <Outlet />
     </div>
   );
 };

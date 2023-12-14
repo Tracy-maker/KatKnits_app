@@ -12,7 +12,6 @@ import {
   useLocation,
   useParams,
 } from "react-router-dom";
-import { LikedPosts } from ".";
 
 
 const Profile = () => {

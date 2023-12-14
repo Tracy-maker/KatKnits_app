@@ -12,7 +12,6 @@ import {
   useLocation,
   useParams,
 } from "react-router-dom";
-import { LikedPosts } from ".";
 
 
 const Profile = () => {
@@ -124,7 +123,7 @@ const Profile = () => {
       <Routes>
         <Route
           index
-          element={<GridPostList posts={currentUser.posts} showUser={false} />}
+          element={<GridPostList posts={currentUser.post} showUser={false} />}
         />
 
         {currentUser.$id === user.id && (
