@@ -3,7 +3,7 @@ interface StabBlockProps {
   label: string;
 }
 
-const StatBlock = ({ value, label }: StabBlockProps) => {
+const StackBlock = ({ value, label }: StabBlockProps) => {
   return (
     <div className="flex-center gap-2">
       <p className="small-semibold lg:body-bold text-primary-500">{value}</p>
@@ -12,4 +12,4 @@ const StatBlock = ({ value, label }: StabBlockProps) => {
   );
 };
 
-export default StatBlock;
+export default StackBlock;

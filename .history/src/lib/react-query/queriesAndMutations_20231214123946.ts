@@ -180,20 +180,19 @@ export const useGetUserPosts = (userId?: string) => {
 export const useGetPosts = () => {
   return useInfiniteQuery({
     queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    queryFn: getInfinitePosts as any,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    getNextPageParam: (lastPage: any) => {
-      if (!lastPage || lastPage.documents.length === 0) {
+    queryFn: getInfinitePosts,
+    getNextPageParam: (lastPage) => {
+      if (lastPage && lastPage?.documents.length === 0) {
         return null;
       }
 
-      const lastId = lastPage.documents[lastPage.documents.length - 1].$id;
+      const lastId = lastPage?.documents[lastPage?.documents.length - 1].$id;
+      // Ensure lastId is a number, or return null if undefined
       return lastId;
     },
-    initialPageParam: null, // Set initialPageParam to null
   });
 };
+
 
 export const useSearchPosts = (searchTerm: string) => {
   return useQuery({
@@ -209,3 +208,4 @@ export const useGetUsers = (limit?: number) => {
     queryFn: () => getUsers(limit),
   });
 };
+
