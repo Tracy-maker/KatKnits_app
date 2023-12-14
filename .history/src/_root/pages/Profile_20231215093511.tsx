@@ -1,6 +1,5 @@
 import Loader from "@/components/shared/Loader";
 import StatBlock from "@/components/shared/StatBlock";
-import { Button } from "@/components/ui/button";
 import { useUserContext } from "@/context/AuthContext";
 import { useGetUserById } from "@/lib/react-query/queriesAndMutations";
 import { Link, useLocation, useParams } from "react-router-dom";
@@ -68,10 +67,8 @@ const Profile = () => {
                 </p>
               </Link>
             </div>
-            <div className={`${user.id === id && "hidden"}`}>
-              <Button type="button" className="shad-button_primary px-8">
-                Follow
-              </Button>
+            <div>
+
             </div>
           </div>
         </div>

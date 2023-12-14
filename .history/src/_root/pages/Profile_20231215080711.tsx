@@ -1,6 +1,5 @@
 import Loader from "@/components/shared/Loader";
 import StatBlock from "@/components/shared/StatBlock";
-import { Button } from "@/components/ui/button";
 import { useUserContext } from "@/context/AuthContext";
 import { useGetUserById } from "@/lib/react-query/queriesAndMutations";
 import { Link, useLocation, useParams } from "react-router-dom";
@@ -57,21 +56,8 @@ const Profile = () => {
                   user.id !== currentUser.$id && "hidden"
                 }`}
               >
-                <img
-                  src="https://img.icons8.com/?size=80&id=38TErZI9R52x&format=png"
-                  alt="edit"
-                  width={25}
-                  height={25}
-                />
-                <p className="flex whitespace-nowrap small-medium">
-                  Edit Profile
-                </p>
+                <img src="https://img.icons8.com/?size=80&id=YXlevC3t7lcU&format=png" alt="edit" width={45} height={45} />
               </Link>
-            </div>
-            <div className={`${user.id === id && "hidden"}`}>
-              <Button type="button" className="shad-button_primary px-8">
-                Follow
-              </Button>
             </div>
           </div>
         </div>

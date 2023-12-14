@@ -1,6 +1,5 @@
 import Loader from "@/components/shared/Loader";
 import StatBlock from "@/components/shared/StatBlock";
-import { Button } from "@/components/ui/button";
 import { useUserContext } from "@/context/AuthContext";
 import { useGetUserById } from "@/lib/react-query/queriesAndMutations";
 import { Link, useLocation, useParams } from "react-router-dom";

@@ -15,7 +15,7 @@ export const sidebarLinks = [
     label: "Find People",
   },
   {
-    imgURL: "https://img.icons8.com/?size=80&id=64478&format=png",
+    imgURL: "https://img.icons8.com/?size=64&id=IEtEEWNg1t54&format=png",
     route: "/text-chat",
     label: "Text Chat",
   },
@@ -42,7 +42,7 @@ export const bottombarLinks = [
     route: "/explore",
     label: "Explore More",
   },
-   {
+  {
     imgURL: "https://img.icons8.com/?size=80&id=64478&format=png",
     route: "/text-chat",
     label: "Text Chat",
