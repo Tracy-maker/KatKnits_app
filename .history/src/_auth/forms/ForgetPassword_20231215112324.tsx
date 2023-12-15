@@ -67,8 +67,8 @@ const ForgetPassword = () => {
         <h2 className="h3-bold md:h2-bold pt-2 sm:pt-4">
           Password Memory Reboot
         </h2>
-        <p className="text-light-3 small-medium md:base-regular mt-2">
-        "Drop email, let's play password hide and seek! 🕵️‍♂️🔍"
+        <p className="text-light-3 small md:base-regular mt-2">
+          "Drop your email, and I'll cook up a fresh password spell! 🪄✉️"
         </p>
       </div>
       <form

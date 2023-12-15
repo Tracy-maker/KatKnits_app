@@ -18,7 +18,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useSignInAccount } from "@/lib/react-query/queriesAndMutations";
 import { useUserContext } from "@/context/AuthContext";
 
-const ForgetPassword = () => {
+const SigninForm = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -65,15 +65,15 @@ const ForgetPassword = () => {
           alt="catlogo"
         />
         <h2 className="h3-bold md:h2-bold pt-2 sm:pt-4">
-          Password Memory Reboot
+          Log in to your account
         </h2>
         <p className="text-light-3 small-medium md:base-regular mt-2">
-        "Drop email, let's play password hide and seek! 🕵️‍♂️🔍"
+          " Welcome back! Ready for some wordy fun? "
         </p>
       </div>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-9 w-6/12"
+        className="flex flex-col gap-3 w-6/12"
       >
         <FormField
           control={form.control}
@@ -88,16 +88,47 @@ const ForgetPassword = () => {
             </FormItem>
           )}
         />
-
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input type="password" className="shad-input" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <Button type="submit" className="shad-button_primary">
           {isUserLoading ? (
             <div className="flex-center gap-2">
               <Loader /> Loading...
             </div>
           ) : (
-            "Reset Password"
+            "Log in"
           )}
         </Button>
+
+        <p className="text-small-regular text-light-2 text-center">
+          No account? Time to join the party!
+          <Link
+            to="/sign-up"
+            className="text-primary-500 text-small-semibold ml-1"
+          >
+            Sign up
+          </Link>
+        </p>
+        <p className="text-small-regular text-light-2 text-center">
+          Forget your password? Resetting Your Secret Decoder Ring!
+          <Link
+            to="/forget-password"
+            className="text-primary-500 text-small-semibold ml-1"
+          >
+            Click me
+          </Link>
+        </p>
       </form>
     </Form>
   );

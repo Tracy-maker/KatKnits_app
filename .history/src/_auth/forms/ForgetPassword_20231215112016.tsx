@@ -58,7 +58,7 @@ const ForgetPassword = () => {
 
   return (
     <Form {...form}>
-      <div className="sm:w-420 flex-center flex-col">
+      <div className="sm:w-420 flex-center flex-col gap-3">
         <img
           className="h-2/6"
           src="https://i.ibb.co/6Yc7HG4/catlogo.png"
@@ -68,12 +68,12 @@ const ForgetPassword = () => {
           Password Memory Reboot
         </h2>
         <p className="text-light-3 small-medium md:base-regular mt-2">
-        "Drop email, let's play password hide and seek! 🕵️‍♂️🔍"
+          " Welcome back! Ready for some wordy fun? "
         </p>
       </div>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-9 w-6/12"
+        className="flex flex-col gap-3 w-6/12"
       >
         <FormField
           control={form.control}
