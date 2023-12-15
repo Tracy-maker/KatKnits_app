@@ -47,12 +47,6 @@ export type INewUser = {
   password: string;
 };
 
-export type IUpdatePassword = {
-  email: string;
-  newPassword: string;
-  confirmPassword: string;
-};
-
 export type IContextType = {
   user: IUser;
   isLoading: boolean;
