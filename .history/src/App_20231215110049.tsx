@@ -17,14 +17,13 @@ import SignupForm from "./_auth/forms/SignupForm";
 import AuthLayout from "./_auth/AuthLayout";
 import RootLayout from "./_root/RootLayout";
 import { Toaster } from "@/components/ui/toaster";
-import ForgetPassword from "./_auth/forms/ForgetPassword";
 
 const App = () => {
   return (
     <main className="flex h-screen">
       <Routes>
         <Route element={<AuthLayout />}>
-        <Route path="/forget-password" element={<ForgetPassword />} />
+        <Route path="/forget-password" element={<ForgetPasswordForm />} />
           <Route path="/sign-in" element={<SigninForm />} />
           <Route path="/sign-up" element={<SignupForm />} />
         </Route>

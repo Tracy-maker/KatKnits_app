@@ -123,10 +123,10 @@ const SigninForm = () => {
         <p className="text-small-regular text-light-2 text-center">
           Forget your password? Resetting Your Secret Decoder Ring!
           <Link
-            to="/forget-password"
+            to="/sign-up"
             className="text-primary-500 text-small-semibold ml-1"
           >
-            Click me
+            Sign up
           </Link>
         </p>
       </form>
