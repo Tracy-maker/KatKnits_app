@@ -60,9 +60,4 @@ export type IContextType = {
   isAuthenticated: boolean;
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
   checkAuthUser: () => Promise<boolean>;
-  updatePassword: (
-    email: string,
-    newPassword: string,
-    repeatPassword: string
-  ) => Promise<boolean>
-};
+  updatePassword: (email: string, newPassword: string, repeatPassword: string) => Promise<boolean>; 

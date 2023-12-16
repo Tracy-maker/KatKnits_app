@@ -30,17 +30,7 @@ export async function createUserAccount(user: INewUser) {
   }
 }
 
-export async function resetPassword(user: { email: string, newPassword: string }) {
-  try {
-    const updatePassword = await account.createRecovery(
-      user.email,
-      user.newPassword
-    );
-    return updatePassword;
-  } catch (error) {
-    console.log(error);
-  }
-}
+export async function resetPasswordexport async function signInAccount(user: { email: string; password: string })
 
 export async function saveUserToDB(user: {
   accountId: string;
@@ -80,6 +70,8 @@ export async function getAccount() {
     console.log(error);
   }
 }
+
+
 
 export async function getCurrentUser() {
   try {

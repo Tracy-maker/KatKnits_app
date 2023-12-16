@@ -18,15 +18,15 @@ import AuthLayout from "./_auth/AuthLayout";
 import RootLayout from "./_root/RootLayout";
 import { Toaster } from "@/components/ui/toaster";
 import ForgetPassword from "./_auth/forms/ForgetPassword";
-
+import ResetPassword from "./_auth/forms/ResetPassword";
 
 const App = () => {
   return (
     <main className="flex h-screen">
       <Routes>
         <Route element={<AuthLayout />}>
-         
-          <Route path="/forget-password" element={<ForgetPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/forget-password" element={<ForgetPassword />} />
           <Route path="/sign-in" element={<SigninForm />} />
           <Route path="/sign-up" element={<SignupForm />} />
         </Route>

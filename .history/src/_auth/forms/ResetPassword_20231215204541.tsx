@@ -10,38 +10,47 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { ResetPasswordValidation, SigninValidation } from "@/lib/validation";
+import { SigninValidation, SignupValidation } from "@/lib/validation";
 import { z } from "zod";
 import Loader from "@/components/shared/Loader";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
-import { useSignInAccount } from "@/lib/react-query/queriesAndMutations";
+import { useCreateUserAccount, useSignInAccount } from "@/lib/react-query/queriesAndMutations";
 import { useUserContext } from "@/context/AuthContext";
 
-const ForgetPassword = () => {
+const ResetPassword = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const { mutateAsync: signInAccount } = useSignInAccount();
+  const { mutateAsync: createUserAccount, isPending: isCreatingAccount } =
+    useCreateUserAccount();
+
+  const { mutateAsync: signInAccount, isPending: isSigningIn } =
+    useSignInAccount();
 
   const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
 
   // 1. Define your form.
-  const form = useForm<z.infer<typeof ResetPasswordValidation>>({
-    resolver: zodResolver(ResetPasswordValidation),
+  const form = useForm<z.infer<typeof SignupValidation>>({
+    resolver: zodResolver(SignupValidation),
     defaultValues: {
+      name: "",
+      username: "",
       email: "",
-      newPassword: "",
-      repeatNewPassword: "",
+      password: "",
     },
   });
 
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof ResetPasswordValidation>) {
+  async function onSubmit(values: z.infer<typeof SignupValidation>) {
+    const newUser = await createUserAccount(values);
+    if (!newUser) {
+      toast({ title: "Sign up failed. Please try again." });
+      return;
+    }
     const session = await signInAccount({
       email: values.email,
-      newPassword: values.newPassword,
-      repeatNewPassword: values.repeatNewPassword,
+      password: values.password,
     });
     if (!session) {
       toast({ title: "Sign up failed. Please try again." });
@@ -67,36 +76,22 @@ const ForgetPassword = () => {
           alt="catlogo"
         />
         <h2 className="h3-bold md:h2-bold pt-2 sm:pt-4">
-          Password Memory Reboot
+         Password Adventure
         </h2>
         <p className="text-light-3 small-medium md:base-regular mt-2">
-          "Drop email, let's play password hide and seek! 🕵️‍♂️🔍"
+        "Drop email, let's play password hide and seek! 🕵️‍♂️🔍"
         </p>
       </div>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-9 w-6/12"
       >
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input type="email" className="shad-input" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
+         <FormField
           control={form.control}
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>New Password</FormLabel>
+              <FormLabel>Password</FormLabel>
               <FormControl>
                 <Input type="password" className="shad-input" {...field} />
               </FormControl>
@@ -105,12 +100,12 @@ const ForgetPassword = () => {
           )}
         />
 
-        <FormField
+<FormField
           control={form.control}
-          name="repeatPassword"
+          name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Repeat Password</FormLabel>
+              <FormLabel>Password</FormLabel>
               <FormControl>
                 <Input type="password" className="shad-input" {...field} />
               </FormControl>
@@ -133,4 +128,4 @@ const ForgetPassword = () => {
   );
 };
 
-export default ForgetPassword;
+export default ResetPassword;

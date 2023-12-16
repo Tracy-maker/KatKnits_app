@@ -27,11 +27,11 @@ const ForgetPassword = () => {
   const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
 
   // 1. Define your form.
-  const form = useForm<z.infer<typeof ResetPasswordValidation>>({
-    resolver: zodResolver(ResetPasswordValidation),
+  const form = useForm<z.infer<typeof ResetPasswordValidation >>({
+    resolver: zodResolver(SigninValidation),
     defaultValues: {
       email: "",
-      newPassword: "",
+      newpassword: "",
       repeatNewPassword: "",
     },
   });
@@ -40,8 +40,7 @@ const ForgetPassword = () => {
   async function onSubmit(values: z.infer<typeof ResetPasswordValidation>) {
     const session = await signInAccount({
       email: values.email,
-      newPassword: values.newPassword,
-      repeatNewPassword: values.repeatNewPassword,
+      password: values.password,
     });
     if (!session) {
       toast({ title: "Sign up failed. Please try again." });
@@ -104,21 +103,6 @@ const ForgetPassword = () => {
             </FormItem>
           )}
         />
-
-        <FormField
-          control={form.control}
-          name="repeatPassword"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Repeat Password</FormLabel>
-              <FormControl>
-                <Input type="password" className="shad-input" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         <Button type="submit" className="shad-button_primary">
           {isUserLoading ? (
             <div className="flex-center gap-2">

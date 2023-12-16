@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { ResetPasswordValidation, SigninValidation } from "@/lib/validation";
+import { SigninValidation } from "@/lib/validation";
 import { z } from "zod";
 import Loader from "@/components/shared/Loader";
 import { Link, useNavigate } from "react-router-dom";
@@ -27,21 +27,19 @@ const ForgetPassword = () => {
   const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
 
   // 1. Define your form.
-  const form = useForm<z.infer<typeof ResetPasswordValidation>>({
-    resolver: zodResolver(ResetPasswordValidation),
+  const form = useForm<z.infer<typeof SigninValidation>>({
+    resolver: zodResolver(SigninValidation),
     defaultValues: {
       email: "",
-      newPassword: "",
-      repeatNewPassword: "",
+      password: "",
     },
   });
 
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof ResetPasswordValidation>) {
+  async function onSubmit(values: z.infer<typeof SigninValidation>) {
     const session = await signInAccount({
       email: values.email,
-      newPassword: values.newPassword,
-      repeatNewPassword: values.repeatNewPassword,
+      password: values.password,
     });
     if (!session) {
       toast({ title: "Sign up failed. Please try again." });
@@ -70,7 +68,7 @@ const ForgetPassword = () => {
           Password Memory Reboot
         </h2>
         <p className="text-light-3 small-medium md:base-regular mt-2">
-          "Drop email, let's play password hide and seek! 🕵️‍♂️🔍"
+        "Drop email, let's play password hide and seek! 🕵️‍♂️🔍"
         </p>
       </div>
       <form
@@ -85,34 +83,6 @@ const ForgetPassword = () => {
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input type="email" className="shad-input" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>New Password</FormLabel>
-              <FormControl>
-                <Input type="password" className="shad-input" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="repeatPassword"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Repeat Password</FormLabel>
-              <FormControl>
-                <Input type="password" className="shad-input" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

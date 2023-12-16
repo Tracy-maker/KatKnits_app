@@ -37,7 +37,7 @@ export const ResetPasswordValidation = z
       .min(8, { message: "Password must be at least 8 characters" }),
     repeatNewPassword: z.string(),
   })
-  .refine((data) => data.newPassword === data.repeatNewPassword, {
+  .refine((data) => data.newPassword.length === data.repeatNewPassword, {
     message: "Password do not match",
     path: ["repeatNewPassword"],
   });

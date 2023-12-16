@@ -41,7 +41,7 @@ const ForgetPassword = () => {
     const session = await signInAccount({
       email: values.email,
       newPassword: values.newPassword,
-      repeatNewPassword: values.repeatNewPassword,
+      repeatNewPassword:values.repeatNewPassword,
     });
     if (!session) {
       toast({ title: "Sign up failed. Please try again." });
@@ -105,12 +105,12 @@ const ForgetPassword = () => {
           )}
         />
 
-        <FormField
+<FormField
           control={form.control}
-          name="repeatPassword"
+          name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Repeat Password</FormLabel>
+              <FormLabel>New Password</FormLabel>
               <FormControl>
                 <Input type="password" className="shad-input" {...field} />
               </FormControl>

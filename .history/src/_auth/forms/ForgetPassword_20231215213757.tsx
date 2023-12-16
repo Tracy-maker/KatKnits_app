@@ -31,7 +31,7 @@ const ForgetPassword = () => {
     resolver: zodResolver(ResetPasswordValidation),
     defaultValues: {
       email: "",
-      newPassword: "",
+      newpassword: "",
       repeatNewPassword: "",
     },
   });
@@ -41,7 +41,7 @@ const ForgetPassword = () => {
     const session = await signInAccount({
       email: values.email,
       newPassword: values.newPassword,
-      repeatNewPassword: values.repeatNewPassword,
+      
     });
     if (!session) {
       toast({ title: "Sign up failed. Please try again." });
@@ -104,21 +104,6 @@ const ForgetPassword = () => {
             </FormItem>
           )}
         />
-
-        <FormField
-          control={form.control}
-          name="repeatPassword"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Repeat Password</FormLabel>
-              <FormControl>
-                <Input type="password" className="shad-input" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         <Button type="submit" className="shad-button_primary">
           {isUserLoading ? (
             <div className="flex-center gap-2">

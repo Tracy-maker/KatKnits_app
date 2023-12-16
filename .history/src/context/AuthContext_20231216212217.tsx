@@ -1,4 +1,4 @@
-import { getCurrentUser, resetPassword } from "@/lib/appwrite/api";
+import { getCurrentUser } from "@/lib/appwrite/api";
 import { IContextType, IUser } from "@/types";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -29,7 +29,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const updatePassword = async (
+  const updatePassword = (
     email: string,
     newPassword: string,
     repeatPassword: string
@@ -38,14 +38,12 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (newPassword !== repeatPassword) {
         throw new Error("New passwords do not match");
       }
-      await resetPassword({ email, newPassword });
       return true;
     } catch (error) {
       console.error("Password update error:", error);
       return false;
     }
   };
-
   const checkAuthUser = async () => {
     try {
       const currentAccount = await getCurrentUser();

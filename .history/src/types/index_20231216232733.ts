@@ -64,5 +64,5 @@ export type IContextType = {
     email: string,
     newPassword: string,
     repeatPassword: string
-  ) => Promise<boolean>
+  ) => Promise<boolean>;
 };
