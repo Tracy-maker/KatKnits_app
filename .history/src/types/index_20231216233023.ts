@@ -50,7 +50,7 @@ export type INewUser = {
 export type IUpdatePassword = {
   email: string;
   newPassword: string;
-  repeatPassword: string;
+  confirmPassword: string;
 };
 
 export type IContextType = {

@@ -29,7 +29,9 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const updatePassword = async (data: IUpdatePassword) => {
+  const updatePassword = async (
+    data:IUpdatePassword
+  ) => {
     try {
       if (data.newPassword !== data.repeatPassword) {
         throw new Error("New passwords do not match");

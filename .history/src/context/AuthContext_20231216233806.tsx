@@ -29,12 +29,14 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const updatePassword = async (data: IUpdatePassword) => {
+  const updatePassword = async (
+    data:IUpdatePassword
+  ) => {
     try {
-      if (data.newPassword !== data.repeatPassword) {
+      if (newPassword !== repeatPassword) {
         throw new Error("New passwords do not match");
       }
-      await resetPassword({ email: data.email, newPassword: data.newPassword });
+      await resetPassword({ email, newPassword });
       return true;
     } catch (error) {
       console.error("Password update error:", error);
