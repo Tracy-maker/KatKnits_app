@@ -46,22 +46,18 @@ export async function createUserAccount(user: INewUser) {
   }
 }
 
-export async function verificationEmail(navigate: ReturnType<typeof useNavigate>) {
-
+export async function verificationEmail() {
   try {
     const urlParams = new URLSearchParams(window.location.search);
     const secret = urlParams.get("secret");
     const userId = urlParams.get("userId");
 
-    if (secret && userId) {
-      await account.updateVerification(userId, secret);
+    account.updateVerification(userId, secret).then(() => {
       console.log("User is verified");
-      navigate("/");
-    } else {
-      console.log("Invalid or missing parameters for verification");
-    }
+      history.push("/")
+    })
   } catch (error) {
-    console.log("Verification failed", error);
+    console.log("Verification failed")
   }
 }
 

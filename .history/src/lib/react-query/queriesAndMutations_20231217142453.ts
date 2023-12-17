@@ -27,17 +27,21 @@ import {
 } from "../appwrite/api";
 import { INewPost, INewUser, IUpdatePost } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
+import { useNavigate } from "react-router-dom";
 
 export const useCreateUserAccount = () => {
+  const navigate = useNavigate();
   return useMutation({
-    mutationFn: (user: INewUser) => createUserAccount(user),
+    mutationFn: (user: INewUser) => createUserAccount(user,navigate),
   });
 };
 
 export const useRestPassword = () => {
   return useMutation({
-    mutationFn: (user: { email: string; newPassword: string }) =>
-      resetPassword(user),
+    mutationFn: (user: {
+      email: string;
+      newPassword: string;
+    }) => resetPassword(user),
   });
 };
 

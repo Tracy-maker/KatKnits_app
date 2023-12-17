@@ -46,8 +46,8 @@ export async function createUserAccount(user: INewUser) {
   }
 }
 
-export async function verificationEmail(navigate: ReturnType<typeof useNavigate>) {
-
+export async function verificationEmail() {
+  const navigate = useNavigate();
   try {
     const urlParams = new URLSearchParams(window.location.search);
     const secret = urlParams.get("secret");

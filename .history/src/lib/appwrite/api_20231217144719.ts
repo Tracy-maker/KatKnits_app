@@ -3,7 +3,7 @@ import { appwriteConfig, account, databases, storage, avatars } from "./config";
 import { IUpdatePost, INewPost, INewUser, IUpdateUser } from "@/types";
 import { useNavigate } from "react-router-dom";
 
-export async function createUserAccount(user: INewUser) {
+export async function createUserAccount(user: INewUser, navigate: ReturnType<typeof useNavigate>) {
   try {
     const newAccount = await account.create(
       ID.unique(),
@@ -31,13 +31,17 @@ export async function createUserAccount(user: INewUser) {
     }
 
     // Create a session
-    const session = await account.createEmailSession(user.email, user.password);
+    const session = await account.createEmailSession(
+      user.email,
+      user.password
+    );
 
     if (!session) {
       throw new Error("Session creation failed");
     }
 
-    await account.createVerification("https://localhost:5173");
+    await account.createVerification(user.email);
+    navigate("/");
 
     console.log("Verification email has been sent");
   } catch (error) {
@@ -46,24 +50,6 @@ export async function createUserAccount(user: INewUser) {
   }
 }
 
-export async function verificationEmail(navigate: ReturnType<typeof useNavigate>) {
-
-  try {
-    const urlParams = new URLSearchParams(window.location.search);
-    const secret = urlParams.get("secret");
-    const userId = urlParams.get("userId");
-
-    if (secret && userId) {
-      await account.updateVerification(userId, secret);
-      console.log("User is verified");
-      navigate("/");
-    } else {
-      console.log("Invalid or missing parameters for verification");
-    }
-  } catch (error) {
-    console.log("Verification failed", error);
-  }
-}
 
 export async function resetPassword(user: {
   email: string;

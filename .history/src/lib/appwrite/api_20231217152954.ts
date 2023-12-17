@@ -46,8 +46,8 @@ export async function createUserAccount(user: INewUser) {
   }
 }
 
-export async function verificationEmail(navigate: ReturnType<typeof useNavigate>) {
-
+export async function verificationEmail() {
+  const navigate = useNavigate();
   try {
     const urlParams = new URLSearchParams(window.location.search);
     const secret = urlParams.get("secret");
@@ -60,9 +60,7 @@ export async function verificationEmail(navigate: ReturnType<typeof useNavigate>
     } else {
       console.log("Invalid or missing parameters for verification");
     }
-  } catch (error) {
-    console.log("Verification failed", error);
-  }
+  } catch (error) {}
 }
 
 export async function resetPassword(user: {

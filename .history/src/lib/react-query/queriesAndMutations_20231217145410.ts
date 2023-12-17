@@ -28,6 +28,7 @@ import {
 import { INewPost, INewUser, IUpdatePost } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
 
+
 export const useCreateUserAccount = () => {
   return useMutation({
     mutationFn: (user: INewUser) => createUserAccount(user),
