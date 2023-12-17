@@ -30,16 +30,7 @@ export async function createUserAccount(user: INewUser) {
       throw new Error("User creation failed");
     }
 
-    // Create a session
-    const session = await account.createEmailSession(user.email, user.password);
-
-    if (!session) {
-      throw new Error("Session creation failed");
-    }
-
-    await account.createVerification("https://localhost:5173");
-
-    console.log("Verification email has been sent");
+    return newUser;
   } catch (error) {
     console.log(error);
     return error;

@@ -40,7 +40,3 @@ export const ResetPasswordValidation = z
     message: "Password do not match",
     path: ["repeatNewPassword"],
   });
-
-export const ValidEmail = z.object({
-  email: z.string().email({ message: "Invalid email address" }),
-});

@@ -41,6 +41,4 @@ export const ResetPasswordValidation = z
     path: ["repeatNewPassword"],
   });
 
-export const ValidEmail = z.object({
-  email: z.string().email({ message: "Invalid email address" }),
-});
+  export const ValidEmail = z.object({email:z.string().email({message:"Invalid email address"})})

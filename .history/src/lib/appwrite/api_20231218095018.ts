@@ -30,41 +30,14 @@ export async function createUserAccount(user: INewUser) {
       throw new Error("User creation failed");
     }
 
-    // Create a session
-    const session = await account.createEmailSession(user.email, user.password);
-
-    if (!session) {
-      throw new Error("Session creation failed");
-    }
-
-    await account.createVerification("https://localhost:5173");
-
-    console.log("Verification email has been sent");
+    return newUser;
   } catch (error) {
     console.log(error);
     return error;
   }
 }
 
-export async function verificationEmail(
-  navigate: ReturnType<typeof useNavigate>
-) {
-  try {
-    const urlParams = new URLSearchParams(window.location.search);
-    const secret = urlParams.get("secret");
-    const userId = urlParams.get("userId");
 
-    if (secret && userId) {
-      await account.updateVerification(userId, secret);
-      console.log("User is verified");
-      navigate("/");
-    } else {
-      console.log("Invalid or missing parameters for verification");
-    }
-  } catch (error) {
-    console.log("Verification failed", error);
-  }
-}
 
 export async function resetPassword(user: {
   email: string;

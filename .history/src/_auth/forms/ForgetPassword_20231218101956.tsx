@@ -10,26 +10,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
+import { ResetPasswordValidation, SigninValidation } from "@/lib/validation";
 import { z } from "zod";
 import Loader from "@/components/shared/Loader";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import {
   useRestPassword,
- 
+  useSignInAccount,
 } from "@/lib/react-query/queriesAndMutations";
 import { useUserContext } from "@/context/AuthContext";
 
-const VerifyEmail = () => {
-  const { toast } = useToast();
-  const { token } = useParams<{ token: string }>();
-  const navigate = useNavigate();
-
-  const { mutateAsync: resetInPassword } = useRestPassword();
-
-  const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
-
+const ForgetPassword = () => {
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -37,14 +29,15 @@ const VerifyEmail = () => {
     defaultValues: {
       username: "",
     },
-  });
-
+  })
+ 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values);
+    console.log(values)
   }
+
 
   return (
     <Form {...form}>
@@ -67,12 +60,25 @@ const VerifyEmail = () => {
       >
         <FormField
           control={form.control}
-          name="email"
+          name="newPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>New Password</FormLabel>
               <FormControl>
-                <Input type="email" className="shad-input" {...field} />
+                <Input type="password" className="shad-input" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="repeatNewPassword"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Repeat New Password</FormLabel>
+              <FormControl>
+                <Input type="password" className="shad-input" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -85,7 +91,7 @@ const VerifyEmail = () => {
               <Loader /> Loading...
             </div>
           ) : (
-            "Verify your email address"
+            "Reset Password"
           )}
         </Button>
       </form>
@@ -93,4 +99,4 @@ const VerifyEmail = () => {
   );
 };
 
-export default VerifyEmail;
+export default ForgetPassword;

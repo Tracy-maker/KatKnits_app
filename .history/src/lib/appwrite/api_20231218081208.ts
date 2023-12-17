@@ -1,7 +1,6 @@
 import { ID, Query } from "appwrite";
 import { appwriteConfig, account, databases, storage, avatars } from "./config";
 import { IUpdatePost, INewPost, INewUser, IUpdateUser } from "@/types";
-import { useNavigate } from "react-router-dom";
 
 export async function createUserAccount(user: INewUser) {
   try {
@@ -30,39 +29,31 @@ export async function createUserAccount(user: INewUser) {
       throw new Error("User creation failed");
     }
 
-    // Create a session
-    const session = await account.createEmailSession(user.email, user.password);
-
-    if (!session) {
-      throw new Error("Session creation failed");
-    }
-
-    await account.createVerification("https://localhost:5173");
-
-    console.log("Verification email has been sent");
+    return newUser;
   } catch (error) {
     console.log(error);
     return error;
   }
 }
 
-export async function verificationEmail(
-  navigate: ReturnType<typeof useNavigate>
-) {
+export async function saveUserToDB(user: {
+  accountId: string;
+  email: string;
+  name: string;
+  imageUrl: URL;
+  username?: string;
+}) {
   try {
-    const urlParams = new URLSearchParams(window.location.search);
-    const secret = urlParams.get("secret");
-    const userId = urlParams.get("userId");
+    const newUser = await databases.createDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      ID.unique(),
+      user
+    );
 
-    if (secret && userId) {
-      await account.updateVerification(userId, secret);
-      console.log("User is verified");
-      navigate("/");
-    } else {
-      console.log("Invalid or missing parameters for verification");
-    }
+    return newUser;
   } catch (error) {
-    console.log("Verification failed", error);
+    console.log(error);
   }
 }
 
