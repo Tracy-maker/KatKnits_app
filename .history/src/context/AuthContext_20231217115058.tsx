@@ -18,7 +18,7 @@ const INITIAL_STATE = {
   setUser: () => {},
   setIsAuthenticated: () => {},
   checkAuthUser: async () => false as boolean,
-  // updatePassword: async () => false as boolean,
+  updatePassword: async () => false as boolean,
 };
 
 const AuthContext = createContext<IContextType>(INITIAL_STATE);
@@ -29,18 +29,18 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  // const updatePassword = async (data: IUpdatePassword) => {
-  //   try {
-  //     if (data.newPassword !== data.repeatPassword) {
-  //       throw new Error("New passwords do not match");
-  //     }
-  //     await resetPassword({ email: data.email, newPassword: data.newPassword });
-  //     return true;
-  //   } catch (error) {
-  //     console.error("Password update error:", error);
-  //     return false;
-  //   }
-  // };
+  const updatePassword = async (data: IUpdatePassword) => {
+    try {
+      if (data.newPassword !== data.repeatPassword) {
+        throw new Error("New passwords do not match");
+      }
+      await resetPassword({ email: data.email, newPassword: data.newPassword });
+      return true;
+    } catch (error) {
+      console.error("Password update error:", error);
+      return false;
+    }
+  };
 
   const checkAuthUser = async () => {
     try {
@@ -84,7 +84,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     isAuthenticated,
     setIsAuthenticated,
     checkAuthUser,
-    // updatePassword,
+    updatePassword,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

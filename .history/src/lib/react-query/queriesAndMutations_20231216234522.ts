@@ -23,25 +23,16 @@ import {
   searchPosts,
   getUsers,
   getUserById,
-  resetPassword,
 } from "../appwrite/api";
 import { INewPost, INewUser, IUpdatePost } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
+
 
 export const useCreateUserAccount = () => {
   return useMutation({
     mutationFn: (user: INewUser) => createUserAccount(user),
   });
 };
-
-// export const useRestPassword = () => {
-//   return useMutation({
-//     mutationFn: (user: {
-//       email: string;
-//       newPassword: string;
-//     }) => resetPassword(user),
-//   });
-// };
 
 export const useSignInAccount = () => {
   return useMutation({

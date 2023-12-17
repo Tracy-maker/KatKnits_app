@@ -34,14 +34,11 @@ export const useCreateUserAccount = () => {
   });
 };
 
-// export const useRestPassword = () => {
-//   return useMutation({
-//     mutationFn: (user: {
-//       email: string;
-//       newPassword: string;
-//     }) => resetPassword(user),
-//   });
-// };
+export const useRestPassword = () => {
+  return useMutation({
+    mutationFn: (user: { email: string; newPassword: string }) => resetPassword(user),
+  });
+};
 
 export const useSignInAccount = () => {
   return useMutation({

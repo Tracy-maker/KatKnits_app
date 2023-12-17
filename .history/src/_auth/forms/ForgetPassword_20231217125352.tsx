@@ -82,25 +82,12 @@ const ForgetPassword = () => {
       >
         <FormField
           control={form.control}
-          name="newPassword"
+          name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>New Password</FormLabel>
+              <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input type="password" className="shad-input" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="repeatNewPassword"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Repeat New Password</FormLabel>
-              <FormControl>
-                <Input type="password" className="shad-input" {...field} />
+                <Input type="email" className="shad-input" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

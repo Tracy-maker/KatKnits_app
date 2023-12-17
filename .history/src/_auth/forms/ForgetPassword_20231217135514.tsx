@@ -93,7 +93,7 @@ const ForgetPassword = () => {
             </FormItem>
           )}
         />
-        <FormField
+          <FormField
           control={form.control}
           name="repeatNewPassword"
           render={({ field }) => (

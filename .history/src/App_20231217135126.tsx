@@ -20,13 +20,14 @@ import { Toaster } from "@/components/ui/toaster";
 import ForgetPassword from "./_auth/forms/ForgetPassword";
 import VerifyEmail from "./_auth/forms/VerifyEmail";
 
+
 const App = () => {
   return (
     <main className="flex h-screen">
       <Routes>
         <Route element={<AuthLayout />}>
-          <Route path="/verify/:token" element={<VerifyEmail />} />
-          <Route path="/forgot-password" element={<ForgetPassword />} />
+        <Route path="/verify/:token" element={<VerifyEmail />} />
+        <Route path="/forgot-password" element={<ForgetPassword />} />
           <Route path="/sign-in" element={<SigninForm />} />
           <Route path="/sign-up" element={<SignupForm />} />
         </Route>

@@ -15,51 +15,48 @@ import { z } from "zod";
 import Loader from "@/components/shared/Loader";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
-import {
-  useRestPassword,
-  useSignInAccount,
-} from "@/lib/react-query/queriesAndMutations";
+import { useRestPassword, useSignInAccount } from "@/lib/react-query/queriesAndMutations";
 import { useUserContext } from "@/context/AuthContext";
 
-const ForgetPassword = () => {
+const VerifyEmail = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const { mutateAsync: resetInPassword } = useRestPassword();
+//   const { mutateAsync: resetInPassword } = useRestPassword();
 
-  const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
+//   const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
 
-  // 1. Define your form.
-  const form = useForm<z.infer<typeof ResetPasswordValidation>>({
-    resolver: zodResolver(ResetPasswordValidation),
-    defaultValues: {
-      email: "",
-      newPassword: "",
-      repeatNewPassword: "",
-    },
-  });
+//   // 1. Define your form.
+//   const form = useForm<z.infer<typeof ResetPasswordValidation>>({
+//     resolver: zodResolver(ResetPasswordValidation),
+//     defaultValues: {
+//       email: "",
+//       newPassword: "",
+//       repeatNewPassword: "",
+//     },
+//   });
 
-  // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof ResetPasswordValidation>) {
-    const session = await resetInPassword({
-      email: values.email,
-      newPassword: values.newPassword,
-      repeatNewPassword: values.repeatNewPassword,
-    });
-    if (!session) {
-      toast({ title: "Sign up failed. Please try again." });
-      return;
-    }
+//   // 2. Define a submit handler.
+//   async function onSubmit(values: z.infer<typeof ResetPasswordValidation>) {
+//     const session = await resetInPassword({
+//       email: values.email,
+//       newPassword: values.newPassword,
+//       repeatNewPassword: values.repeatNewPassword,
+//     });
+//     if (!session) {
+//       toast({ title: "Sign up failed. Please try again." });
+//       return;
+//     }
 
-    const isLoggedIn = await checkAuthUser();
+//     const isLoggedIn = await checkAuthUser();
 
-    if (isLoggedIn) {
-      form.reset();
-      navigate("/");
-    } else {
-      return toast({ title: "Sign up failed. Please try again." });
-    }
-  }
+//     if (isLoggedIn) {
+//       form.reset();
+//       navigate("/");
+//     } else {
+//       return toast({ title: "Sign up failed. Please try again." });
+//     }
+//   }
 
   return (
     <Form {...form}>
@@ -82,7 +79,21 @@ const ForgetPassword = () => {
       >
         <FormField
           control={form.control}
-          name="newPassword"
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input type="email" className="shad-input" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="password"
           render={({ field }) => (
             <FormItem>
               <FormLabel>New Password</FormLabel>
@@ -93,12 +104,13 @@ const ForgetPassword = () => {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
-          name="repeatNewPassword"
+          name="repeatPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Repeat New Password</FormLabel>
+              <FormLabel>Repeat Password</FormLabel>
               <FormControl>
                 <Input type="password" className="shad-input" {...field} />
               </FormControl>
@@ -121,4 +133,4 @@ const ForgetPassword = () => {
   );
 };
 
-export default ForgetPassword;
+export default VerifyEmail;

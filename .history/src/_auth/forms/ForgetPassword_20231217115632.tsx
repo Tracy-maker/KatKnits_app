@@ -15,10 +15,7 @@ import { z } from "zod";
 import Loader from "@/components/shared/Loader";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
-import {
-  useRestPassword,
-  useSignInAccount,
-} from "@/lib/react-query/queriesAndMutations";
+import { useRestPassword, useSignInAccount } from "@/lib/react-query/queriesAndMutations";
 import { useUserContext } from "@/context/AuthContext";
 
 const ForgetPassword = () => {
@@ -82,7 +79,21 @@ const ForgetPassword = () => {
       >
         <FormField
           control={form.control}
-          name="newPassword"
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input type="email" className="shad-input" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="password"
           render={({ field }) => (
             <FormItem>
               <FormLabel>New Password</FormLabel>
@@ -93,12 +104,13 @@ const ForgetPassword = () => {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
-          name="repeatNewPassword"
+          name="repeatPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Repeat New Password</FormLabel>
+              <FormLabel>Repeat Password</FormLabel>
               <FormControl>
                 <Input type="password" className="shad-input" {...field} />
               </FormControl>
