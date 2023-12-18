@@ -3,8 +3,7 @@ import { useForm } from 'react-hook-form';
 import { account } from "@/lib/appwrite/config";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { Button} from "@/components/ui/button";
-import { Input} from "@/components/ui/input";
+import { Button, Input } from "@/components/ui";
 
 type PasswordFormData = {
   newPassword: string;
@@ -50,7 +49,7 @@ const ForgetPassword: React.FC = () => {
             required
             type="password"
             {...register("newPassword")}
-            className="form-control text-sky-900"
+            className="form-control"
             id="newPassword"
           />
         </div>
@@ -62,7 +61,7 @@ const ForgetPassword: React.FC = () => {
             required
             type="password"
             {...register("repeatedPassword")}
-            className="form-control text-sky-900"
+            className="form-control"
             id="repeatedPassword"
           />
         </div>

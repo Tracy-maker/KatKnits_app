@@ -50,7 +50,7 @@ const ForgetPassword: React.FC = () => {
             required
             type="password"
             {...register("newPassword")}
-            className="form-control text-sky-900"
+            className="form-control text-sky-400"
             id="newPassword"
           />
         </div>
@@ -62,7 +62,7 @@ const ForgetPassword: React.FC = () => {
             required
             type="password"
             {...register("repeatedPassword")}
-            className="form-control text-sky-900"
+            className="form-control"
             id="repeatedPassword"
           />
         </div>

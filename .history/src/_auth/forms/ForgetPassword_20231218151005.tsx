@@ -1,75 +1,81 @@
-import React from "react";
-import { useForm } from 'react-hook-form';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useState } from "react";
 import { account } from "@/lib/appwrite/config";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { Button} from "@/components/ui/button";
-import { Input} from "@/components/ui/input";
 
-type PasswordFormData = {
+type PasswordState = {
   newPassword: string;
   repeatedPassword: string;
 };
 
 const ForgetPassword: React.FC = () => {
   const history = useNavigate();
-  const { handleSubmit, register } = useForm<PasswordFormData>();
+  const [password, setPassword] = useState<PasswordState>({
+    newPassword: "",
+    repeatedPassword: "",
+  });
 
-  const onSubmit = async (data: PasswordFormData) => {
+  const changePassword = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const urlParams = new URLSearchParams(window.location.search);
     const userId = urlParams.get("userId");
     const secret = urlParams.get("secret");
 
-    if (data.newPassword === data.repeatedPassword) {
-      try {
-        await account.updateRecovery(
-          userId ?? "",
-          secret ?? "",
-          data.newPassword,
-          data.repeatedPassword
-        );
-        history("/");
-      } catch (error) {
-        console.error("Error updating password:", error);
-        toast.error("Failed to update password.");
-      }
+    if (password.newPassword === password.repeatedPassword) {
+      await account.updateRecovery(
+        userId ?? "",
+        secret ?? "",
+        password.newPassword,
+        password.repeatedPassword
+      );
+      history("/sign-in");
     } else {
-      toast.error("Both new password and the repeated password should be the same.");
+      toast.error(
+        "Both new password and the repeated password should be the same"
+      );
     }
   };
 
   return (
     <div className="container-xl p-3 my-5 border">
-      <h2 className="text-center">Reset your password</h2>
-      <form className="container" onSubmit={handleSubmit(onSubmit)}>
+      <h2 className="text-center"> Reset your password </h2>
+      <Form onSubmit={changePassword} className="container">
         <div className="mb-3">
           <label htmlFor="newPassword" className="form-label">
-            Enter your new password:
+            Enter your new password :
           </label>
           <Input
             required
             type="password"
-            {...register("newPassword")}
-            className="form-control text-sky-900"
+            name="newPassword"
+            onChange={(e) =>
+              setPassword({ ...password, newPassword: e.target.value })
+            }
+            className="form-control"
             id="newPassword"
           />
         </div>
         <div className="mb-3">
           <label htmlFor="repeatedPassword" className="form-label">
-            Repeat your new password:
+            Repeat your new password :
           </label>
           <Input
             required
             type="password"
-            {...register("repeatedPassword")}
-            className="form-control text-sky-900"
+            name="repeatedPassword"
+            onChange={(e) =>
+              setPassword({ ...password, repeatedPassword: e.target.value })
+            }
+            className="form-control"
             id="repeatedPassword"
           />
         </div>
         <Button type="submit" className="btn-success">
           Change Password
         </Button>
-      </form>
+      </Form>
       <ToastContainer
         position="top-right"
         autoClose={3000}

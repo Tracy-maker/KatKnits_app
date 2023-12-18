@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useState } from "react";
 import { account } from "@/lib/appwrite/config";
 
@@ -13,7 +13,7 @@ const VerifyEmail: React.FC = () => {
     if (userEmail && userEmail.includes("@")) {
       await account.createRecovery(
         userEmail,
-        "http://localhost:5173/forget-password"
+        "http://localhost:3000/forget-password"
       );
       toast.success(`Email has been sent!`);
     } else {
@@ -41,17 +41,7 @@ const VerifyEmail: React.FC = () => {
           Reset password
         </Button>
       </form>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+      {/* ToastContainer and other components */}
     </div>
   );
 };

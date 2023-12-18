@@ -23,6 +23,8 @@ import {
   searchPosts,
   getUsers,
   getUserById,
+  verifyEmail,
+  resetPassword,
 } from "../appwrite/api";
 import { INewPost, INewUser, IUpdatePost } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
