@@ -25,7 +25,7 @@ const App = () => {
     <main className="flex h-screen">
       <Routes>
         <Route element={<AuthLayout />}>
-          <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/verify" element={<VerifyEmail />} />
           <Route path="/forget-password" element={<ForgetPassword />} />
           <Route path="/sign-in" element={<SigninForm />} />
           <Route path="/sign-up" element={<SignupForm />} />

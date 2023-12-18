@@ -37,9 +37,10 @@ export async function createUserAccount(user: INewUser) {
   }
 }
 
-export const verifyEmail = async (user: { userId: string; token: string }) => {
+
+export const verifyEmail = async (user:{userId: string; token: string}) => {
   try {
-    await account.updateVerification(user.userId, user.token);
+    await account.updateVerification(userId, token);
     toast.success("Email verified successfully");
   } catch (error) {
     console.error("Error verifying email:", error);
@@ -48,10 +49,10 @@ export const verifyEmail = async (user: { userId: string; token: string }) => {
   }
 };
 
-export const resetPassword = async (user: { email: string }) => {
+export const resetPassword = async (email: string) => {
   try {
     await account.createRecovery(
-      user.email,
+    user.email,
       "https://localhost:5173/forget-password"
     );
     toast.success("Password reset email sent successfully");
@@ -61,6 +62,7 @@ export const resetPassword = async (user: { email: string }) => {
     throw error;
   }
 };
+
 
 export async function saveUserToDB(user: {
   accountId: string;

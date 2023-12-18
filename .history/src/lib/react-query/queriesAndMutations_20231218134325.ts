@@ -35,17 +35,18 @@ export const useCreateUserAccount = () => {
   });
 };
 
-// export const useVerifyEmail = () => {
-//   return useMutation({
-//     mutationFn: (user: { userId: string }) => verifyEmail(user.userId),
-//   });
-// };
+export const useVerifyEmail = () => {
+  return useMutation({
+    mutationFn: (user: { userId: string; token: string }) =>
+      verifyEmail(user.userId, user.token),
+  });
+};
 
-// export const useResetPassword = () => {
-//   return useMutation({
-//     mutationFn: (user: { email: string }) => resetPassword(user.email),
-//   });
-// };
+export const useResetPassword = () => {
+  return useMutation({
+    mutationFn:(user:{email:string})=>resetPassword(user.email)
+  })
+}
 
 export const useSignInAccount = () => {
   return useMutation({

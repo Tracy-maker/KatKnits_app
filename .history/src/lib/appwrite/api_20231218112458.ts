@@ -1,7 +1,7 @@
 import { ID, Query } from "appwrite";
 import { appwriteConfig, account, databases, storage, avatars } from "./config";
 import { IUpdatePost, INewPost, INewUser, IUpdateUser } from "@/types";
-
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -37,22 +37,34 @@ export async function createUserAccount(user: INewUser) {
   }
 }
 
-export const verifyEmail = async (user: { userId: string; token: string }) => {
+export const sendVerificationEmail = async () => {
   try {
-    await account.updateVerification(user.userId, user.token);
-    toast.success("Email verified successfully");
+    await account.createVerification("https://your-app-url/verify");
+    toast.success("Verification email sent successfully");
   } catch (error) {
-    console.error("Error verifying email:", error);
-    toast.error("Error verifying email");
+    console.error("Error sending verification email:", error);
+    toast.error("Error sending verification email");
     throw error;
   }
 };
 
-export const resetPassword = async (user: { email: string }) => {
+export const verifyEmail = async (userId: string, token: string) => {
+  try {
+    await account.updateVerification(userId, token);
+    toast.success('Email verified successfully');
+  } catch (error) {
+    console.error('Error verifying email:', error);
+    toast.error('Error verifying email');
+    throw error;
+  }
+};
+
+
+export const resetPassword = async (email: string) => {
   try {
     await account.createRecovery(
-      user.email,
-      "https://localhost:5173/forget-password"
+      email,
+      "https://localhost:5173/reset-password"
     );
     toast.success("Password reset email sent successfully");
   } catch (error) {
@@ -61,7 +73,6 @@ export const resetPassword = async (user: { email: string }) => {
     throw error;
   }
 };
-
 export async function saveUserToDB(user: {
   accountId: string;
   email: string;

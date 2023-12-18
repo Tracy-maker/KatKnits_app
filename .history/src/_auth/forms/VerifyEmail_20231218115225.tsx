@@ -10,45 +10,37 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { ResetPasswordValidation } from "@/lib/validation";
+
 import { z } from "zod";
 import Loader from "@/components/shared/Loader";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
-import {
-  useRestPassword,
-  useSignInAccount,
-} from "@/lib/react-query/queriesAndMutations";
+import { useRestPassword } from "@/lib/react-query/queriesAndMutations";
 import { useUserContext } from "@/context/AuthContext";
+import { ValidEmail } from "@/lib/validation";
+import { useEffect } from "react";
 
-const ForgetPassword = () => {
-  const isLoading = true;
+const VerifyEmail = () => {
+  const { toast } = useToast();
+  const { token } = useParams<{ token: string }>();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const secret = urlParams.get("secret");
-    const userId = urlParams.get("userId");
+  const { mutateAsync: resetInPassword } = useRestPassword();
 
-    if (secret && userId) {
-      verifyEmail(userId, secret);
-    } else {
-      // Handle the case where either secret or userId is null
-      console.error("Invalid or missing parameters in URL");
-      // You might want to navigate the user to an error page or show an error message
-    }
-  }, []);
+  const { checkAuthUser, isLoading: isSubmitting } = useUserContext();
+
+  useEffect(() => {});
 
   // 1. Define your form.
-  const form = useForm<z.infer<typeof ResetPasswordValidation>>({
-    resolver: zodResolver(ResetPasswordValidation),
+  const form = useForm<z.infer<typeof ValidEmail>>({
+    resolver: zodResolver(ValidEmail),
     defaultValues: {
-      newPassword: "",
-      repeatNewPassword: "",
+      email: "",
     },
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof ResetPasswordValidation>) {
+  function onSubmit(values: z.infer<typeof ValidEmail>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
@@ -75,25 +67,12 @@ const ForgetPassword = () => {
       >
         <FormField
           control={form.control}
-          name="newPassword"
+          name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>New Password</FormLabel>
+              <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input type="password" className="shad-input" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="repeatNewPassword"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Repeat New Password</FormLabel>
-              <FormControl>
-                <Input type="password" className="shad-input" {...field} />
+                <Input type="email" className="shad-input" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -101,12 +80,12 @@ const ForgetPassword = () => {
         />
 
         <Button type="submit" className="shad-button_primary">
-          {isLoading ? (
+          {isSubmitting ? (
             <div className="flex-center gap-2">
-              <Loader /> Loading...
+              <Loader />
             </div>
           ) : (
-            "Reset Password"
+            "Verify your email address"
           )}
         </Button>
       </form>
@@ -114,4 +93,4 @@ const ForgetPassword = () => {
   );
 };
 
-export default ForgetPassword;
+export default VerifyEmail;

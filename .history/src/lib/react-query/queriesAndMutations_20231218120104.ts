@@ -23,8 +23,8 @@ import {
   searchPosts,
   getUsers,
   getUserById,
-  verifyEmail,
   resetPassword,
+  verifyEmail,
 } from "../appwrite/api";
 import { INewPost, INewUser, IUpdatePost } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
@@ -35,17 +35,11 @@ export const useCreateUserAccount = () => {
   });
 };
 
-// export const useVerifyEmail = () => {
-//   return useMutation({
-//     mutationFn: (user: { userId: string }) => verifyEmail(user.userId),
-//   });
-// };
-
-// export const useResetPassword = () => {
-//   return useMutation({
-//     mutationFn: (user: { email: string }) => resetPassword(user.email),
-//   });
-// };
+export const useVerifyEmail = () => {
+  return useMutation({
+    mutationFn: ({ userId, token }) => verifyEmail(userId, token),
+  });
+};
 
 export const useSignInAccount = () => {
   return useMutation({

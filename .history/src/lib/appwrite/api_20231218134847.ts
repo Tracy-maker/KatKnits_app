@@ -48,7 +48,7 @@ export const verifyEmail = async (user: { userId: string; token: string }) => {
   }
 };
 
-export const resetPassword = async (user: { email: string }) => {
+export const resetPassword = async (user:{email: string}) => {
   try {
     await account.createRecovery(
       user.email,

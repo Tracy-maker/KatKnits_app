@@ -39,7 +39,7 @@ export async function createUserAccount(user: INewUser) {
 
 export const verifyEmail = async (user: { userId: string; token: string }) => {
   try {
-    await account.updateVerification(user.userId, user.token);
+    await account.updateVerification(userId, token);
     toast.success("Email verified successfully");
   } catch (error) {
     console.error("Error verifying email:", error);
@@ -48,7 +48,7 @@ export const verifyEmail = async (user: { userId: string; token: string }) => {
   }
 };
 
-export const resetPassword = async (user: { email: string }) => {
+export const resetPassword = async (email: string) => {
   try {
     await account.createRecovery(
       user.email,

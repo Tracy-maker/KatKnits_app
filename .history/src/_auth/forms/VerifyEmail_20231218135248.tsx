@@ -10,25 +10,25 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { ResetPasswordValidation } from "@/lib/validation";
+import "react-toastify/dist/ReactToastify.css";
 import { z } from "zod";
 import Loader from "@/components/shared/Loader";
-import { Link, useNavigate } from "react-router-dom";
-import { useToast } from "@/components/ui/use-toast";
-import {
-  useRestPassword,
-  useSignInAccount,
-} from "@/lib/react-query/queriesAndMutations";
-import { useUserContext } from "@/context/AuthContext";
+import { useNavigate, useParams } from "react-router-dom";
+import { ValidEmail } from "@/lib/validation";
+import { useEffect } from "react";
+import {  resetPassword, verifyEmail } from "@/lib/appwrite/api";
+import { toast } from "react-toastify";
+import { useResetPassword } from "@/lib/react-query/queriesAndMutations";
 
-const ForgetPassword = () => {
-  const isLoading = true;
+const VerifyEmail = () => {
+  const { mutate: resetPassword, isLoading, error } = useResetPassword();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const secret = urlParams.get("secret");
     const userId = urlParams.get("userId");
-
+  
     if (secret && userId) {
       verifyEmail(userId, secret);
     } else {
@@ -39,20 +39,31 @@ const ForgetPassword = () => {
   }, []);
 
   // 1. Define your form.
-  const form = useForm<z.infer<typeof ResetPasswordValidation>>({
-    resolver: zodResolver(ResetPasswordValidation),
+  const form = useForm<z.infer<typeof ValidEmail>>({
+    resolver: zodResolver(ValidEmail),
     defaultValues: {
-      newPassword: "",
-      repeatNewPassword: "",
+      email: "",
+      token: "",
     },
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof ResetPasswordValidation>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  async function onSubmit(values: z.infer<typeof ValidEmail>) {
+    try {
+      resetPassword(values.email, {
+        onSuccess: () => {
+          toast.success("Password reset email sent successfully!");
+          navigate("/");
+        },
+        onError: (err) => {
+          toast.error("Password reset failed. Please try again.");
+          console.error(err); // Log the error for debugging
+        }
+      });
+    } catch (error) {
+      console.error(error); // Log the caught error
+    }
+  };
 
   return (
     <Form {...form}>
@@ -75,25 +86,12 @@ const ForgetPassword = () => {
       >
         <FormField
           control={form.control}
-          name="newPassword"
+          name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>New Password</FormLabel>
+              <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input type="password" className="shad-input" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="repeatNewPassword"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Repeat New Password</FormLabel>
-              <FormControl>
-                <Input type="password" className="shad-input" {...field} />
+                <Input type="email" className="shad-input" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -103,10 +101,10 @@ const ForgetPassword = () => {
         <Button type="submit" className="shad-button_primary">
           {isLoading ? (
             <div className="flex-center gap-2">
-              <Loader /> Loading...
+              <Loader />
             </div>
           ) : (
-            "Reset Password"
+            "Verify your email address"
           )}
         </Button>
       </form>
@@ -114,4 +112,4 @@ const ForgetPassword = () => {
   );
 };
 
-export default ForgetPassword;
+export default VerifyEmail;

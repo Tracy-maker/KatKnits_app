@@ -1,9 +1,7 @@
 import { ID, Query } from "appwrite";
 import { appwriteConfig, account, databases, storage, avatars } from "./config";
 import { IUpdatePost, INewPost, INewUser, IUpdateUser } from "@/types";
-
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 export async function createUserAccount(user: INewUser) {
   try {
@@ -31,36 +29,48 @@ export async function createUserAccount(user: INewUser) {
     if (!newUser) {
       throw new Error("User creation failed");
     }
+
+  
   } catch (error) {
     console.log(error);
     return error;
   }
 }
 
-export const verifyEmail = async (user: { userId: string; token: string }) => {
+export async function verificationEmail(
+  navigate: ReturnType<typeof useNavigate>
+) {
   try {
-    await account.updateVerification(user.userId, user.token);
-    toast.success("Email verified successfully");
-  } catch (error) {
-    console.error("Error verifying email:", error);
-    toast.error("Error verifying email");
-    throw error;
-  }
-};
+    const urlParams = new URLSearchParams(window.location.search);
+    const secret = urlParams.get("secret");
+    const userId = urlParams.get("userId");
 
-export const resetPassword = async (user: { email: string }) => {
-  try {
-    await account.createRecovery(
-      user.email,
-      "https://localhost:5173/forget-password"
-    );
-    toast.success("Password reset email sent successfully");
+    if (secret && userId) {
+      await account.updateVerification(userId, secret);
+      console.log("User is verified");
+      navigate("/");
+    } else {
+      console.log("Invalid or missing parameters for verification");
+    }
   } catch (error) {
-    console.error("Error sending password reset email:", error);
-    toast.error("Error sending password reset email");
-    throw error;
+    console.log("Verification failed", error);
   }
-};
+}
+
+export async function resetPassword(user: {
+  email: string;
+  newPassword: string;
+}) {
+  try {
+    const updatePassword = await account.createRecovery(
+      user.email,
+      "https://example.com"
+    );
+    return updatePassword;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export async function saveUserToDB(user: {
   accountId: string;

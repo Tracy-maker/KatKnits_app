@@ -48,8 +48,8 @@ export type INewUser = {
 };
 
 export type IUserIdentification = {
-  token: string;
-  userId: string;
+ token:string;
+ userId:string;
 };
 
 export type IContextType = {
@@ -59,4 +59,7 @@ export type IContextType = {
   isAuthenticated: boolean;
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
   checkAuthUser: () => Promise<boolean>;
+  updatePassword: (
+   data:IUpdatePassword
+  ) => Promise<boolean>
 };

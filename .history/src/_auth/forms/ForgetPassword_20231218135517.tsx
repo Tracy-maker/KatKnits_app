@@ -24,11 +24,12 @@ import { useUserContext } from "@/context/AuthContext";
 const ForgetPassword = () => {
   const isLoading = true;
 
+
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const secret = urlParams.get("secret");
     const userId = urlParams.get("userId");
-
+  
     if (secret && userId) {
       verifyEmail(userId, secret);
     } else {

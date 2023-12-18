@@ -45,4 +45,5 @@ export const ResetPasswordValidation = z
 // Verify that the email
 export const ValidEmail = z.object({
   email: z.string().email({ message: "Invalid email address" }),
+  token: z.string()
 });

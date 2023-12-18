@@ -50,10 +50,8 @@ const VerifyEmail = () => {
       });
     } catch (error) {
       console.error(error); // Log the caught error
-      toast.error("An unexpected error occurred.");
     }
-  }
-  
+  };
 
   return (
     <Form {...form}>

@@ -1,9 +1,7 @@
 import { ID, Query } from "appwrite";
 import { appwriteConfig, account, databases, storage, avatars } from "./config";
 import { IUpdatePost, INewPost, INewUser, IUpdateUser } from "@/types";
-
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 export async function createUserAccount(user: INewUser) {
   try {
@@ -31,37 +29,45 @@ export async function createUserAccount(user: INewUser) {
     if (!newUser) {
       throw new Error("User creation failed");
     }
+
   } catch (error) {
     console.log(error);
     return error;
   }
 }
 
-export const verifyEmail = async (user: { userId: string; token: string }) => {
+export const sendVerificationEmail = async () => {
   try {
-    await account.updateVerification(user.userId, user.token);
-    toast.success("Email verified successfully");
+    await appwriteAccount.createVerification('https://your-app-url/verify');
+    toast.success('Verification email sent successfully');
   } catch (error) {
-    console.error("Error verifying email:", error);
-    toast.error("Error verifying email");
+    console.error('Error sending verification email:', error);
+    toast.error('Error sending verification email');
     throw error;
   }
 };
 
-export const resetPassword = async (user: { email: string }) => {
+export const verifyEmail = async (token: string) => {
   try {
-    await account.createRecovery(
-      user.email,
-      "https://localhost:5173/forget-password"
-    );
-    toast.success("Password reset email sent successfully");
+    await appwriteAccount.updateVerification(token);
+    toast.success('Email verified successfully');
   } catch (error) {
-    console.error("Error sending password reset email:", error);
-    toast.error("Error sending password reset email");
+    console.error('Error verifying email:', error);
+    toast.error('Error verifying email');
     throw error;
   }
 };
 
+export const resetPassword = async (email: string) => {
+  try {
+    await appwriteAccount.createRecovery(email, 'https://your-app-url/reset-password');
+    toast.success('Password reset email sent successfully');
+  } catch (error) {
+    console.error('Error sending password reset email:', error);
+    toast.error('Error sending password reset email');
+    throw error;
+  }
+};
 export async function saveUserToDB(user: {
   accountId: string;
   email: string;

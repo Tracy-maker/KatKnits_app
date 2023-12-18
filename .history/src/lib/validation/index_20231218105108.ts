@@ -20,7 +20,7 @@ export const PostValidation = z.object({
   caption: z
     .string()
     .min(5, { message: "Minimum 5 characters." })
-    .max(2200, { message: "Maximum 2,200 characters" }),
+    .max(2200, { message: "Maximum 2,200 caracters" }),
   file: z.custom<File[]>(),
   location: z
     .string()
@@ -42,7 +42,6 @@ export const ResetPasswordValidation = z
     path: ["repeatNewPassword"],
   });
 
-// Verify that the email
 export const ValidEmail = z.object({
   email: z.string().email({ message: "Invalid email address" }),
 });
