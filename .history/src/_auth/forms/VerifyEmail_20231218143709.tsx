@@ -36,6 +36,7 @@ const VerifyEmail: React.FC = () => {
             name="email"
             required
             id="emailInput"
+            // Other props as needed
           />
         </div>
         <Button type="submit" className="btn-primary">

@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 
 import { Input } from "@/components/ui/input";
 import "react-toastify/dist/ReactToastify.css";
+
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { account } from "@/lib/appwrite/config";
@@ -36,6 +37,7 @@ const VerifyEmail: React.FC = () => {
             name="email"
             required
             id="emailInput"
+            // Other props as needed
           />
         </div>
         <Button type="submit" className="btn-primary">

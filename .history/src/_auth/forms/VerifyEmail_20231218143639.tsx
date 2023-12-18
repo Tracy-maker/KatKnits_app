@@ -1,9 +1,22 @@
 import { Button } from "@/components/ui/button";
-
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import "react-toastify/dist/ReactToastify.css";
-import { toast } from "react-toastify";
-import { useState } from "react";
+import { z } from "zod";
+import Loader from "@/components/shared/Loader";
+import { useNavigate } from "react-router-dom";
+import { ValidEmail } from "@/lib/validation";
+import { ToastContainer, toast } from "react-toastify";
+import { FormEvent, useState } from "react";
 import { account } from "@/lib/appwrite/config";
 
 const VerifyEmail: React.FC = () => {
@@ -36,6 +49,7 @@ const VerifyEmail: React.FC = () => {
             name="email"
             required
             id="emailInput"
+            // Other props as needed
           />
         </div>
         <Button type="submit" className="btn-primary">
