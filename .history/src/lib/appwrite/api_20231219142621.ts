@@ -7,15 +7,17 @@ import {
   avatars,
   client,
 } from "./config";
-import { IUpdatePost, INewPost, INewUser, IUserIdentification } from "@/types";
+import {
+  IUpdatePost,
+  INewPost,
+  INewUser,
+  IUserIdentification,
+} from "@/types";
 
 export async function createUserAccount(user: INewUser) {
   try {
     // Check if user already exists
-    const existingUser = await checkIfUserExists({
-      email: user.email,
-      username: user.username,
-    });
+    const existingUser = await checkIfUserExists({ email: user.email, username: user.username });
     if (existingUser) {
       return { status: "exists", message: "User already exists" };
     }
@@ -47,29 +49,27 @@ export async function createUserAccount(user: INewUser) {
     if (!newUser) {
       throw new Error("User creation failed");
     }
+
     return newUser;
   } catch (error) {
-    if (error instanceof Error) {
-      console.log(error.message);
-      return { status: "error", message: error.message };
-    } else {
-      console.log("An unexpected error occurred");
-      return { status: "error", message: "An unexpected error occurred" };
-    }
+    console.log(error);
+    return { status: "error", message: error.message };
   }
 }
 
-export async function checkIfUserExists(
-  user: IUserIdentification
-): Promise<boolean> {
+
+
+export async function checkIfUserExists(user: IUserIdentification): Promise<boolean> {
   try {
     // Construct the query array
-    const query = `email=${user.email}&username=${user.username}`;
+    const queries = [
+      `email=${user.email}`,
+      `userId=${user.userId}`,
+      
+    ];
 
-    const response = await databases.listDocuments(
-      appwriteConfig.userCollectionId,
-      query
-    );
+    const response = await databases.listDocuments(appwriteConfig.userCollectionId, queries);
+
     return response.documents.length > 0;
   } catch (error) {
     console.error("Error checking user existence:", error);

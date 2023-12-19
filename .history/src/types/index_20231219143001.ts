@@ -41,6 +41,7 @@ export type IUser = {
 };
 
 export type INewUser = {
+  userId: string;
   name: string;
   email: string;
   username: string;
@@ -48,8 +49,8 @@ export type INewUser = {
 };
 
 export type IUserIdentification = {
+  userId: string;
   email: string;
-  username: string;
 };
 
 export type IContextType = {

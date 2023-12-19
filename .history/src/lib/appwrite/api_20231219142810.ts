@@ -47,12 +47,15 @@ export async function createUserAccount(user: INewUser) {
     if (!newUser) {
       throw new Error("User creation failed");
     }
+
     return newUser;
   } catch (error) {
     if (error instanceof Error) {
+      // Now 'error' is narrowed down to the type 'Error', and you can access 'error.message'
       console.log(error.message);
       return { status: "error", message: error.message };
     } else {
+      // Handle cases where the error is not an instance of Error
       console.log("An unexpected error occurred");
       return { status: "error", message: "An unexpected error occurred" };
     }
@@ -64,12 +67,13 @@ export async function checkIfUserExists(
 ): Promise<boolean> {
   try {
     // Construct the query array
-    const query = `email=${user.email}&username=${user.username}`;
+    const queries = [`email=${user.email}`, `userId=${user.userId}`];
 
     const response = await databases.listDocuments(
       appwriteConfig.userCollectionId,
-      query
+      queries
     );
+
     return response.documents.length > 0;
   } catch (error) {
     console.error("Error checking user existence:", error);

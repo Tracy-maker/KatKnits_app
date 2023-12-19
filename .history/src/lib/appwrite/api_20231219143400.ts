@@ -14,7 +14,7 @@ export async function createUserAccount(user: INewUser) {
     // Check if user already exists
     const existingUser = await checkIfUserExists({
       email: user.email,
-      username: user.username,
+      userId: user.userId,
     });
     if (existingUser) {
       return { status: "exists", message: "User already exists" };
@@ -64,7 +64,7 @@ export async function checkIfUserExists(
 ): Promise<boolean> {
   try {
     // Construct the query array
-    const query = `email=${user.email}&username=${user.username}`;
+    const query = `email=${user.email}&userId=${user.userId}`;
 
     const response = await databases.listDocuments(
       appwriteConfig.userCollectionId,

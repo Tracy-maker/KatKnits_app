@@ -28,7 +28,7 @@ const ForgetPassword: React.FC = () => {
           data.newPassword,
           data.repeatedPassword
         );
-        history("/");
+        history("/sign-in");
       } catch (error) {
         console.error("Error updating password:", error);
         toast.error("Failed to update password.");

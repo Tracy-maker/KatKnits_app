@@ -48,8 +48,8 @@ export type INewUser = {
 };
 
 export type IUserIdentification = {
+  userId: string;
   email: string;
-  username: string;
 };
 
 export type IContextType = {

@@ -121,7 +121,7 @@ const SigninForm = () => {
           </Link>
         </p>
         <p className="text-small-regular text-light-2 text-center">
-          Forget your password?
+          Forget your password? Resetting Your Secret Decoder Ring!
           <Link
             to="/verify-email"
             className="text-primary-500 text-small-semibold ml-1"
