@@ -12,34 +12,30 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Textarea, Input, Button } from "@/components/ui";
 import { ProfileUploader, Loader } from "@/components/shared";
 
+import { ProfileValidation } from "@/lib/validation";
 import { useUserContext } from "@/context/AuthContext";
-import { useGetUserById } from "@/lib/react-query/queriesAndMutations";
-import { profileValidation } from "@/lib/validation";
+import { useGetUserById, useUpdateUser } from "@/lib/react-query/queries";
+
+const formSchema = z.object({
+  username: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+});
 
 const UpdateProfile = () => {
-  // const { toast } = useToast();
-  // const navigate = useNavigate();
-  const { id } = useParams();
-  const { user, setUser } = useUserContext();
-  const form = useForm<z.infer<typeof ProfileValidation>>({
-    resolver: zodResolver(profileValidation),
+  // 1. Define your form.
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
-      file: [],
-      name: user.name,
-      username: user.username,
-      email: user.email,
-      bio: user.bio || "",
+      username: "",
     },
   });
 
-  const { data: currentUser } = useGetUserById(id || "");
-
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof ProfileValidation>) {
+  function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
@@ -59,13 +55,10 @@ const UpdateProfile = () => {
         </div>
 
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-7 w-full mt-4 max-w-5xl"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
               control={form.control}
-              name="file"
+              name="username"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Username</FormLabel>

@@ -49,11 +49,9 @@ export const ValidEmail = z.object({
 
 // profileValidation
 export const profileValidation = z.object({
-  file: z.custom<File[]>(),
-  name: z.string().min(2, { message: "Name must be at least 2 characters" }),
-  username: z
-    .string()
-    .min(2, { message: "Username must be at least 2 characters" }),
-  email: z.string().email(),
-  bio: z.string(),
+  file:z.custom<File[]>(),
+  name:z.string().min(2,{message:"Name must be at least 2 characters"}),
+  username:z.string().min(2,{message:"Username must be at least 2 characters"}),
+email:z.string().email(),
+bio:z.string()
 });

@@ -11,15 +11,14 @@ import { IUpdatePost, INewPost, INewUser, IUserIdentification } from "@/types";
 
 export async function createUserAccount(user: INewUser) {
   try {
-    console.log("uuhuhu");
     // Check if user already exists
-    // const existingUser = await checkIfUserExists({
-    //   email: user.email,
-    //   username: user.username,
-    // });
-    // if (existingUser) {
-    //   return { status: "exists", message: "User already exists" };
-    // }
+    const existingUser = await checkIfUserExists({
+      email: user.email,
+      username: user.username,
+    });
+    if (existingUser) {
+      return { status: "exists", message: "User already exists" };
+    }
 
     // Create a new account
     const newAccount = await account.create(
@@ -71,8 +70,9 @@ export async function checkIfUserExists(
       appwriteConfig.userCollectionId,
       query
     );
-    console.log("!!!!", response);
+    console.log("!!!!",response);
     return response.documents.length > 0;
+  
   } catch (error) {
     console.error("Error checking user existence:", error);
     return false;

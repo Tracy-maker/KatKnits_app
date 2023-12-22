@@ -13,13 +13,13 @@ export async function createUserAccount(user: INewUser) {
   try {
     console.log("uuhuhu");
     // Check if user already exists
-    // const existingUser = await checkIfUserExists({
-    //   email: user.email,
-    //   username: user.username,
-    // });
-    // if (existingUser) {
-    //   return { status: "exists", message: "User already exists" };
-    // }
+    const existingUser = await checkIfUserExists({
+      email: user.email,
+      username: user.username,
+    });
+    if (existingUser) {
+      return { status: "exists", message: "User already exists" };
+    }
 
     // Create a new account
     const newAccount = await account.create(

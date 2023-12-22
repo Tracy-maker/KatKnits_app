@@ -16,9 +16,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ProfileUploader, Loader } from "@/components/shared";
 
+import { ProfileValidation } from "@/lib/validation";
 import { useUserContext } from "@/context/AuthContext";
-import { useGetUserById } from "@/lib/react-query/queriesAndMutations";
-import { profileValidation } from "@/lib/validation";
+import { useGetUserById, useUpdateUser } from "@/lib/react-query/queries";
 
 const UpdateProfile = () => {
   // const { toast } = useToast();
@@ -26,7 +26,7 @@ const UpdateProfile = () => {
   const { id } = useParams();
   const { user, setUser } = useUserContext();
   const form = useForm<z.infer<typeof ProfileValidation>>({
-    resolver: zodResolver(profileValidation),
+    resolver: zodResolver(ProfileValidation),
     defaultValues: {
       file: [],
       name: user.name,
@@ -36,7 +36,7 @@ const UpdateProfile = () => {
     },
   });
 
-  const { data: currentUser } = useGetUserById(id || "");
+  const {data:currentUser} =userGetById(id||"");
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof ProfileValidation>) {

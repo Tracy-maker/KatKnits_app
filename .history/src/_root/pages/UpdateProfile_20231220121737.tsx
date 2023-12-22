@@ -12,39 +12,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Textarea, Input, Button } from "@/components/ui";
 import { ProfileUploader, Loader } from "@/components/shared";
 
+import { ProfileValidation } from "@/lib/validation";
 import { useUserContext } from "@/context/AuthContext";
-import { useGetUserById } from "@/lib/react-query/queriesAndMutations";
-import { profileValidation } from "@/lib/validation";
+import { useGetUserById, useUpdateUser } from "@/lib/react-query/queries";
 
 const UpdateProfile = () => {
-  // const { toast } = useToast();
-  // const navigate = useNavigate();
-  const { id } = useParams();
-  const { user, setUser } = useUserContext();
-  const form = useForm<z.infer<typeof ProfileValidation>>({
-    resolver: zodResolver(profileValidation),
-    defaultValues: {
-      file: [],
-      name: user.name,
-      username: user.username,
-      email: user.email,
-      bio: user.bio || "",
-    },
-  });
-
-  const { data: currentUser } = useGetUserById(id || "");
-
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof ProfileValidation>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
-
   return (
     <div className="flex flex-1">
       <div className="common-container">
@@ -59,20 +34,19 @@ const UpdateProfile = () => {
         </div>
 
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-7 w-full mt-4 max-w-5xl"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
               control={form.control}
-              name="file"
+              name="username"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Username</FormLabel>
                   <FormControl>
                     <Input placeholder="shadcn" {...field} />
                   </FormControl>
-
+                  <FormDescription>
+                    This is your public display name.
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

@@ -16,27 +16,24 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ProfileUploader, Loader } from "@/components/shared";
 
+import { ProfileValidation } from "@/lib/validation";
 import { useUserContext } from "@/context/AuthContext";
-import { useGetUserById } from "@/lib/react-query/queriesAndMutations";
-import { profileValidation } from "@/lib/validation";
+import { useGetUserById, useUpdateUser } from "@/lib/react-query/queries";
+
+const formSchema = z.object({
+  username: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+});
 
 const UpdateProfile = () => {
-  // const { toast } = useToast();
-  // const navigate = useNavigate();
-  const { id } = useParams();
-  const { user, setUser } = useUserContext();
-  const form = useForm<z.infer<typeof ProfileValidation>>({
-    resolver: zodResolver(profileValidation),
+  // 1. Define your form.
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
-      file: [],
-      name: user.name,
-      username: user.username,
-      email: user.email,
-      bio: user.bio || "",
+      username: "",
     },
   });
-
-  const { data: currentUser } = useGetUserById(id || "");
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof ProfileValidation>) {

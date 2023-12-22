@@ -18,7 +18,7 @@ import { ProfileUploader, Loader } from "@/components/shared";
 
 import { useUserContext } from "@/context/AuthContext";
 import { useGetUserById } from "@/lib/react-query/queriesAndMutations";
-import { profileValidation } from "@/lib/validation";
+
 
 const UpdateProfile = () => {
   // const { toast } = useToast();
@@ -26,7 +26,7 @@ const UpdateProfile = () => {
   const { id } = useParams();
   const { user, setUser } = useUserContext();
   const form = useForm<z.infer<typeof ProfileValidation>>({
-    resolver: zodResolver(profileValidation),
+    resolver: zodResolver(ProfileValidation),
     defaultValues: {
       file: [],
       name: user.name,

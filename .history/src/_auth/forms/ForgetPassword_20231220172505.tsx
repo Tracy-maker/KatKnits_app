@@ -1,5 +1,5 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { useForm } from 'react-hook-form';
 import { account } from "@/lib/appwrite/config";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -16,8 +16,8 @@ const ForgetPassword: React.FC = () => {
   const { handleSubmit, register } = useForm<PasswordFormData>();
 
   const onSubmit = async (data: PasswordFormData) => {
-    console.log(data);
-  };
+    console.log(data)
+  }
 
   // const onSubmit = async (data: PasswordFormData) => {
   //   const urlParams = new URLSearchParams(window.location.search);
