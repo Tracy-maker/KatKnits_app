@@ -5,6 +5,7 @@ import {
   databases,
   storage,
   avatars,
+  client,
 } from "./config";
 import { IUpdatePost, INewPost, INewUser, IUpdateUser } from "@/types";
 

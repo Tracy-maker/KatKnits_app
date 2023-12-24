@@ -24,7 +24,6 @@ import { profileValidation } from "@/lib/validation";
 import { toast, useToast } from "react-toastify";
 import Loader from "@/components/shared/Loader";
 import { Textarea } from "@/components/ui/textarea";
-import ProfileUploader from "@/components/shared/ProfileUploader";
 
 const UpdateProfile = () => {
   const navigate = useNavigate();
@@ -92,7 +91,7 @@ const UpdateProfile = () => {
 
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(onSubmit)}
+            onSubmit={form.handleSubmit(handleUpdate)}
             className="flex flex-col gap-7 w-full mt-4 max-w-5xl">
             <FormField
               control={form.control}

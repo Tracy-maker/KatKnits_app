@@ -223,8 +223,8 @@ export const useUpdateUser = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (user: IUpdateUser) => {
-      const data = await updateUser(user);
-      return data;
+      const updatedUser = await updateUser(user);
+      return updatedUser; // Assuming updateUser returns the updated user data directly
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({
@@ -236,4 +236,5 @@ export const useUpdateUser = () => {
     },
   });
 };
+
 

@@ -222,11 +222,8 @@ export const useGetUserById = (userId: string) => {
 export const useUpdateUser = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (user: IUpdateUser) => {
-      const data = await updateUser(user);
-      return data;
-    },
-    onSuccess: (data) => {
+    mutationFn: async(user: IUpdateUser) => {const data= await updateUser(user); return data;}
+    ,onSuccess: (data) => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_CURRENT_USER],
       });
@@ -236,4 +233,3 @@ export const useUpdateUser = () => {
     },
   });
 };
-
