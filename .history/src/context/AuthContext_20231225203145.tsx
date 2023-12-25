@@ -72,7 +72,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
            } else if (user.needsPasswordReset) {
              navigate("/reset-password");
            }
-ƒ
+
         }
       }
   

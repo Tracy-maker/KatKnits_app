@@ -19,11 +19,14 @@ const GridPostList = ({
   const uniquePosts = posts.filter(
     (post, index, self) => index === self.findIndex((p) => p.$id === post.$id)
   );
-  console.log(uniquePosts);
+
+  
 
   return (
     <ul className="grid-container">
       {uniquePosts.map((post) => (
+          console.log(post.creator.name);
+          return(
         <li key={post.$id} className="relative min-w-80 h-80">
           <Link to={`/posts/${post.$id}`} className="grid-post_link">
             <img
@@ -32,7 +35,7 @@ const GridPostList = ({
               className="h-full w-full object-cover"
             />
           </Link>
-
+          
           <div className="grid-post_user">
             {showUser && (
               <div className="flex items-center justify-start gap-2 flex-1">
@@ -45,14 +48,14 @@ const GridPostList = ({
                   className="h-10 w-10 rounded-full"
                 />
                 <p className="line-clamp-1">{post.creator.name}</p>
-              </div>
-            )}
-            {showStats && <PostStats post={post} userId={user.id} />}
-          </div>
-        </li>
-      ))}
+                </div>
+              )}
+              {showStats && <PostStats post={post} userId={user.id} />}
+            </div>
+          </li>
+        );
+      })}
     </ul>
   );
 };
-
 export default GridPostList;

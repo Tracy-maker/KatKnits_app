@@ -72,7 +72,8 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
            } else if (user.needsPasswordReset) {
              navigate("/reset-password");
            }
-ƒ
+  
+          // Add additional conditions here as per your application requirements
         }
       }
   

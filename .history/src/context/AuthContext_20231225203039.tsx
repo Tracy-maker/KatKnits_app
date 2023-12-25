@@ -66,13 +66,14 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         if (!isAuthenticated) {
           navigate("/sign-in");
         } else {
-          
-           if (!user.emailVerified) {
-             navigate("/verify-email");
-           } else if (user.needsPasswordReset) {
-             navigate("/reset-password");
-           }
-ƒ
+          // Example: Redirect based on additional conditions
+          // if (!user.emailVerified) {
+          //   navigate("/verify-email");
+          // } else if (user.needsPasswordReset) {
+          //   navigate("/reset-password");
+          // }
+  
+          // Add additional conditions here as per your application requirements
         }
       }
   
