@@ -8,7 +8,6 @@ type ProfileUploaderProps = {
 };
 
 const ProfileUploader = ({ fieldChange, mediaUrl }: ProfileUploaderProps) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [file, setFile] = useState<File[]>([]);
   const [fileUrl, setFileUrl] = useState<string>(mediaUrl);
 
@@ -38,14 +37,11 @@ const ProfileUploader = ({ fieldChange, mediaUrl }: ProfileUploaderProps) => {
 
       <div className="cursor-pointer flex-center gap-4">
         <img
-          src={
-            fileUrl ||
-            "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="
-          }
+          src={fileUrl || "/assets/icons/profile-placeholder.svg"}
           alt="image"
           className="h-24 w-24 rounded-full object-cover object-top"
         />
-        <p className="text-primary-500 small-regular md:base-semibold">
+        <p className="text-primary-500 small-regular md:bbase-semibold">
           Change profile photo
         </p>
       </div>
