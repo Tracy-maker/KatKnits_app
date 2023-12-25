@@ -32,14 +32,14 @@ export type IUpdatePost = {
 };
 
 export type IUser = {
+  isEmailVerified?: boolean; // Optional property
+  isPasswordResetRequested?: boolean; // Optional property
   id: string;
   name: string;
   username: string;
   email: string;
   imageUrl: string;
   bio: string;
-  isEmailVerified?: boolean; 
-  isPasswordResetRequested?: boolean; 
 };
 
 export type INewUser = {

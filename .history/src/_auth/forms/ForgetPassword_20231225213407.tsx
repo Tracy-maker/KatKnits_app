@@ -15,7 +15,9 @@ const ForgetPassword: React.FC = () => {
   const history = useNavigate();
   const { handleSubmit, register } = useForm<PasswordFormData>();
 
-
+  const onSubmit = async (data: PasswordFormData) => {
+    console.log(data);
+  };
 
   const onSubmit = async (data: PasswordFormData) => {
     const urlParams = new URLSearchParams(window.location.search);
