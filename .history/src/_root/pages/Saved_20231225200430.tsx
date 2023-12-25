@@ -20,8 +20,8 @@ const Saved = () => {
       <div className="flex gap-2 w-full max-w-5xl">
         <img
           src="https://img.icons8.com/?size=64&id=42847&format=png"
-          width={60}
-          height={60}
+          width={67}
+          height={67}
           alt="edit"
         />
         <h2 className="h3-bold md:h2-bold text-left w-full">Saved Posts</h2>

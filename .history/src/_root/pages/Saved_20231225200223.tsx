@@ -26,11 +26,10 @@ const Saved = () => {
         />
         <h2 className="h3-bold md:h2-bold text-left w-full">Saved Posts</h2>
       </div>
-
       {!currentUser ? (
         <Loader />
       ) : (
-        <ul className="w-full flex justify-center max-w-5xl gap-9">
+        <ul className="w-ful flex justify-center max-w-5xl gap-9">
           {savePosts.length === 0 ? (
             <p className="text-light-4">No available posts</p>
           ) : (
