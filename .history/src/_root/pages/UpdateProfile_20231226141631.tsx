@@ -2,6 +2,7 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate, useParams } from "react-router-dom";
+
 import {
   Form,
   FormControl,
@@ -10,22 +11,22 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useToast } from "@/components/ui/use-toast";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 import { useUserContext } from "@/context/AuthContext";
-import { profileValidation } from "@/lib/validation";
 import {
   useGetUserById,
   useUpdateUser,
 } from "@/lib/react-query/queriesAndMutations";
+import { profileValidation } from "@/lib/validation";
+import { toast, useToast } from "react-toastify";
 import Loader from "@/components/shared/Loader";
-import ProfileUploader from "@/components/shared/ProfileUploader";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+import ProfileUploader from "@/components/shared/ProfileUploader";
 
 const UpdateProfile = () => {
-  const { toast } = useToast();
   const navigate = useNavigate();
   const { id } = useParams();
   const { user, setUser } = useUserContext();
@@ -40,29 +41,30 @@ const UpdateProfile = () => {
     },
   });
 
-  // Queries
   const { data: currentUser } = useGetUserById(id || "");
   const { mutateAsync: updateUser, isPending: isLoadingUpdate } =
     useUpdateUser();
 
-  if (!currentUser)
+  if (!currentUser) {
     return (
       <div className="flex-center w-full h-full">
         <Loader />
       </div>
     );
+  }
 
-  // Handler
-  const handleUpdate = async (value: z.infer<typeof profileValidation>) => {
+  // 2. Define a submit handler.
+  async function onSubmit(values: z.infer<typeof profileValidation>) {
     const updatedUser = await updateUser({
-      userId: currentUser.$id,
-      name: value.name,
-      bio: value.bio,
-      file: value.file,
-      imageUrl: currentUser.imageUrl,
-      imageId: currentUser.imageId,
+      userId: currentUser!.$id,
+      name: values.name,
+      bio: values.bio,
+      file: values.file,
+      imageUrl: currentUser?.imageUrl,
+      imageId: currentUser?.imageId,
     });
 
+   
     if (!updatedUser) {
       toast({
         title: `Update user failed. Please try again.`,
@@ -77,26 +79,24 @@ const UpdateProfile = () => {
     });
     return navigate(`/profile/${id}`);
   };
-
+}
   return (
     <div className="flex flex-1">
       <div className="common-container">
         <div className="flex-start gap-3 justify-start w-full max-w-5xl">
           <img
-            src="/assets/icons/edit.svg"
-            width={36}
-            height={36}
+            src="https://img.icons8.com/?size=80&id=38TErZI9R52x&format=png"
             alt="edit"
-            className="invert-white"
+            width={76}
+            height={76}
           />
           <h2 className="h3-bold md:h2-bold text-left w-full">Edit Profile</h2>
         </div>
 
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(handleUpdate)}
-            className="flex flex-col gap-7 w-full mt-4 max-w-5xl"
-          >
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-7 w-full mt-4 max-w-5xl">
             <FormField
               control={form.control}
               name="file"
@@ -186,15 +186,13 @@ const UpdateProfile = () => {
               <Button
                 type="button"
                 className="shad-button_dark_4"
-                onClick={() => navigate(-1)}
-              >
+                onClick={() => navigate(-1)}>
                 Cancel
               </Button>
               <Button
                 type="submit"
                 className="shad-button_primary whitespace-nowrap"
-                disabled={isLoadingUpdate}
-              >
+                disabled={isLoadingUpdate}>
                 {isLoadingUpdate && <Loader />}
                 Update Profile
               </Button>

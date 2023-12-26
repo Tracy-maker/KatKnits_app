@@ -12,15 +12,25 @@ import {
   useLocation,
   useParams,
 } from "react-router-dom";
-import { LikedPosts } from ".";
 
+
+interface StabBlockProps {
+  value: string | number;
+  label: string;
+}
+
+const StatBlock = ({ value, label }: StabBlockProps) => (
+  <div className="flex-center gap-2">
+    <p className="small-semibold lg:body-bold text-primary-500">{value}</p>
+    <p className="small-medium lg:base-medium text-light-2">{label}</p>
+  </div>
+);
 const Profile = () => {
   const { id } = useParams();
   const { user } = useUserContext();
   const { pathname } = useLocation();
 
   const { data: currentUser } = useGetUserById(id || "");
-
   if (!currentUser) {
     return (
       <div className="flex-center w-full h-full">
@@ -95,6 +105,7 @@ const Profile = () => {
               pathname === `/profile/${id}` && "!bg-dark-3"
             }`}
           >
+      
             <img
               src="https://img.icons8.com/?size=80&id=91IOJmdT5Vif&format=png"
               alt="posts"

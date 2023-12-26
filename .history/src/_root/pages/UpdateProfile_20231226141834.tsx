@@ -2,6 +2,7 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate, useParams } from "react-router-dom";
+
 import {
   Form,
   FormControl,
@@ -11,26 +12,20 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
+import { Textarea, Input, Button } from "@/components/ui";
+import { ProfileUploader, Loader } from "@/components/shared";
 
+import { ProfileValidation } from "@/lib/validation";
 import { useUserContext } from "@/context/AuthContext";
-import { profileValidation } from "@/lib/validation";
-import {
-  useGetUserById,
-  useUpdateUser,
-} from "@/lib/react-query/queriesAndMutations";
-import Loader from "@/components/shared/Loader";
-import ProfileUploader from "@/components/shared/ProfileUploader";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+import { useGetUserById, useUpdateUser } from "@/lib/react-query/queries";
 
 const UpdateProfile = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const { id } = useParams();
   const { user, setUser } = useUserContext();
-  const form = useForm<z.infer<typeof profileValidation>>({
-    resolver: zodResolver(profileValidation),
+  const form = useForm<z.infer<typeof ProfileValidation>>({
+    resolver: zodResolver(ProfileValidation),
     defaultValues: {
       file: [],
       name: user.name,
@@ -42,7 +37,7 @@ const UpdateProfile = () => {
 
   // Queries
   const { data: currentUser } = useGetUserById(id || "");
-  const { mutateAsync: updateUser, isPending: isLoadingUpdate } =
+  const { mutateAsync: updateUser, isLoading: isLoadingUpdate } =
     useUpdateUser();
 
   if (!currentUser)
@@ -53,7 +48,7 @@ const UpdateProfile = () => {
     );
 
   // Handler
-  const handleUpdate = async (value: z.infer<typeof profileValidation>) => {
+  const handleUpdate = async (value: z.infer<typeof ProfileValidation>) => {
     const updatedUser = await updateUser({
       userId: currentUser.$id,
       name: value.name,
@@ -95,8 +90,7 @@ const UpdateProfile = () => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleUpdate)}
-            className="flex flex-col gap-7 w-full mt-4 max-w-5xl"
-          >
+            className="flex flex-col gap-7 w-full mt-4 max-w-5xl">
             <FormField
               control={form.control}
               name="file"
@@ -186,15 +180,13 @@ const UpdateProfile = () => {
               <Button
                 type="button"
                 className="shad-button_dark_4"
-                onClick={() => navigate(-1)}
-              >
+                onClick={() => navigate(-1)}>
                 Cancel
               </Button>
               <Button
                 type="submit"
                 className="shad-button_primary whitespace-nowrap"
-                disabled={isLoadingUpdate}
-              >
+                disabled={isLoadingUpdate}>
                 {isLoadingUpdate && <Loader />}
                 Update Profile
               </Button>

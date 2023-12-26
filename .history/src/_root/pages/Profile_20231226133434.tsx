@@ -14,6 +14,7 @@ import {
 } from "react-router-dom";
 import { LikedPosts } from ".";
 
+
 const Profile = () => {
   const { id } = useParams();
   const { user } = useUserContext();
@@ -21,6 +22,7 @@ const Profile = () => {
 
   const { data: currentUser } = useGetUserById(id || "");
 
+  console.log(currentUser)
   if (!currentUser) {
     return (
       <div className="flex-center w-full h-full">
@@ -95,6 +97,7 @@ const Profile = () => {
               pathname === `/profile/${id}` && "!bg-dark-3"
             }`}
           >
+      
             <img
               src="https://img.icons8.com/?size=80&id=91IOJmdT5Vif&format=png"
               alt="posts"

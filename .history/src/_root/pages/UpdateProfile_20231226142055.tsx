@@ -2,6 +2,7 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate, useParams } from "react-router-dom";
+
 import {
   Form,
   FormControl,
@@ -42,7 +43,7 @@ const UpdateProfile = () => {
 
   // Queries
   const { data: currentUser } = useGetUserById(id || "");
-  const { mutateAsync: updateUser, isPending: isLoadingUpdate } =
+  const { mutateAsync: updateUser, isLoading: isLoadingUpdate } =
     useUpdateUser();
 
   if (!currentUser)
