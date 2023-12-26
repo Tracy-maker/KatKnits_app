@@ -29,15 +29,16 @@ const PostDetails = () => {
     navigate(-1);
   };
 
-  const filterUserPosts = (userPosts: UserPost[] | undefined, id: string | undefined) => {
-    if (!userPosts) {
-      return []; 
-    }
-    return userPosts.filter((userPost) => userPost.$id !== id);
-  };
-  
-  const relatedPosts = filterUserPosts(userPosts, id);
-  
+  const userPosts: UserPost[] | undefined = null* Initialize with data or set to undefined */;
+
+const filterUserPosts = (userPosts: UserPost[] | undefined, id: string | undefined) => {
+  if (!userPosts) {
+    return []; // Return an empty array when userPosts is undefined
+  }
+  return userPosts.filter((userPost) => userPost.$id !== id);
+};
+
+const relatedPosts = filterUserPosts(userPosts, id);
   return (
     <div className="post_details-container">
       <div className="hidden md:flex max-w-5xl w-full">

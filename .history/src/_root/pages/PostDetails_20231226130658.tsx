@@ -31,7 +31,7 @@ const PostDetails = () => {
 
   const filterUserPosts = (userPosts: UserPost[] | undefined, id: string | undefined) => {
     if (!userPosts) {
-      return []; 
+      return []; // Return an empty array when userPosts is undefined
     }
     return userPosts.filter((userPost) => userPost.$id !== id);
   };

@@ -3,17 +3,9 @@ import Loader from "@/components/shared/Loader";
 import PostStats from "@/components/shared/PostStats";
 import { Button } from "@/components/ui/button";
 import { useUserContext } from "@/context/AuthContext";
-import {
-  useDeletePost,
-  useGetPostById,
-  useGetUserPosts,
-} from "@/lib/react-query/queriesAndMutations";
+import { useDeletePost, useGetPostById, useGetUserPosts, } from "@/lib/react-query/queriesAndMutations";
 import { multiFormatDateString } from "@/lib/utils";
 import { Link, useNavigate, useParams } from "react-router-dom";
-
-interface UserPost {
-  $id: string | undefined;
-}
 
 const PostDetails = () => {
   const navigate = useNavigate();
@@ -25,19 +17,16 @@ const PostDetails = () => {
   );
   const { mutate: deletePost } = useDeletePost();
   const handleDeletePost = () => {
-    deletePost({ postId: id ?? "", imageId: post?.imageId });
+    deletePost({ postId: id ?? '', imageId: post?.imageId });
     navigate(-1);
   };
 
-  const filterUserPosts = (userPosts: UserPost[] | undefined, id: string | undefined) => {
-    if (!userPosts) {
-      return []; 
-    }
-    return userPosts.filter((userPost) => userPost.$id !== id);
-  };
-  
-  const relatedPosts = filterUserPosts(userPosts, id);
-  
+
+
+  const relatedPosts = userPosts?.documents.filter(
+    (userPost: { $id: string | undefined; }) => userPost.$id !== id
+  );
+
   return (
     <div className="post_details-container">
       <div className="hidden md:flex max-w-5xl w-full">

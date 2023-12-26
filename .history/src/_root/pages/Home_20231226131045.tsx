@@ -1,6 +1,5 @@
 import Loader from "@/components/shared/Loader";
 import PostCard from "@/components/shared/PostCard";
-import UserCard from "@/components/shared/UserCard";
 import { useGetRecentPosts, useGetUsers } from "@/lib/react-query/queriesAndMutations";
 import { Models } from "appwrite";
 
@@ -15,7 +14,7 @@ const Home = () => {
     isPending: isUserLoading,
     isError: isErrorCreators,
   } = useGetUsers(10);
-
+  
   if (isErrorPosts || isErrorCreators) {
     return (
       <div className="flex flex-1">
