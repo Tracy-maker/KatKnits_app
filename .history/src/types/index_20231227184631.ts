@@ -52,6 +52,9 @@ export type IUserIdentification = {
   username: string;
 };
 
+export type IRestPassword = {
+  id: string;
+};
 
 export type IContextType = {
   user: IUser;

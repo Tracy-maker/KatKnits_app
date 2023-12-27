@@ -1,7 +1,6 @@
 import { ID, Query } from "appwrite";
 import { appwriteConfig, account, databases, storage, avatars } from "./config";
 import { IUpdatePost, INewPost, INewUser, IUpdateUser } from "@/types";
-import { v4 as uuidv4 } from "uuid";
 
 export async function createUserAccount(user: INewUser) {
   try {
@@ -458,4 +457,36 @@ export async function updateUser(user: IUpdateUser) {
   } catch (error) {
     console.log(error);
   }
+}
+
+
+export async function generateResetPasswordToken(email: string): Promise<void> {
+  try {
+    function generateUniqueToken(length: number = 32): string {
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let token = '';
+    
+      for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        token += characters.charAt(randomIndex);
+      }
+    
+      return token;
+    }
+    const user = await getUserByEmail(email); // Get the user based on email
+    if (user) {
+      const resetPasswordToken: string = generateUniqueToken(); // Generate a unique reset password token
+      associateTokenWithUser(user.id, resetPasswordToken); // Associate the token with the user
+      sendResetPasswordEmail(email, resetPasswordToken); // Send an email containing the token
+    }
+  } catch (error) {
+    console.error('Error generating reset password token:', error);
+    // Handle the error as needed, e.g., return an error response or throw an exception
+  }
+}
+
+
+const sendResetPasswordEmail = (email: string, resetPasswordToken: string): void => {
+  const resetPasswordLink = `https://your-app-url/resetpassword?token=${resetPasswordToken}`;
+  // Send an email containing resetPasswordLink to the user
 }

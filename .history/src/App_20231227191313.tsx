@@ -17,6 +17,7 @@ import SignupForm from "./_auth/forms/SignupForm";
 import AuthLayout from "./_auth/AuthLayout";
 import RootLayout from "./_root/RootLayout";
 import { Toaster } from "@/components/ui/toaster";
+import ForgetPassword from "./_auth/forms/ResetPassword";
 import VerifyEmail from "./_auth/forms/VerifyEmail";
 import ResetPassword from "./_auth/forms/ResetPassword";
 

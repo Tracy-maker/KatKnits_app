@@ -11,7 +11,7 @@ type PasswordFormData = {
   repeatedPassword: string;
 };
 
-const ForgetPassword: React.FC = () => {
+const ResetPassword: React.FC = () => {
   const history = useNavigate();
   const { handleSubmit, register } = useForm<PasswordFormData>();
 
@@ -87,4 +87,4 @@ const ForgetPassword: React.FC = () => {
   );
 };
 
-export default ForgetPassword;
+export default ResetPassword;

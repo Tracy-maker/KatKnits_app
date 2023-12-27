@@ -52,6 +52,10 @@ export type IUserIdentification = {
   username: string;
 };
 
+export type IRestPassword = {
+  userId: string;
+  resetPasswordToken: string;
+};
 
 export type IContextType = {
   user: IUser;

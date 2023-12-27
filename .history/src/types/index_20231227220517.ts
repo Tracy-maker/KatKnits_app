@@ -52,7 +52,6 @@ export type IUserIdentification = {
   username: string;
 };
 
-
 export type IContextType = {
   user: IUser;
   isLoading: boolean;

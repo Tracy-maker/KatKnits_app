@@ -1,7 +1,13 @@
 import { ID, Query } from "appwrite";
-import { appwriteConfig, account, databases, storage, avatars } from "./config";
+import {
+  appwriteConfig,
+  account,
+  databases,
+  storage,
+  avatars,
+} from "./config";
 import { IUpdatePost, INewPost, INewUser, IUpdateUser } from "@/types";
-import { v4 as uuidv4 } from "uuid";
+
 
 export async function createUserAccount(user: INewUser) {
   try {
@@ -402,17 +408,18 @@ export async function getUserById(accountId: string) {
       appwriteConfig.userCollectionId,
       accountId
     );
-
+    
     if (!user) {
-      throw new Error("User not found");
+      throw new Error('User not found'); 
     }
 
     return user;
   } catch (error) {
-    console.error("Error fetching user:", error);
-    throw error;
+    console.error('Error fetching user:', error);
+    throw error; 
   }
 }
+
 
 export async function updateUser(user: IUpdateUser) {
   const hasFileToUpdate = user.file.length > 0;
@@ -459,3 +466,10 @@ export async function updateUser(user: IUpdateUser) {
     console.log(error);
   }
 }
+
+export async function generateResetPasswordToken(user:email){
+  
+}
+
+
+

@@ -17,8 +17,8 @@ import SignupForm from "./_auth/forms/SignupForm";
 import AuthLayout from "./_auth/AuthLayout";
 import RootLayout from "./_root/RootLayout";
 import { Toaster } from "@/components/ui/toaster";
+import ForgetPassword from "./_auth/forms/ResetPassword";
 import VerifyEmail from "./_auth/forms/VerifyEmail";
-import ResetPassword from "./_auth/forms/ResetPassword";
 
 const App = () => {
   return (
@@ -26,7 +26,7 @@ const App = () => {
       <Routes>
         <Route element={<AuthLayout />}>
           <Route path="/verify-email" element={<VerifyEmail />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/forget-password" element={<ResetPassword />} />
           <Route path="/sign-in" element={<SigninForm />} />
           <Route path="/sign-up" element={<SignupForm />} />
         </Route>
