@@ -406,17 +406,17 @@ export async function getUserById(accountId: string) {
     const user = await databases.getDocument(
       appwriteConfig.databaseId,
       appwriteConfig.userCollectionId,
-      accountId
+      userId
     );
     
     if (!user) {
-      throw new Error('User not found'); 
+      throw new Error('User not found'); // Throw a meaningful error if user is not found
     }
 
     return user;
   } catch (error) {
     console.error('Error fetching user:', error);
-    throw error; 
+    throw error; // Rethrow the error to propagate it to the caller
   }
 }
 

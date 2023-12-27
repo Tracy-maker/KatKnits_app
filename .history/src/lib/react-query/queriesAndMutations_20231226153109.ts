@@ -211,11 +211,11 @@ export const useGetUsers = (limit?: number) => {
   });
 };
 
-export const useGetUserById = (accountId: string) => {
+export const useGetUserById = (id: string) => {
   return useQuery({
-    queryKey: [QUERY_KEYS.GET_USER_BY_ID, accountId],
-    queryFn: () => getUserById(accountId),
-    enabled: !!accountId,
+    queryKey: [QUERY_KEYS.GET_USER_BY_ID, userId],
+    queryFn: () => getUserById(userId),
+    enabled: !!userId,
   });
 };
 
