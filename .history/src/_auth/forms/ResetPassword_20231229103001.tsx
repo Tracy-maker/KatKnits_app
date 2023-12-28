@@ -76,7 +76,7 @@ const ResetPassword: React.FC = () => {
             id="repeatedPassword"
           />
         </div>
-        <Button type="submit"  className="shad-button_primary">
+        <Button type="submit" className="btn-success">
           Change Password
         </Button>
       </form>

@@ -65,18 +65,18 @@ const ResetPassword: React.FC = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="repeatedPassword"  className="shad-form_label">
+          <label htmlFor="repeatedPassword" className="form-label">
             Repeat your new password:
           </label>
           <Input
             required
             type="password"
             {...register("repeatedPassword")}
-            className="shad-input"
+            className="form-control"
             id="repeatedPassword"
           />
         </div>
-        <Button type="submit"  className="shad-button_primary">
+        <Button type="submit" className="btn-success">
           Change Password
         </Button>
       </form>

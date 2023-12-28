@@ -33,50 +33,44 @@ const ResetPassword: React.FC = () => {
         toast.error("Failed to update password.");
       }
     } else {
-      toast.error(
-        "Both new password and the repeated password should be the same."
-      );
+      toast.error("Both new password and the repeated password should be the same.");
     }
   };
 
   return (
-    <div className="sm:w-420 flex-center flex-col">
-      <img
+    <div className="container-xl p-3 my-5 border">
+       <img
         className="h-2/6"
         src="https://i.ibb.co/6Yc7HG4/catlogo.png"
         alt="catlogo"
       />
-      <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12">Reset your password</h2>
-
-      <p className="text-light-3 small-medium md:base-regular mt-2">
-        Once you do, you're all set to go!
-      </p>
-      <form   className="flex flex-col gap-5 w-full mt-4" onSubmit={handleSubmit(handleResetPassword)}>
+      <h2 className="text-center">Reset your password</h2>
+      <form className="container" onSubmit={handleSubmit(handleResetPassword)}>
         <div className="mb-3">
-          <label htmlFor="newPassword" className="shad-form_label">
+          <label htmlFor="newPassword" className="form-label">
             Enter your new password:
           </label>
           <Input
             required
             type="password"
             {...register("newPassword")}
-            className="shad-input"
+            className="form-control"
             id="newPassword"
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="repeatedPassword"  className="shad-form_label">
+          <label htmlFor="repeatedPassword" className="form-label">
             Repeat your new password:
           </label>
           <Input
             required
             type="password"
             {...register("repeatedPassword")}
-            className="shad-input"
+            className="form-control"
             id="repeatedPassword"
           />
         </div>
-        <Button type="submit"  className="shad-button_primary">
+        <Button type="submit" className="btn-success">
           Change Password
         </Button>
       </form>
