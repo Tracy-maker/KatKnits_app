@@ -4,16 +4,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { useState } from "react";
 import { account } from "@/lib/appwrite/config";
-import { Link } from "react-router-dom";
-
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 
 const VerifyEmail: React.FC = () => {
   const { toast } = useToast();

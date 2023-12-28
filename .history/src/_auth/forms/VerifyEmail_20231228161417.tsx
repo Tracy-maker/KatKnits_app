@@ -5,7 +5,6 @@ import { ToastContainer, toast } from "react-toastify";
 import { useState } from "react";
 import { account } from "@/lib/appwrite/config";
 import { Link } from "react-router-dom";
-
 import {
   Form,
   FormControl,
@@ -14,7 +13,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
 const VerifyEmail: React.FC = () => {
   const { toast } = useToast();
   const navigate = useNavigate();

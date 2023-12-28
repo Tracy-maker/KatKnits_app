@@ -23,8 +23,8 @@ const ResetPassword: React.FC = () => {
     if (data.newPassword === data.repeatedPassword) {
       try {
         await account.updateRecovery(
-          userId ?? "",
-          secret ?? "",
+          userId,
+          secret,
           data.newPassword,
           data.repeatedPassword
         );

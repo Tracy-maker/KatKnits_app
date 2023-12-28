@@ -15,6 +15,8 @@ const ResetPassword: React.FC = () => {
   const history = useNavigate();
   const { handleSubmit, register } = useForm<PasswordFormData>();
 
+
+
   const onSubmit = async (data: PasswordFormData) => {
     const urlParams = new URLSearchParams(window.location.search);
     const userId = urlParams.get("userId");
@@ -34,9 +36,7 @@ const ResetPassword: React.FC = () => {
         toast.error("Failed to update password.");
       }
     } else {
-      toast.error(
-        "Both new password and the repeated password should be the same."
-      );
+      toast.error("Both new password and the repeated password should be the same.");
     }
   };
 

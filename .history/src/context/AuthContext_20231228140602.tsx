@@ -1,5 +1,5 @@
 import { getCurrentUser } from "@/lib/appwrite/api";
-import { IUser } from "@/types";
+import {  IUser } from "@/types";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -37,7 +37,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<IUser>(INITIAL_USER);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { token } = useParams();
+ const { token } = useParams();
 
   const checkAuthUser = async () => {
     setIsLoading(true);
@@ -74,9 +74,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       cookieFallback === undefined
     ) {
       navigate("/sign-in");
-    } else if (token) {
-      navigate("/reset-password");
+    } else if (token) {   
+      navigate('/reset-password');
     } else {
+    
       checkAuthUser();
     }
   }, [navigate, token]);
