@@ -460,4 +460,36 @@ export async function updateUser(user: IUpdateUser) {
   }
 }
 
+export async function getUserByEmail(email: string): Promise<any> {
+  try {
+    const collectionId = appwriteConfig.userCollectionId;
+
+    // Assuming the filters are provided as separate string queries
+    const result = await databases.listDocuments(collectionId, `email=${email}`);
+
+    if (result.documents.length > 0) {
+      return result.documents[0];
+    } else {
+      throw new Error('User not found');
+    }
+  } catch (error) {
+    console.error('Error fetching user by email:', error);
+    throw error;
+  }
+}
+
+export async function generateResetPasswordToken(email: string): Promise<void> {
+  try {
+    const user = await getUserByEmail(email);
+
+    if (user) {
+      const resetPasswordToken: string = uuidv4();
+      associateTokenWithUser(user.id, resetPasswordToken);
+      await sendResetPasswordEmail(email, resetPasswordToken);
+    }
+  } catch (error) {
+    console.error('Error generating reset password token:', error);
+    // Handle the error as needed, e.g., return an error response or throw an exception
+  }
+}
 

@@ -75,7 +75,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       cookieFallback === undefined
     ) {
       navigate("/sign-in");
-    } else if (token) {   
+    } else if (token) {
+      // Set the reset password mode to true and navigate to the reset-password page
+     
       navigate('/reset-password');
     } else {
       // User is authenticated, so you can proceed

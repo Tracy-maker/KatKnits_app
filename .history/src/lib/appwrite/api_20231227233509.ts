@@ -1,7 +1,7 @@
 import { ID, Query } from "appwrite";
 import { appwriteConfig, account, databases, storage, avatars } from "./config";
 import { IUpdatePost, INewPost, INewUser, IUpdateUser } from "@/types";
-import { v4 as uuidv4 } from "uuid";
+
 
 export async function createUserAccount(user: INewUser) {
   try {
@@ -459,5 +459,3 @@ export async function updateUser(user: IUpdateUser) {
     console.log(error);
   }
 }
-
-

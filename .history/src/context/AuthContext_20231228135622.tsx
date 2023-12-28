@@ -1,7 +1,7 @@
 import { getCurrentUser } from "@/lib/appwrite/api";
 import {  IUser } from "@/types";
 import { createContext, useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const INITIAL_USER = {
   id: "",
@@ -37,7 +37,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<IUser>(INITIAL_USER);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
- 
+  const [isResetPasswordMode, setIsResetPasswordMode] = useState(false);
   const { token } = useParams();
 
   const checkAuthUser = async () => {
@@ -75,13 +75,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       cookieFallback === undefined
     ) {
       navigate("/sign-in");
-    } else if (token) {   
+    } else if (/* Add your condition to check if in reset password mode */) {
+      // Set the reset password mode to true and navigate to the reset-password page
+      setIsResetPasswordMode(true);
       navigate('/reset-password');
     } else {
       // User is authenticated, so you can proceed
-      checkAuthUser();
-    }
-  }, [navigate, token]);
+      checkAuthUser();}
+  }, []);
 
   const value = {
     user,

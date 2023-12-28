@@ -37,7 +37,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<IUser>(INITIAL_USER);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
- 
+  const [isResetPasswordMode, setIsResetPasswordMode] = useState(false);
   const { token } = useParams();
 
   const checkAuthUser = async () => {
@@ -75,7 +75,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       cookieFallback === undefined
     ) {
       navigate("/sign-in");
-    } else if (token) {   
+    } else if (token) {
+      // Set the reset password mode to true and navigate to the reset-password page
+      setIsResetPasswordMode(true);
       navigate('/reset-password');
     } else {
       // User is authenticated, so you can proceed
