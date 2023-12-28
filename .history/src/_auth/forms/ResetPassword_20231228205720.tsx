@@ -12,7 +12,7 @@ type PasswordFormData = {
 
 const ResetPassword: React.FC = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm<PasswordFormData>();
+  const { register, handleSubmit, watch, formState: { errors } } = useForm<PasswordFormData>();
 
   const changePassword = async (data: PasswordFormData) => {
     const urlParams = new URLSearchParams(window.location.search);

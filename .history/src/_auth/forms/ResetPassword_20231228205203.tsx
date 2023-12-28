@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { account } from "@/lib/appwrite/config";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 type PasswordFormData = {
   newPassword: string;
@@ -12,25 +13,27 @@ type PasswordFormData = {
 
 const ResetPassword: React.FC = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm<PasswordFormData>();
+  const [password, setPassword] = useState<PasswordFormData>({
+    newPassword: "",
+    repeatedPassword: "",
+  });
 
-  const changePassword = async (data: PasswordFormData) => {
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+   e.preventDefault();
     const urlParams = new URLSearchParams(window.location.search);
     const userId = urlParams.get("userId");
     const secret = urlParams.get("secret");
 
-    if (data.newPassword === data.repeatedPassword) {
-      try {
-        await account.updateRecovery(
-          userId ?? "",
-          secret ?? "",
-          data.newPassword,
-          data.repeatedPassword
-        );
+    if (password.newPassword === password.repeatedPassword) {
+      await account.updateRecovery(
+        userId ?? "", // Using nullish coalescing to ensure string type
+        secret ?? "",
+        password.newPassword,
+        password.repeatedPassword
+      );
         navigate("/sign-in");
-      } catch (error) {
-        toast.error("Failed to update password.");
-      }
+    
     } else {
       toast.error(
         "Both new password and the repeated password should be the same."
@@ -41,12 +44,12 @@ const ResetPassword: React.FC = () => {
   return (
     <div className="container-xl p-3 my-5 border">
       <h2 className="text-center">Reset your password</h2>
-      <form className="container" onSubmit={handleSubmit(changePassword)}>
+      <form className="container" onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-3">
           <label htmlFor="newPassword" className="form-label">
             Enter your new password:
           </label>
-          <input
+          <Input
             required
             type="password"
             {...register("newPassword")}
@@ -58,7 +61,7 @@ const ResetPassword: React.FC = () => {
           <label htmlFor="repeatedPassword" className="form-label">
             Repeat your new password:
           </label>
-          <input
+          <Input
             required
             type="password"
             {...register("repeatedPassword")}

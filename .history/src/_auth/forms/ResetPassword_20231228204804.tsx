@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { account } from "@/lib/appwrite/config";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 type PasswordFormData = {
   newPassword: string;
@@ -12,9 +13,13 @@ type PasswordFormData = {
 
 const ResetPassword: React.FC = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm<PasswordFormData>();
+  const [password, repeatedPassword] = useState<PasswordFormData>({
+    newPassword: "",
+    repeatedPassword: "",
+  });
+  const { handleSubmit, register } = useForm<PasswordFormData>();
 
-  const changePassword = async (data: PasswordFormData) => {
+  const onSubmit = async (data: PasswordFormData) => {
     const urlParams = new URLSearchParams(window.location.search);
     const userId = urlParams.get("userId");
     const secret = urlParams.get("secret");
@@ -29,6 +34,7 @@ const ResetPassword: React.FC = () => {
         );
         navigate("/sign-in");
       } catch (error) {
+        console.error("Error updating password:", error);
         toast.error("Failed to update password.");
       }
     } else {
@@ -41,12 +47,12 @@ const ResetPassword: React.FC = () => {
   return (
     <div className="container-xl p-3 my-5 border">
       <h2 className="text-center">Reset your password</h2>
-      <form className="container" onSubmit={handleSubmit(changePassword)}>
+      <form className="container" onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-3">
           <label htmlFor="newPassword" className="form-label">
             Enter your new password:
           </label>
-          <input
+          <Input
             required
             type="password"
             {...register("newPassword")}
@@ -58,7 +64,7 @@ const ResetPassword: React.FC = () => {
           <label htmlFor="repeatedPassword" className="form-label">
             Repeat your new password:
           </label>
-          <input
+          <Input
             required
             type="password"
             {...register("repeatedPassword")}
