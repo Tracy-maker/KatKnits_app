@@ -48,10 +48,9 @@ const VerifyEmail: React.FC = () => {
             name="email"
             required
             id="emailInput"
-            className="shad-input"
           />
         </div>
-        <Button type="submit" className="shad-button_primary">
+        <Button type="submit" className="btn-primary">
           Reset password
         </Button>
       </form>

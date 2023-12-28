@@ -51,7 +51,7 @@ const VerifyEmail: React.FC = () => {
             className="shad-input"
           />
         </div>
-        <Button type="submit" className="shad-button_primary">
+        <Button type="submit" className="btn-primary">
           Reset password
         </Button>
       </form>

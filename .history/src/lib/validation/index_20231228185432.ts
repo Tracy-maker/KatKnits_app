@@ -42,6 +42,12 @@ export const ResetPasswordValidation = z
     path: ["repeatNewPassword"],
   });
 
+// Verify that the email
+export const ValidEmail = z.object({
+  email: z.string()
+    .email({ message: "Invalid email address" })
+    .regex(/\.com$/, { message: "Email must end with .com" }),
+});
 
 // profileValidation
 export const profileValidation = z.object({

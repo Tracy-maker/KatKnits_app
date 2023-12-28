@@ -32,15 +32,12 @@ const VerifyEmail: React.FC = () => {
         Verify your Email address
       </h2>
       <p className="text-light-3 small-medium md:base-regular mt-2">
-        Once you do, you're all set to go!
+      Once you do, you're all set to go!
       </p>
-      <form
-        onSubmit={forgetPassword}
-        className="flex flex-col gap-5 w-full mt-4"
-      >
+      <form onSubmit={forgetPassword} className="container">
         <div className="mb-3">
-          <label htmlFor="emailInput" className="shad-form_label">
-            Enter your Email
+          <label htmlFor="emailInput" className="form-label">
+            Enter your email
           </label>
           <Input
             onChange={(e) => setUserEmail(e.target.value)}
@@ -48,10 +45,9 @@ const VerifyEmail: React.FC = () => {
             name="email"
             required
             id="emailInput"
-            className="shad-input"
           />
         </div>
-        <Button type="submit" className="shad-button_primary">
+        <Button type="submit" className="btn-primary">
           Reset password
         </Button>
       </form>

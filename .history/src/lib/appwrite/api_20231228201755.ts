@@ -460,21 +460,15 @@ export async function updateUser(user: IUpdateUser) {
   }
 }
 
-export const isEmailRegistered = async (email: string) => {
+export async function isEmailRegistered(email: string): Promise<boolean> {
   try {
-    const collectionId = appwriteConfig.userCollectionId;
-
-    // Ensure collectionId is correctly retrieved
-    if (!collectionId) {
-      throw new Error("Collection ID is not set in the configuration.");
-    }
-
-    const query = `email=${encodeURIComponent(email)}`;
-    const result = await databases.listDocuments(collectionId, [query]);
-
+    // 假设 'userCollectionId' 是存储用户邮箱的集合ID
+    const result = await databases.listDocuments(appwriteConfig.userCollectionId, [
+      `email=${email}`,
+    ]);
     return result.documents.length > 0;
   } catch (error) {
     console.error('Error checking email registration:', error);
     return false;
   }
-};
+}

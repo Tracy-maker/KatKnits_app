@@ -460,21 +460,4 @@ export async function updateUser(user: IUpdateUser) {
   }
 }
 
-export const isEmailRegistered = async (email: string) => {
-  try {
-    const collectionId = appwriteConfig.userCollectionId;
 
-    // Ensure collectionId is correctly retrieved
-    if (!collectionId) {
-      throw new Error("Collection ID is not set in the configuration.");
-    }
-
-    const query = `email=${encodeURIComponent(email)}`;
-    const result = await databases.listDocuments(collectionId, [query]);
-
-    return result.documents.length > 0;
-  } catch (error) {
-    console.error('Error checking email registration:', error);
-    return false;
-  }
-};

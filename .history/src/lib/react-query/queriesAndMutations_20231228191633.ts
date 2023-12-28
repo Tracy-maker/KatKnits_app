@@ -238,3 +238,10 @@ export const useUpdateUser = () => {
 };
 
 
+export const useIsEmailRegistered = (email: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_USER_BY_ID, accountId],
+    queryFn: () => isEmailRegistered(accountId),
+    enabled: !!accountId,
+  });
+};
