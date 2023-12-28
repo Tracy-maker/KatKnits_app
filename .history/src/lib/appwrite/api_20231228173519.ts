@@ -468,8 +468,7 @@ export async function isEmailRegistered(email: string): Promise<boolean> {
       query
     );
     return result.documents.length > 0;
-  } catch (error) {
-    console.error("Error checking email registration:", error);
+    console.error('Error checking email registration:', error);
     return false;
   }
-}
+};

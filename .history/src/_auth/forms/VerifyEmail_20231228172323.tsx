@@ -35,6 +35,7 @@ const VerifyEmail: React.FC = () => {
   async function onSubmit(values: z.infer<typeof ValidEmail>) {
     const session = await signInAccount({
       email: values.email,
+      password: values.password,
     });
     if (!session) {
       toast({ title: "Sign up failed. Please try again." });

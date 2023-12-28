@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import "react-toastify/dist/ReactToastify.css";
-import { useToast } from "react-toastify";
+import { ToastContainer, toast, useToast } from "react-toastify";
+import { useState } from "react";
+import { account } from "@/lib/appwrite/config";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import {
   Form,
   FormControl,
@@ -13,8 +14,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { ValidEmail } from "@/lib/validation";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 const VerifyEmail: React.FC = () => {
   const { toast } = useToast();
@@ -22,19 +21,22 @@ const VerifyEmail: React.FC = () => {
 
   const { mutateAsync: signInAccount } = useSignInAccount();
 
+  const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
 
   // 1. Define your form.
-  const form = useForm<z.infer<typeof ValidEmail>>({
-    resolver: zodResolver(ValidEmail),
+  const form = useForm<z.infer<typeof SigninValidation>>({
+    resolver: zodResolver(SigninValidation),
     defaultValues: {
       email: "",
+      password: "",
     },
   });
 
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof ValidEmail>) {
+  async function onSubmit(values: z.infer<typeof SigninValidation>) {
     const session = await signInAccount({
       email: values.email,
+      password: values.password,
     });
     if (!session) {
       toast({ title: "Sign up failed. Please try again." });

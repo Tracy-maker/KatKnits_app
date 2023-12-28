@@ -32,9 +32,10 @@ const VerifyEmail: React.FC = () => {
   });
 
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof ValidEmail>) {
+  async function onSubmit(values: z.infer<typeof SigninValidation>) {
     const session = await signInAccount({
       email: values.email,
+      password: values.password,
     });
     if (!session) {
       toast({ title: "Sign up failed. Please try again." });

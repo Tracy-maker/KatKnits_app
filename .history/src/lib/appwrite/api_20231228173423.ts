@@ -464,12 +464,7 @@ export async function isEmailRegistered(email: string): Promise<boolean> {
   try {
     const query = `email=${email}`;
     const result = await databases.listDocuments(
-      appwriteConfig.userCollectionId,
-      query
-    );
-    return result.documents.length > 0;
-  } catch (error) {
-    console.error("Error checking email registration:", error);
-    return false;
-  }
+      appwriteConfig.userCollectionId,query
+    )
+  } catch (error) {}
 }
