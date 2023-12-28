@@ -13,7 +13,7 @@ type PasswordFormData = {
 
 const ResetPassword: React.FC = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm<PasswordFormData>();
+  const { register, handleSubmit, watch, formState: { errors } } = useForm<PasswordFormData>();
 
   const handleResetPassword = async (data: PasswordFormData) => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -23,7 +23,7 @@ const ResetPassword: React.FC = () => {
     if (data.newPassword === data.repeatedPassword) {
       try {
         await account.updateRecovery(
-          userId ?? "",
+          userId ?? "", // Using nullish coalescing to ensure string type
           secret ?? "",
           data.newPassword,
           data.repeatedPassword

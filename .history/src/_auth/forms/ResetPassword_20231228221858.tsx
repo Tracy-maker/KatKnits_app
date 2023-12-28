@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { account } from "@/lib/appwrite/config";
 import { toast, ToastContainer } from "react-toastify";
@@ -13,34 +13,36 @@ type PasswordFormData = {
 
 const ResetPassword: React.FC = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm<PasswordFormData>();
+  const [password, setPassword] = useState<PasswordFormData>({
+    newPassword: "",
+    repeatedPassword: "",
+  });
 
-  const handleResetPassword = async (data: PasswordFormData) => {
+  const handleResetPassword = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const urlParams = new URLSearchParams(window.location.search);
     const userId = urlParams.get("userId");
     const secret = urlParams.get("secret");
 
-    if (data.newPassword === data.repeatedPassword) {
-      try {
-        await account.updateRecovery(
-          userId ?? "",
-          secret ?? "",
-          data.newPassword,
-          data.repeatedPassword
-        );
-        navigate("/sign-in");
-      } catch (error) {
-        toast.error("Failed to update password.");
-      }
+    if (password.newPassword === password.repeatedPassword) {
+      await account.updateRecovery(
+        userId ?? "", // Using nullish coalescing to ensure string type
+        secret ?? "",
+        password.newPassword,
+        password.repeatedPassword
+      );
+      navigate("/sign-in");
     } else {
-      toast.error("Both new password and the repeated password should be the same.");
+      toast.error(
+        "Both new password and the repeated password should be the same."
+      );
     }
   };
 
   return (
     <div className="container-xl p-3 my-5 border">
       <h2 className="text-center">Reset your password</h2>
-      <form className="container" onSubmit={handleSubmit(handleResetPassword)}>
+      <form className="container" onSubmit={handleResetPassword}>
         <div className="mb-3">
           <label htmlFor="newPassword" className="form-label">
             Enter your new password:
