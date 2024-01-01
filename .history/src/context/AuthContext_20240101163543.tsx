@@ -62,37 +62,39 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } finally {
       setIsLoading(false);
     }
-  }, [setUser, setIsAuthenticated, getCurrentUser]); 
+  }, [setUser, setIsAuthenticated, getCurrentUser]); // 添加这些函数和状态作为依赖项
   
 
   useEffect(() => {
     async function handleAuthentication() {
-
-      const currentPath = window.location.pathname;
-  
-      
-      if (currentPath.includes("/sign-in") || currentPath.includes("/sign-up") || currentPath.includes("/verify-email")) {
+      // 只在特定页面执行认证状态检查
+      const path = window.location.pathname;
+      if (path === "/sign-up" || path === "/verify-email") {
+        // 如果用户在尝试访问注册或验证邮箱页面，不执行重定向
         return;
       }
   
       const cookieFallback = localStorage.getItem("cookieFallback");
-    
-      if (!cookieFallback || cookieFallback === "[]") {
+  
+      // 如果没有 cookieFallback 或者它为空，且不在登录页面，则重定向到登录页面
+      if ((!cookieFallback || cookieFallback === "[]") && path !== "/sign-in") {
         navigate("/sign-in");
         return;
       }
-    
+  
+      // 如果有 token 参数，重定向到密码重置页面
       if (token) {
         navigate("/reset-password");
         return;
       }
-    
+  
+      // 执行用户认证状态检查
       const isAuthenticated = await checkAuthUser();
-      if (!isAuthenticated) {
+      if (!isAuthenticated && path !== "/sign-in") {
         navigate("/sign-in");
       }
     }
-    
+  
     handleAuthentication();
   }, [navigate, token, checkAuthUser]);
   

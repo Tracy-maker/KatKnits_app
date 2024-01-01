@@ -62,39 +62,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } finally {
       setIsLoading(false);
     }
-  }, [setUser, setIsAuthenticated, getCurrentUser]); 
+  }, [setUser, setIsAuthenticated, getCurrentUser]); // 添加这些函数和状态作为依赖项
   
 
   useEffect(() => {
     async function handleAuthentication() {
-
-      const currentPath = window.location.pathname;
-  
-      
-      if (currentPath.includes("/sign-in") || currentPath.includes("/sign-up") || currentPath.includes("/verify-email")) {
-        return;
-      }
-  
       const cookieFallback = localStorage.getItem("cookieFallback");
-    
+  
       if (!cookieFallback || cookieFallback === "[]") {
         navigate("/sign-in");
         return;
       }
-    
+  
       if (token) {
         navigate("/reset-password");
         return;
       }
-    
-      const isAuthenticated = await checkAuthUser();
-      if (!isAuthenticated) {
-        navigate("/sign-in");
-      }
+  
+      await checkAuthUser();
     }
-    
+  
     handleAuthentication();
-  }, [navigate, token, checkAuthUser]);
+  }, [navigate, token, checkAuthUser]); // 现在 checkAuthUser 作为一个稳定的依赖项
   
   
 

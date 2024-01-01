@@ -1,6 +1,6 @@
 import { getCurrentUser } from "@/lib/appwrite/api";
 import { IUser } from "@/types";
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 export const INITIAL_USER = {
@@ -39,7 +39,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(false);
   const { token } = useParams();
 
-  const checkAuthUser = useCallback(async () => {
+  const checkAuthUser = async () => {
     setIsLoading(true);
     try {
       const currentAccount = await getCurrentUser();
@@ -53,8 +53,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           bio: currentAccount.bio,
         });
         setIsAuthenticated(true);
+
         return true;
       }
+
       return false;
     } catch (error) {
       console.error(error);
@@ -62,40 +64,43 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } finally {
       setIsLoading(false);
     }
-  }, [setUser, setIsAuthenticated, getCurrentUser]); 
-  
+  };
 
   useEffect(() => {
-    async function handleAuthentication() {
-
-      const currentPath = window.location.pathname;
+    async function handleNavigation() {
+      setIsLoading(true);
   
-      
-      if (currentPath.includes("/sign-in") || currentPath.includes("/sign-up") || currentPath.includes("/verify-email")) {
-        return;
-      }
-  
+      // 检查 localStorage 中的 cookieFallback
       const cookieFallback = localStorage.getItem("cookieFallback");
-    
       if (!cookieFallback || cookieFallback === "[]") {
+        setIsLoading(false);
         navigate("/sign-in");
-        return;
+        return; // 如果 cookieFallback 不存在或为空，重定向到登录页面并结束函数
       }
-    
+  
+      // 检查 URL 中的 token
       if (token) {
+        setIsLoading(false);
         navigate("/reset-password");
-        return;
+        return; // 如果存在 token，重定向到重置密码页面并结束函数
       }
-    
-      const isAuthenticated = await checkAuthUser();
-      if (!isAuthenticated) {
+  
+      // 检查用户认证状态
+      try {
+        const isAuthenticated = await checkAuthUser();
+        if (!isAuthenticated) {
+          navigate("/sign-in");
+        }
+      } catch (error) {
+        console.error(error);
         navigate("/sign-in");
+      } finally {
+        setIsLoading(false);
       }
     }
-    
-    handleAuthentication();
-  }, [navigate, token, checkAuthUser]);
   
+    handleNavigation();
+  }, [navigate, token]); // 移除 checkAuthUser 从依赖项，因为它可能不会改变
   
 
   const value = {

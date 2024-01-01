@@ -1,6 +1,6 @@
 import { getCurrentUser } from "@/lib/appwrite/api";
 import { IUser } from "@/types";
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 export const INITIAL_USER = {
@@ -39,7 +39,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(false);
   const { token } = useParams();
 
-  const checkAuthUser = useCallback(async () => {
+  const checkAuthUser = async () => {
     setIsLoading(true);
     try {
       const currentAccount = await getCurrentUser();
@@ -53,8 +53,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           bio: currentAccount.bio,
         });
         setIsAuthenticated(true);
+
         return true;
       }
+
       return false;
     } catch (error) {
       console.error(error);
@@ -62,40 +64,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } finally {
       setIsLoading(false);
     }
-  }, [setUser, setIsAuthenticated, getCurrentUser]); 
-  
+  };
 
   useEffect(() => {
-    async function handleAuthentication() {
-
-      const currentPath = window.location.pathname;
-  
-      
-      if (currentPath.includes("/sign-in") || currentPath.includes("/sign-up") || currentPath.includes("/verify-email")) {
-        return;
-      }
-  
+    async function validateAndNavigate() {
       const cookieFallback = localStorage.getItem("cookieFallback");
-    
+  
+      // 如果 cookieFallback 不存在或为空，重定向到登录页面
       if (!cookieFallback || cookieFallback === "[]") {
         navigate("/sign-in");
-        return;
-      }
-    
-      if (token) {
-        navigate("/reset-password");
-        return;
-      }
-    
-      const isAuthenticated = await checkAuthUser();
-      if (!isAuthenticated) {
-        navigate("/sign-in");
+      } else {
+        // 如果 URL 中包含 token，重定向到重置密码页面
+        if (token) {
+          navigate("/reset-password");
+        } else {
+          // 否则，检查用户的认证状态
+          const isAuthenticated = await checkAuthUser();
+          if (!isAuthenticated) {
+            navigate("/sign-in");
+          }
+        }
       }
     }
-    
-    handleAuthentication();
-  }, [navigate, token, checkAuthUser]);
   
+    validateAndNavigate();
+  }, [navigate, token, checkAuthUser]); // 添加 checkAuthUser 到依赖数组
   
 
   const value = {

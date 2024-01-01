@@ -1,6 +1,6 @@
 import { getCurrentUser } from "@/lib/appwrite/api";
 import { IUser } from "@/types";
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 export const INITIAL_USER = {
@@ -39,7 +39,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(false);
   const { token } = useParams();
 
-  const checkAuthUser = useCallback(async () => {
+  const checkAuthUser = async () => {
     setIsLoading(true);
     try {
       const currentAccount = await getCurrentUser();
@@ -53,8 +53,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           bio: currentAccount.bio,
         });
         setIsAuthenticated(true);
+
         return true;
       }
+
       return false;
     } catch (error) {
       console.error(error);
@@ -62,40 +64,38 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } finally {
       setIsLoading(false);
     }
-  }, [setUser, setIsAuthenticated, getCurrentUser]); 
-  
+  };
 
   useEffect(() => {
     async function handleAuthentication() {
-
-      const currentPath = window.location.pathname;
+      setIsLoading(true);
   
-      
-      if (currentPath.includes("/sign-in") || currentPath.includes("/sign-up") || currentPath.includes("/verify-email")) {
-        return;
-      }
-  
+      // 检查 localStorage 中的 cookieFallback
       const cookieFallback = localStorage.getItem("cookieFallback");
-    
-      if (!cookieFallback || cookieFallback === "[]") {
-        navigate("/sign-in");
-        return;
-      }
-    
-      if (token) {
-        navigate("/reset-password");
-        return;
-      }
-    
-      const isAuthenticated = await checkAuthUser();
-      if (!isAuthenticated) {
-        navigate("/sign-in");
-      }
-    }
-    
-    handleAuthentication();
-  }, [navigate, token, checkAuthUser]);
   
+      // 如果 cookieFallback 存在且不为空，尝试验证用户
+      if (cookieFallback && cookieFallback !== "[]") {
+        try {
+          const isAuthenticated = await checkAuthUser();
+          if (!isAuthenticated) {
+            navigate("/sign-in");
+          }
+        } catch (error) {
+          console.error(error);
+          navigate("/sign-in");
+        }
+      } else {
+        // 如果 cookieFallback 不存在或为空，且当前不在登录页面，重定向到登录页面
+        if (!window.location.pathname.includes("sign-in")) {
+          navigate("/sign-in");
+        }
+      }
+  
+      setIsLoading(false);
+    }
+  
+    handleAuthentication();
+  }, [navigate, checkAuthUser]);
   
 
   const value = {

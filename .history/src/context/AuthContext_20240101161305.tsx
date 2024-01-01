@@ -1,6 +1,6 @@
 import { getCurrentUser } from "@/lib/appwrite/api";
 import { IUser } from "@/types";
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 export const INITIAL_USER = {
@@ -37,9 +37,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<IUser>(INITIAL_USER);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { token } = useParams();
+  // const { token } = useParams();
 
-  const checkAuthUser = useCallback(async () => {
+  const checkAuthUser = async () => {
     setIsLoading(true);
     try {
       const currentAccount = await getCurrentUser();
@@ -53,8 +53,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           bio: currentAccount.bio,
         });
         setIsAuthenticated(true);
+
         return true;
       }
+
       return false;
     } catch (error) {
       console.error(error);
@@ -62,41 +64,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } finally {
       setIsLoading(false);
     }
-  }, [setUser, setIsAuthenticated, getCurrentUser]); 
-  
+  };
 
   useEffect(() => {
-    async function handleAuthentication() {
-
-      const currentPath = window.location.pathname;
-  
-      
-      if (currentPath.includes("/sign-in") || currentPath.includes("/sign-up") || currentPath.includes("/verify-email")) {
-        return;
-      }
-  
-      const cookieFallback = localStorage.getItem("cookieFallback");
+    const cookieFallback = localStorage.getItem("cookieFallback");
+    if (
+      cookieFallback === "[]" ||
+      cookieFallback === null ||
+      cookieFallback === undefined
+    ) {
+      navigate("/sign-in");
+    // } else if (token) {
+    //   navigate("/reset-password");
+    } 
+      checkAuthUser();
     
-      if (!cookieFallback || cookieFallback === "[]") {
-        navigate("/sign-in");
-        return;
-      }
-    
-      if (token) {
-        navigate("/reset-password");
-        return;
-      }
-    
-      const isAuthenticated = await checkAuthUser();
-      if (!isAuthenticated) {
-        navigate("/sign-in");
-      }
-    }
-    
-    handleAuthentication();
-  }, [navigate, token, checkAuthUser]);
-  
-  
+  }, [navigate]);
 
   const value = {
     user,

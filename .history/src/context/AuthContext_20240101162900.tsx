@@ -62,40 +62,39 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } finally {
       setIsLoading(false);
     }
-  }, [setUser, setIsAuthenticated, getCurrentUser]); 
+  }, []); // 添加必要的依赖项，如果没有则保留空数组
   
 
   useEffect(() => {
     async function handleAuthentication() {
-
-      const currentPath = window.location.pathname;
+      setIsLoading(true);
   
-      
-      if (currentPath.includes("/sign-in") || currentPath.includes("/sign-up") || currentPath.includes("/verify-email")) {
-        return;
-      }
-  
+      // 检查 localStorage 中的 cookieFallback
       const cookieFallback = localStorage.getItem("cookieFallback");
-    
-      if (!cookieFallback || cookieFallback === "[]") {
-        navigate("/sign-in");
-        return;
-      }
-    
-      if (token) {
-        navigate("/reset-password");
-        return;
-      }
-    
-      const isAuthenticated = await checkAuthUser();
-      if (!isAuthenticated) {
-        navigate("/sign-in");
-      }
-    }
-    
-    handleAuthentication();
-  }, [navigate, token, checkAuthUser]);
   
+      // 如果 cookieFallback 存在且不为空，尝试验证用户
+      if (cookieFallback && cookieFallback !== "[]") {
+        try {
+          const isAuthenticated = await checkAuthUser();
+          if (!isAuthenticated) {
+            navigate("/sign-in");
+          }
+        } catch (error) {
+          console.error(error);
+          navigate("/sign-in");
+        }
+      } else {
+        // 如果 cookieFallback 不存在或为空，且当前不在登录页面，重定向到登录页面
+        if (!window.location.pathname.includes("sign-in")) {
+          navigate("/sign-in");
+        }
+      }
+  
+      setIsLoading(false);
+    }
+  
+    handleAuthentication();
+  }, [navigate, checkAuthUser]);
   
 
   const value = {

@@ -1,6 +1,6 @@
 import { getCurrentUser } from "@/lib/appwrite/api";
 import { IUser } from "@/types";
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 export const INITIAL_USER = {
@@ -39,7 +39,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(false);
   const { token } = useParams();
 
-  const checkAuthUser = useCallback(async () => {
+  const checkAuthUser = async () => {
     setIsLoading(true);
     try {
       const currentAccount = await getCurrentUser();
@@ -53,8 +53,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           bio: currentAccount.bio,
         });
         setIsAuthenticated(true);
+
         return true;
       }
+
       return false;
     } catch (error) {
       console.error(error);
@@ -62,42 +64,34 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } finally {
       setIsLoading(false);
     }
-  }, [setUser, setIsAuthenticated, getCurrentUser]); 
-  
+  };
 
   useEffect(() => {
-    async function handleAuthentication() {
-
-      const currentPath = window.location.pathname;
-  
-      
-      if (currentPath.includes("/sign-in") || currentPath.includes("/sign-up") || currentPath.includes("/verify-email")) {
-        return;
-      }
-  
+    async function validateAuthentication() {
       const cookieFallback = localStorage.getItem("cookieFallback");
-    
+  
+      // 如果 cookieFallback 为空，重定向到登录页面
       if (!cookieFallback || cookieFallback === "[]") {
         navigate("/sign-in");
-        return;
+        return; // 早期返回，防止执行后续代码
       }
-    
+  
+      // 如果 URL 中有 token，重定向到密码重置页面
       if (token) {
         navigate("/reset-password");
-        return;
+        return; // 早期返回
       }
-    
+  
+      // 检查用户是否已认证
       const isAuthenticated = await checkAuthUser();
       if (!isAuthenticated) {
         navigate("/sign-in");
       }
     }
-    
-    handleAuthentication();
-  }, [navigate, token, checkAuthUser]);
   
+    validateAuthentication();
+  }, [navigate, token, checkAuthUser]); // 添加 checkAuthUser 到依赖数组
   
-
   const value = {
     user,
     setUser,

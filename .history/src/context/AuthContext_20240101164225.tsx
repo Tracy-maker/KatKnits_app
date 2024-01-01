@@ -67,10 +67,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     async function handleAuthentication() {
-
+      // 获取当前路由路径
       const currentPath = window.location.pathname;
   
-      
+      // 如果用户已经在登录、注册或验证邮箱页面，不执行任何操作
       if (currentPath.includes("/sign-in") || currentPath.includes("/sign-up") || currentPath.includes("/verify-email")) {
         return;
       }

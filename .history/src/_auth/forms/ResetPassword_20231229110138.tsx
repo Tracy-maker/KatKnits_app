@@ -30,8 +30,7 @@ const ResetPassword: React.FC = () => {
         );
         navigate("/sign-in");
       } catch (error) {
-        console.error("Password update error:", error); // Log the error
-        toast.error("Failed to update password. Please check your credentials.");
+        toast.error("Failed to update password.");
       }
     } else {
       toast.error(

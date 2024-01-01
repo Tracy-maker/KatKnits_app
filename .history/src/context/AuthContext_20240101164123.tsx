@@ -67,32 +67,34 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     async function handleAuthentication() {
-
-      const currentPath = window.location.pathname;
-  
       
-      if (currentPath.includes("/sign-in") || currentPath.includes("/sign-up") || currentPath.includes("/verify-email")) {
+      const path = window.location.pathname;
+      if (path === "/sign-up" || path === "/verify-email") {
+       
         return;
       }
   
       const cookieFallback = localStorage.getItem("cookieFallback");
+  
     
-      if (!cookieFallback || cookieFallback === "[]") {
+      if ((!cookieFallback || cookieFallback === "[]") && path !== "/sign-in") {
         navigate("/sign-in");
         return;
       }
-    
+  
+      
       if (token) {
         navigate("/reset-password");
         return;
       }
+  
     
       const isAuthenticated = await checkAuthUser();
-      if (!isAuthenticated) {
+      if (!isAuthenticated && path !== "/sign-in") {
         navigate("/sign-in");
       }
     }
-    
+  
     handleAuthentication();
   }, [navigate, token, checkAuthUser]);
   
