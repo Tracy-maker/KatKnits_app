@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { account } from "@/lib/appwrite/config";
 import { toast, ToastContainer } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -13,14 +13,15 @@ type PasswordFormData = {
 
 const ResetPassword: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { register, handleSubmit } = useForm<PasswordFormData>();
 
+  // 获取 URL 中的查询参数
+  const queryParams = new URLSearchParams(location.search);
+  const userId = queryParams.get("userId");
+  const secret = queryParams.get("secret");
 
   const handleResetPassword = async (data: PasswordFormData) => {
-    const urlParams = new URLSearchParams(location.search);
-    const userId = urlParams.get("userId");
-    const secret = urlParams.get("secret");
-
     if (data.newPassword === data.repeatedPassword) {
       try {
         await account.updateRecovery(
@@ -31,13 +32,11 @@ const ResetPassword: React.FC = () => {
         );
         navigate("/sign-in");
       } catch (error) {
-        console.error("Password update error:", error); // Log the error
+        console.error("Password update error:", error);
         toast.error("Failed to update password. Please check your credentials.");
       }
     } else {
-      toast.error(
-        "Both new password and the repeated password should be the same."
-      );
+      toast.error("Both new password and the repeated password should be the same.");
     }
   };
 
