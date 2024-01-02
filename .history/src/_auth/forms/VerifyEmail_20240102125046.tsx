@@ -16,11 +16,11 @@ const VerifyEmail: React.FC = () => {
     e.preventDefault();
     try {
       if (userId && verificationToken) {
-       
+        // Assuming you have a function in your Appwrite setup to verify the token
         await account.updateVerification(userId,verificationToken);
         setIsEmailVerified(true);
         toast.success("Email verified successfully!");
-        navigate("/"); 
+        navigate("/"); // Navigate to home or other page after successful verification
       } else {
         toast.error("Verification token is required.");
       }

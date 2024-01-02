@@ -1,8 +1,7 @@
-import { useNavigate } from "react-router-dom";
-import { createContext, useContext, useEffect, useState } from "react";
-
-import { IUser } from "@/types";
 import { getCurrentUser } from "@/lib/appwrite/api";
+import { IUser } from "@/types";
+import { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const INITIAL_USER = {
   id: "",
@@ -38,6 +37,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<IUser>(INITIAL_USER);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { token } = useParams();
 
   const checkAuthUser = async () => {
     setIsLoading(true);
@@ -67,18 +67,45 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
-    const cookieFallback = localStorage.getItem("cookieFallback");
-    if (
-      cookieFallback === "[]" ||
-      cookieFallback === null ||
-      cookieFallback === undefined
-    ) {
-      navigate("/sign-in");
-    }
-
-    checkAuthUser();
-  }, []);
-
+    const checkAndRedirect = async () => {
+      setIsLoading(true);
+  
+      try {
+        const isAuthenticated = await checkAuthUser();
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get("userId");
+        const secret = urlParams.get("secret");
+        const expire = urlParams.get("expire");
+        const verifyToken = urlParams.get("verifyToken");
+  
+        if (!isAuthenticated) {
+          // If trying to reset the password
+          if (userId && secret && expire) {
+            navigate(`/reset-password?userId=${userId}&secret=${secret}&expire=${expire}`);
+          } 
+          // If trying to verify email
+          else if (verifyToken) {
+            navigate(`/verify-email?token=${verifyToken}`);
+          } 
+          // Default to Sign Up page if not authenticated
+          else {
+            navigate("/sign-up");
+          }
+        } else {
+          
+          navigate("/"); 
+        }
+      } catch (error) {
+        console.error(error);
+        navigate("/sign-in");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+  
+    checkAndRedirect();
+  }, [navigate]);
+  
   const value = {
     user,
     setUser,

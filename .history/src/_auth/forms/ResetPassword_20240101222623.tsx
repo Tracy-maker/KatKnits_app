@@ -1,7 +1,6 @@
-import { account } from "@/lib/appwrite/config";
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate} from "react-router-dom";
-
+import { account } from "../services/appwriteConfig";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

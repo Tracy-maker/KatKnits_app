@@ -1,7 +1,6 @@
-import { account } from "@/lib/appwrite/config";
 import React, { useState, ChangeEvent, FormEvent } from "react";
-import { useNavigate} from "react-router-dom";
-
+import { useHistory } from "react-router-dom";
+import { account } from "../services/appwriteConfig";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -11,7 +10,7 @@ interface PasswordState {
 }
 
 const ResetPassword: React.FC = () => {
-  const navigate = useNavigate();
+  const history = useHistory();
   const [password, setPassword] = useState<PasswordState>({
     newPassword: "",
     repeatedPassword: "",
@@ -31,7 +30,7 @@ const ResetPassword: React.FC = () => {
         password.newPassword,
         password.repeatedPassword
       );
-      navigate("/");
+      history.push("/home");
     } else {
       toast.error('Both new password and the repeated password should be same');
     }
