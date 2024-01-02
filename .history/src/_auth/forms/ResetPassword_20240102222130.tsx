@@ -38,13 +38,13 @@ const ResetPassword: React.FC = () => {
       } catch (error) {
         console.error("Error updating password:", error);
   
-       
+        // 检查并显示更详细的错误信息
         if (error instanceof AppwriteException) {
-        
+          // AppwriteException 的特定处理
           console.error("Appwrite Exception Message:", error.message);
           toast.error(`Error: ${error.message}`);
         } else {
-        
+          // 其他类型错误的处理
           toast.error("Error updating password");
         }
       }

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import { account } from "@/lib/appwrite/config";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,7 +15,7 @@ const VerifyEmail: React.FC = () => {
     if (userEmail && userEmail.includes('@')) {
       await account.createRecovery(
         userEmail,
-        "http://localhost:5173/reset-password"
+        "http://localhost:3000/reset-password"
       );
 
       toast.success(`Email has been sent!`);

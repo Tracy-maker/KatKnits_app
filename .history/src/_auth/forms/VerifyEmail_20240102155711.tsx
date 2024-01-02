@@ -1,25 +1,28 @@
 import React, { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import { account } from "@/lib/appwrite/config";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 const VerifyEmail: React.FC = () => {
-  const [userEmail, setuserEmail] = useState<string>("");
-
+  const navigate = useNavigate();
+  const [verificationToken, setVerificationToken] = useState<string>("");
+  const [userId, setUserId] = useState<string>("");
 
   // Function to handle the verification of the email
   const handleVerifyEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (userEmail && userEmail.includes('@')) {
-      await account.createRecovery(
-        userEmail,
-        "http://localhost:5173/reset-password"
-      );
-
-      toast.success(`Email has been sent!`);
-    } else {
-      toast.error(`Please enter your email!`);
+    try {
+      if (userId && verificationToken) {
+        await account.updateVerification(userId, verificationToken);
+        toast.success("Email verified successfully!");
+        navigate("/");
+      } else {
+        toast.error("Verification token is required.");
+      }
+    } catch (error) {
+      toast.error("Failed to verify email.");
     }
   };
 
@@ -43,7 +46,7 @@ const VerifyEmail: React.FC = () => {
             Enter your Email:
           </label>
           <Input
-            onChange={(e) =>setuserEmail(e.target.value)}
+            onChange={(e) => setVerificationToken(e.target.value)}
             type="text"
             required
             className="shad-input"

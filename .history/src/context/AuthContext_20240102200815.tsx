@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { createContext, useContext, useEffect, useState } from "react";
 import { IUser } from "@/types";
 import { getCurrentUser } from "@/lib/appwrite/api";
 

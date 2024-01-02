@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { createContext, useContext, useEffect, useState } from "react";
 import { IUser } from "@/types";
 import { getCurrentUser } from "@/lib/appwrite/api";
 
@@ -32,11 +33,12 @@ type IContextType = {
 const AuthContext = createContext<IContextType>(INITIAL_STATE);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
- 
+  const navigate = useNavigate();
   const [user, setUser] = useState<IUser>(INITIAL_USER);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  
+  const { token } = useParams();
+
   const checkAuthUser = async () => {
     setIsLoading(true);
     try {
@@ -63,6 +65,37 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    const init = async () => {
+      const cookieFallback = localStorage.getItem("cookieFallback");
+  
+      // 如果URL中有token，即用户通过邮箱链接进入
+      if (token) {
+        navigate("/reset-password");
+      }
+      // 没有token，检查用户认证状态
+      else {
+        // 如果cookieFallback为空或者用户未认证，导航到登录页面
+        if (
+          cookieFallback === "[]" ||
+          cookieFallback === null ||
+          cookieFallback === undefined
+        ) {
+          navigate("/sign-in");
+        } else {
+          // 检查用户认证状态
+          const isAuthenticated = await checkAuthUser();
+          if (!isAuthenticated) {
+            navigate("/sign-in");
+          }
+        }
+      }
+    };
+  
+    init();
+  }, [token, navigate, checkAuthUser]);
+  
 
   const value = {
     user,

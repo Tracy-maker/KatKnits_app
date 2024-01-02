@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { AppwriteException } from "appwrite";
 
 interface PasswordState {
   newPassword: string;
@@ -21,38 +20,24 @@ const ResetPassword: React.FC = () => {
 
   const changePassword = async (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-  
+
     const urlParams = new URLSearchParams(window.location.search);
     const userId = urlParams.get("userId");
     const secret = urlParams.get("secret");
-  
+
     if (password.newPassword === password.repeatedPassword) {
-      try {
-        await account.updateRecovery(
-          userId!,
-          secret!,
-          password.newPassword,
-          password.repeatedPassword
-        );
-        navigate("/sign-in");
-      } catch (error) {
-        console.error("Error updating password:", error);
-  
-       
-        if (error instanceof AppwriteException) {
-        
-          console.error("Appwrite Exception Message:", error.message);
-          toast.error(`Error: ${error.message}`);
-        } else {
-        
-          toast.error("Error updating password");
-        }
-      }
+      await account.updateRecovery(
+        userId!,
+        secret!,
+        password.newPassword,
+        password.repeatedPassword
+      );
+      navigate("/sign-in");
     } else {
       toast.error("Both new password and the repeated password should be same");
     }
   };
-  
+
   return (
     <div className="sm:w-420 flex-center flex-col">
       <img
@@ -62,11 +47,7 @@ const ResetPassword: React.FC = () => {
       />
 
       <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12">Reset your password</h2>
-
-      <p className="text-light-3 small-medium md:base-regular mt-2">
-        Welcome back! Please enter your details.
-      </p>
-      <form className="flex flex-col gap-5 w-full mt-4">
+      <form className="container">
         <div className="mb-3">
           <label htmlFor="exampleInputPassword1" className="shad-form_label">
             Enter your new password:
@@ -81,15 +62,15 @@ const ResetPassword: React.FC = () => {
                 newPassword: e.target.value,
               });
             }}
-            className="shad-input"
+            className="form-control"
             id="exampleInputPassword1"
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="exampleInputPassword2" className="shad-form_label">
+          <label htmlFor="exampleInputPassword2" className="form-label">
             Repeat your new password:
           </label>
-          <Input
+          <input
             required
             type="password"
             name="password"
@@ -99,12 +80,12 @@ const ResetPassword: React.FC = () => {
                 repeatedPassword: e.target.value,
               });
             }}
-            className="shad-input"
+            className="form-control"
             id="exampleInputPassword2"
           />
         </div>
         <Button
-          className="shad-button_primary"
+          className="btn btn-success"
           type="submit"
           onClick={(e) => changePassword(e as FormEvent<HTMLButtonElement>)}
         >

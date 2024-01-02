@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { createContext, useContext, useEffect, useState } from "react";
 import { IUser } from "@/types";
 import { getCurrentUser } from "@/lib/appwrite/api";
 
@@ -32,11 +33,12 @@ type IContextType = {
 const AuthContext = createContext<IContextType>(INITIAL_STATE);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
- 
+  const navigate = useNavigate();
   const [user, setUser] = useState<IUser>(INITIAL_USER);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  
+  const { token } = useParams();
+
   const checkAuthUser = async () => {
     setIsLoading(true);
     try {
@@ -63,6 +65,40 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    // 检查 cookieFallback
+    const cookieFallback = localStorage.getItem("cookieFallback");
+    if (cookieFallback === "[]" || cookieFallback === null || cookieFallback === undefined) {
+      navigate("/sign-in");
+      return; // 早期返回以避免不必要的操作
+    }
+  
+    // 如果有 token，重定向到重置密码页面
+    if (token) {
+      navigate("/reset-password");
+      return; // 早期返回
+    }
+  
+    // 异步检查用户认证状态
+    const checkAndSetAuthStatus = async () => {
+      setIsLoading(true);
+      try {
+        const authStatus = await checkAuthUser();
+        if (!authStatus) {
+          navigate("/sign-in");
+        }
+      } catch (error) {
+        console.error(error);
+        navigate("/sign-in");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+  
+    checkAndSetAuthStatus();
+  }, [token]); // 添加 token 作为依赖项
+  
 
   const value = {
     user,
