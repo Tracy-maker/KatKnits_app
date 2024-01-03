@@ -29,7 +29,7 @@ const PostDetails = () => {
     navigate(-1);
   };
 
-  const filterUserPosts = (userPosts: UserPost[] | undefined, id: string | undefined): UserPost[] => {
+  const filterUserPosts = (userPosts: UserPost[] | undefined, id: string | undefined) => {
     if (!userPosts) {
       return []; 
     }
@@ -37,7 +37,6 @@ const PostDetails = () => {
   };
   
   const relatedPosts = filterUserPosts(userPosts, id);
-  
   
   return (
     <div className="post_details-container">

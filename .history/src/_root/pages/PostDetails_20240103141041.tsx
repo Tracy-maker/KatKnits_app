@@ -12,23 +12,18 @@ import { multiFormatDateString } from "@/lib/utils";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 interface UserPost {
-  $id: string | undefined;
+  $id: string ;
 }
 
 const PostDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { user } = useUserContext();
-  const { data: post, isPending } = useGetPostById(id || "");
-  const { data: userPosts, isLoading: isUserPostLoading } = useGetUserPosts(
+  const { data: post, isPending } = useGetPostById(id);
+  const { data: userPosts, isPending: isUserPostLoading } = useGetUserPosts(
     post?.creator.$id
   );
   const { mutate: deletePost } = useDeletePost();
-  const handleDeletePost = () => {
-    deletePost({ postId: id ?? "", imageId: post?.imageId });
-    navigate(-1);
-  };
-
   const filterUserPosts = (userPosts: UserPost[] | undefined, id: string | undefined): UserPost[] => {
     if (!userPosts) {
       return []; 
@@ -37,6 +32,12 @@ const PostDetails = () => {
   };
   
   const relatedPosts = filterUserPosts(userPosts, id);
+  const handleDeletePost = () => {
+    deletePost({ postId: id ?? "", imageId: post?.imageId });
+    navigate(-1);
+  };
+
+
   
   
   return (

@@ -12,7 +12,7 @@ import { multiFormatDateString } from "@/lib/utils";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 interface UserPost {
-  $id: string | undefined;
+  $id: string ;
 }
 
 const PostDetails = () => {

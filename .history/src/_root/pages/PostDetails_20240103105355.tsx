@@ -11,53 +11,46 @@ import {
 import { multiFormatDateString } from "@/lib/utils";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-interface UserPost {
-  $id: string | undefined;
-}
+
 
 const PostDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { user } = useUserContext();
-  const { data: post, isPending } = useGetPostById(id || "");
+
+  const { data: post, isLoading } = useGetPostById(id);
   const { data: userPosts, isLoading: isUserPostLoading } = useGetUserPosts(
     post?.creator.$id
   );
   const { mutate: deletePost } = useDeletePost();
+
+  const relatedPosts = userPosts?.documents.filter(
+    (userPost) => userPost.$id !== id
+  );
+
   const handleDeletePost = () => {
-    deletePost({ postId: id ?? "", imageId: post?.imageId });
+    deletePost({ postId: id, imageId: post?.imageId });
     navigate(-1);
   };
 
-  const filterUserPosts = (userPosts: UserPost[] | undefined, id: string | undefined): UserPost[] => {
-    if (!userPosts) {
-      return []; 
-    }
-    return userPosts.filter((userPost) => userPost.$id !== id);
-  };
-  
-  const relatedPosts = filterUserPosts(userPosts, id);
-  
-  
   return (
     <div className="post_details-container">
       <div className="hidden md:flex max-w-5xl w-full">
         <Button
           onClick={() => navigate(-1)}
           variant="ghost"
-          className="shad-button_ghost"
-        >
+          className="shad-button_ghost">
           <img
-            src="https://img.icons8.com/?size=64&id=46415&format=png"
+            src={"/assets/icons/back.svg"}
             alt="back"
-            width={50}
-            height={50}
+            width={24}
+            height={24}
           />
           <p className="small-medium lg:base-medium">Back</p>
         </Button>
       </div>
 
-      {isPending || !post ? (
+      {isLoading || !post ? (
         <Loader />
       ) : (
         <div className="post_details-card">
@@ -71,12 +64,11 @@ const PostDetails = () => {
             <div className="flex-between w-full">
               <Link
                 to={`/profile/${post?.creator.$id}`}
-                className="flex items-center gap-3"
-              >
+                className="flex items-center gap-3">
                 <img
                   src={
                     post?.creator.imageUrl ||
-                    "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="
+                    "/assets/icons/profile-placeholder.svg"
                   }
                   alt="creator"
                   className="w-8 h-8 lg:w-12 lg:h-12 rounded-full"
@@ -100,13 +92,12 @@ const PostDetails = () => {
               <div className="flex-center gap-4">
                 <Link
                   to={`/update-post/${post?.$id}`}
-                  className={`${user.id !== post?.creator.$id && "hidden"}`}
-                >
+                  className={`${user.id !== post?.creator.$id && "hidden"}`}>
                   <img
-                    src="https://img.icons8.com/?size=50&id=FM7OHrqvInFE&format=png"
+                    src={"/assets/icons/edit.svg"}
                     alt="edit"
-                    width={35}
-                    height={35}
+                    width={24}
+                    height={24}
                   />
                 </Link>
 
@@ -115,13 +106,12 @@ const PostDetails = () => {
                   variant="ghost"
                   className={`ost_details-delete_btn ${
                     user.id !== post?.creator.$id && "hidden"
-                  }`}
-                >
+                  }`}>
                   <img
-                    src="https://img.icons8.com/?size=80&id=SNuQdHisifKK&format=png"
+                    src={"/assets/icons/delete.svg"}
                     alt="delete"
-                    width={30}
-                    height={30}
+                    width={24}
+                    height={24}
                   />
                 </Button>
               </div>
@@ -135,8 +125,7 @@ const PostDetails = () => {
                 {post?.tags.map((tag: string, index: string) => (
                   <li
                     key={`${tag}${index}`}
-                    className="text-light-3 small-regular"
-                  >
+                    className="text-light-3 small-regular">
                     #{tag}
                   </li>
                 ))}

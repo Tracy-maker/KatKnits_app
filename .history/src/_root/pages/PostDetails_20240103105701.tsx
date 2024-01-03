@@ -29,14 +29,15 @@ const PostDetails = () => {
     navigate(-1);
   };
 
-  const filterUserPosts = (userPosts: UserPost[] | undefined, id: string | undefined): UserPost[] => {
-    if (!userPosts) {
-      return []; 
-    }
-    return userPosts.filter((userPost) => userPost.$id !== id);
+  const filterUserPosts = (userPosts: UserPost[] | undefined, id: string | undefined) => {
+    // Provide a default empty array if userPosts is undefined or void
+    const validUserPosts = userPosts || [];
+    return validUserPosts.filter((userPost) => userPost.$id !== id);
   };
   
+  // Now, this should not throw an error
   const relatedPosts = filterUserPosts(userPosts, id);
+  
   
   
   return (

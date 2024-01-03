@@ -19,7 +19,7 @@ const PostDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { user } = useUserContext();
-  const { data: post, isPending } = useGetPostById(id || "");
+  const { data: post, isPending } = useGetPostById(id);
   const { data: userPosts, isLoading: isUserPostLoading } = useGetUserPosts(
     post?.creator.$id
   );

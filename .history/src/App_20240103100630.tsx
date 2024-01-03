@@ -11,17 +11,22 @@ import {
   Profile,
   Saved,
   UpdateProfile,
+  Chat,
 } from "./_root/pages";
 import SignupForm from "./_auth/forms/SignupForm";
 import AuthLayout from "./_auth/AuthLayout";
 import RootLayout from "./_root/RootLayout";
 import { Toaster } from "@/components/ui/toaster";
+import VerifyEmail from "./_auth/forms/VerifyEmail";
+import ResetPassword from "./_auth/forms/ResetPassword";
 
 const App = () => {
   return (
     <main className="flex h-screen">
       <Routes>
         <Route element={<AuthLayout />}>
+          <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/sign-in" element={<SigninForm />} />
           <Route path="/sign-up" element={<SignupForm />} />
         </Route>

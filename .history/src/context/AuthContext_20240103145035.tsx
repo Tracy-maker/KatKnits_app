@@ -1,7 +1,6 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { IContextType, IUser } from "@/types";
 import { getCurrentUser } from "@/lib/appwrite/api";
-import { useNavigate } from "react-router-dom";
 
 export const INITIAL_USER = {
   id: "",
@@ -21,14 +20,15 @@ const INITIAL_STATE = {
   checkAuthUser: async () => false as boolean,
 };
 
+
 const AuthContext = createContext<IContextType>(INITIAL_STATE);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const navigate = useNavigate();
+ 
   const [user, setUser] = useState<IUser>(INITIAL_USER);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  
   const checkAuthUser = async () => {
     setIsLoading(true);
     try {
@@ -55,16 +55,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    const cookieFallback = localStorage.getItem("cookieFallback");
-    if (cookieFallback === "[]" || cookieFallback === null) {
-      navigate("/sign-in");
-    }
-
-    checkAuthUser();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const value = {
     user,

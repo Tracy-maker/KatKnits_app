@@ -12,14 +12,14 @@ import { multiFormatDateString } from "@/lib/utils";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 interface UserPost {
-  $id: string | undefined;
+  $id: string ;
 }
 
 const PostDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { user } = useUserContext();
-  const { data: post, isPending } = useGetPostById(id || "");
+  const { data: post, isPending } = useGetPostById(id);
   const { data: userPosts, isLoading: isUserPostLoading } = useGetUserPosts(
     post?.creator.$id
   );

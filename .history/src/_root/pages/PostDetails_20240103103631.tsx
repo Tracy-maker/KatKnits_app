@@ -29,15 +29,14 @@ const PostDetails = () => {
     navigate(-1);
   };
 
-  const filterUserPosts = (userPosts: UserPost[] | undefined, id: string | undefined): UserPost[] => {
+  const filterUserPosts = (userPosts: UserPost[] | undefined, id: string | undefined) => {
     if (!userPosts) {
       return []; 
     }
     return userPosts.filter((userPost) => userPost.$id !== id);
   };
   
-  const relatedPosts = filterUserPosts(userPosts, id);
-  
+  const relatedPosts = filterUserPosts(userPosts: UserPost[] | undefined, id: string | undefined);
   
   return (
     <div className="post_details-container">
