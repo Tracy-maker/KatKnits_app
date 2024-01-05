@@ -375,7 +375,6 @@ export async function searchPosts(searchTerm: string) {
 }
 
 export async function getUsers(limit?: number) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const queries: any[] = [Query.orderDesc("$createdAt")];
 
   if (limit) {
@@ -414,7 +413,7 @@ export async function getUserById(accountId: string) {
   }
 }
 
-export async function updateUser(user: IUpdateUser) {
+export async function updateUser(user: IUpdateUser): Promise<UpdatedUser> {
   const hasFileToUpdate = user.file.length > 0;
   try {
     let image = {
@@ -424,18 +423,15 @@ export async function updateUser(user: IUpdateUser) {
 
     if (hasFileToUpdate) {
       const uploadedFile = await uploadFile(user.file[0]);
-      if (!uploadedFile) {
-        throw new Error("Failed to upload file");
-      }
+      if (!uploadedFile) throw Error;
 
       const fileUrl = getFilePreview(uploadedFile.$id);
       if (!fileUrl) {
         await deleteFile(uploadedFile.$id);
-        throw new Error("Failed to get file URL");
+        throw Error;
       }
       image = { ...image, imageUrl: fileUrl, imageId: uploadedFile.$id };
     }
-
     const updatedUser = await databases.updateDocument(
       appwriteConfig.databaseId,
       appwriteConfig.userCollectionId,
@@ -452,16 +448,14 @@ export async function updateUser(user: IUpdateUser) {
       if (hasFileToUpdate) {
         await deleteFile(image.imageId);
       }
-      throw new Error("Failed to update user");
+      throw Error;
     }
-
     if (user.imageId && hasFileToUpdate) {
       await deleteFile(user.imageId);
     }
-
-    return updatedUser; 
+    return updateUser;
   } catch (error) {
-    console.error(error);
-    throw error; 
+    console.log(error);
   }
 }
+

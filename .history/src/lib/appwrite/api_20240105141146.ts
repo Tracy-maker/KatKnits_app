@@ -459,9 +459,9 @@ export async function updateUser(user: IUpdateUser) {
       await deleteFile(user.imageId);
     }
 
-    return updatedUser; 
+    return updatedUser; // Return the result of the update operation
   } catch (error) {
     console.error(error);
-    throw error; 
+    throw error; // Re-throw the error to be handled by the caller
   }
 }
