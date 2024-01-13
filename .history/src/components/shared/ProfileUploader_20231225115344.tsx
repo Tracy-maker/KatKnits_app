@@ -9,7 +9,7 @@ type ProfileUploaderProps = {
 
 const ProfileUploader = ({ fieldChange, mediaUrl }: ProfileUploaderProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [, setFile] = useState<File[]>([]);
+  const [file, setFile] = useState<File[]>([]);
   const [fileUrl, setFileUrl] = useState<string>(mediaUrl);
 
   const onDrop = useCallback(
