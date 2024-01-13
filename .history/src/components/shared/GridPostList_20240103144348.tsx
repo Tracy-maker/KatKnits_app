@@ -19,7 +19,7 @@ const GridPostList = ({
   const uniquePosts = posts.filter(
     (post, index, self) => index === self.findIndex((p) => p.$id === post.$id)
   );
-
+  console.log(uniquePosts);
 
   return (
     <ul className="grid-container">
