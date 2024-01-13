@@ -1,3 +1,4 @@
+import GridPostList from "@/components/shared/GridPostList";
 import Loader from "@/components/shared/Loader";
 import PostStats from "@/components/shared/PostStats";
 import { Button } from "@/components/ui/button";
@@ -5,21 +6,40 @@ import { useUserContext } from "@/context/AuthContext";
 import {
   useDeletePost,
   useGetPostById,
+  useGetUserPosts,
 } from "@/lib/react-query/queriesAndMutations";
 import { multiFormatDateString } from "@/lib/utils";
 import { Link, useNavigate, useParams } from "react-router-dom";
+
+type UserPost= {
+  $id: string;
+}
 
 const PostDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { user } = useUserContext();
   const { data: post, isPending } = useGetPostById(id || "");
-
+  const { data: userPosts, isLoading: isUserPostLoading } = useGetUserPosts(
+    post?.creator.$id
+  );
   const { mutate: deletePost } = useDeletePost();
   const handleDeletePost = () => {
     deletePost({ postId: id ?? "", imageId: post?.imageId });
     navigate(-1);
   };
+
+  const filterUserPosts = (
+    userPosts: UserPost[] | undefined,
+    id: string | undefined
+  ): UserPost[] => {
+    if (!userPosts || typeof id !== "string") {
+      return [];
+    }
+
+    return userPosts.filter((userPost) => userPost.$id !== id);
+  };
+  const relatedPosts = filterUserPosts(userPosts, id);
 
   return (
     <div className="post_details-container">
@@ -131,6 +151,19 @@ const PostDetails = () => {
           </div>
         </div>
       )}
+
+      <div className="w-full max-w-5xl">
+        <hr className="border w-full border-dark-4/80" />
+
+        <h3 className="body-bold md:h3-bold w-full my-10">
+          More Related Posts
+        </h3>
+        {isUserPostLoading || !relatedPosts ? (
+          <Loader />
+        ) : (
+          <GridPostList posts={relatedPosts} />
+        )}
+      </div>
     </div>
   );
 };

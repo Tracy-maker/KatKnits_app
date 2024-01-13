@@ -1,3 +1,4 @@
+import GridPostList from "@/components/shared/GridPostList";
 import Loader from "@/components/shared/Loader";
 import PostStats from "@/components/shared/PostStats";
 import { Button } from "@/components/ui/button";
@@ -5,9 +6,11 @@ import { useUserContext } from "@/context/AuthContext";
 import {
   useDeletePost,
   useGetPostById,
+
 } from "@/lib/react-query/queriesAndMutations";
 import { multiFormatDateString } from "@/lib/utils";
 import { Link, useNavigate, useParams } from "react-router-dom";
+
 
 const PostDetails = () => {
   const navigate = useNavigate();
@@ -20,6 +23,11 @@ const PostDetails = () => {
     deletePost({ postId: id ?? "", imageId: post?.imageId });
     navigate(-1);
   };
+
+
+
+
+
 
   return (
     <div className="post_details-container">
@@ -131,6 +139,7 @@ const PostDetails = () => {
           </div>
         </div>
       )}
+
     </div>
   );
 };
