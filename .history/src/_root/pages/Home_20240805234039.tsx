@@ -1,10 +1,7 @@
 import Loader from "@/components/shared/Loader";
 import PostCard from "@/components/shared/PostCard";
 import UserCard from "@/components/shared/UserCard";
-import {
-  useGetRecentPosts,
-  useGetUsers,
-} from "@/lib/react-query/queriesAndMutations";
+import { useGetRecentPosts, useGetUsers } from "@/lib/react-query/queriesAndMutations";
 import { Models } from "appwrite";
 
 const Home = () => {
@@ -47,6 +44,7 @@ const Home = () => {
           )}
         </div>
       </div>
+   
     </div>
   );
 };
