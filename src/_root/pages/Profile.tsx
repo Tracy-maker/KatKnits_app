@@ -78,11 +78,7 @@ const Profile = () => {
                 </p>
               </Link>
             </div>
-            <div className={`${user.id === id && "hidden"}`}>
-              <Button type="button" className="shad-button_primary px-8">
-              Learn more
-              </Button>
-            </div>
+           
           </div>
         </div>
       </div>
