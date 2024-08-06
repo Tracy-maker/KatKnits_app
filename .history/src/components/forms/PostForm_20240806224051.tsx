@@ -44,7 +44,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
     resolver: zodResolver(PostValidation),
     defaultValues: {
       caption: post ? post?.caption : "",
-      content: post ? post?.content : "",
+      content: post ? post?.content : "", 
       file: [],
       location: post ? post?.location : "",
       tags: post ? post.tags.join(",") : "",
@@ -101,7 +101,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
           )}
         />
 
-        <FormField
+<FormField
           control={form.control}
           name="content"
           render={({ field }) => (
@@ -117,6 +117,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
             </FormItem>
           )}
         />
+
 
         <FormField
           control={form.control}

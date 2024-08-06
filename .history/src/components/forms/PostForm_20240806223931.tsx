@@ -44,7 +44,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
     resolver: zodResolver(PostValidation),
     defaultValues: {
       caption: post ? post?.caption : "",
-      content: post ? post?.content : "",
+      content: post ? post?.content : "", // A
       file: [],
       location: post ? post?.location : "",
       tags: post ? post.tags.join(",") : "",
@@ -90,23 +90,6 @@ const PostForm = ({ post, action }: PostFormProps) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="shad-form_label">Caption</FormLabel>
-              <FormControl>
-                <Textarea
-                  className="shad-textarea custom-scrollbar"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage className="shad-form_message" />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="content"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="shad-form_label">Content</FormLabel>
               <FormControl>
                 <Textarea
                   className="shad-textarea custom-scrollbar"

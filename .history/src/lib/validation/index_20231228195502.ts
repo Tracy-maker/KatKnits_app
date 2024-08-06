@@ -21,10 +21,6 @@ export const PostValidation = z.object({
     .string()
     .min(5, { message: "Minimum 5 characters." })
     .max(2200, { message: "Maximum 2,200 characters" }),
-    content: z
-    .string()
-    .min(5, { message: "Minimum 5 characters." })
-    .max(2200, { message: "Maximum 2,200 characters" }),
   file: z.custom<File[]>(),
   location: z
     .string()
