@@ -73,7 +73,7 @@ const PostCard = ({ post }: PostCardProps) => {
           className="post-card_img"
           alt="post image"
         />
-        <div className="post-content mt-4 mb-4 text-gray-50 leading-relaxed text-justify">
+        <div className="post-content mt-4 text-gray-700 leading-relaxed">
           <p>{post.content}</p>
         </div>
       </Link>

@@ -11,8 +11,7 @@ type PostCardProps = {
 const PostCard = ({ post }: PostCardProps) => {
   const { user } = useUserContext();
 
-  if (!post.creator) return null;
-
+  if (!post.creator) return;
   return (
     <div className="post-card">
       <div className="flex-between">
@@ -73,9 +72,6 @@ const PostCard = ({ post }: PostCardProps) => {
           className="post-card_img"
           alt="post image"
         />
-        <div className="post-content mt-4 mb-4 text-gray-50 leading-relaxed text-justify">
-          <p>{post.content}</p>
-        </div>
       </Link>
       <PostStats post={post} userId={user.id} />
     </div>

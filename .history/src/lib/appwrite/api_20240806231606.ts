@@ -285,7 +285,6 @@ export async function updatePost(post: IUpdatePost) {
       post.postId,
       {
         caption: post.caption,
-        content: post.content,
         imageUrl: image.imageUrl,
         imageId: image.imageId,
         location: post.location,

@@ -4,6 +4,7 @@ import { IUpdatePost, INewPost, INewUser, IUpdateUser } from "@/types";
 
 export async function createUserAccount(user: INewUser) {
   try {
+    // Create a new account
     const newAccount = await account.create(
       ID.unique(),
       user.email,
@@ -15,8 +16,10 @@ export async function createUserAccount(user: INewUser) {
       throw new Error("Account creation failed");
     }
 
+    // Create avatar URL
     const avatarUrl = avatars.getInitials(user.name);
 
+    // Save the new user to the database
     const newUser = await saveUserToDB({
       accountId: newAccount.$id,
       name: newAccount.name,
@@ -56,11 +59,13 @@ export async function saveUserToDB(user: {
 
 export async function signInAccount(user: { email: string; password: string }) {
   try {
+    // Check if there is an active session
     const currentAccount = await account.get();
     if (currentAccount) {
       return currentAccount;
     }
 
+    // Create a new session if no active session exists
     const session = await account.createEmailSession(user.email, user.password);
     return session;
   } catch (error) {
@@ -125,7 +130,6 @@ export async function createPost(post: INewPost) {
       {
         creator: post.userId,
         caption: post.caption,
-        content: post.content,    
         imageUrl: fileUrl,
         imageId: uploadedFile.$id,
         location: post.location,
@@ -285,7 +289,6 @@ export async function updatePost(post: IUpdatePost) {
       post.postId,
       {
         caption: post.caption,
-        content: post.content,
         imageUrl: image.imageUrl,
         imageId: image.imageId,
         location: post.location,
@@ -340,7 +343,7 @@ export async function getUserPosts(userId?: string) {
 }
 
 export async function getInfinitePosts({ pageParam }: { pageParam: number }) {
-  const queries: (string | ReturnType<typeof Query.orderDesc> | ReturnType<typeof Query.limit>)[] = [Query.orderDesc("$updatedAt"), Query.limit(9)];
+  const queries: (Query | ReturnType<typeof Query.orderDesc> | ReturnType<typeof Query.limit>)[] = [Query.orderDesc("$updatedAt"), Query.limit(9)];
 
   if (pageParam) {
     queries.push(Query.cursorAfter(pageParam.toString()));
@@ -349,7 +352,7 @@ export async function getInfinitePosts({ pageParam }: { pageParam: number }) {
     const posts = await databases.listDocuments(
       appwriteConfig.databaseId,
       appwriteConfig.postCollectionId,
-      queries as string[]
+      queries
     );
     if (!posts) throw new Error("Failed to fetch posts");
     return posts;
@@ -373,7 +376,7 @@ export async function searchPosts(searchTerm: string) {
 }
 
 export async function getUsers(limit?: number) {
-  const queries: (string | ReturnType<typeof Query.limit> | ReturnType<typeof Query.orderDesc>)[] = [Query.orderDesc("$createdAt")];
+  const queries: (Query | ReturnType<typeof Query.limit> | ReturnType<typeof Query.orderDesc>)[] = [Query.orderDesc("$createdAt")];
 
   if (limit) {
     queries.push(Query.limit(limit));
@@ -383,7 +386,7 @@ export async function getUsers(limit?: number) {
     const users = await databases.listDocuments(
       appwriteConfig.databaseId,
       appwriteConfig.userCollectionId,
-      queries as string[]
+      queries
     );
     if (!users) throw new Error("Failed to fetch users");
     return users;

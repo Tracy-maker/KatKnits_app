@@ -14,8 +14,8 @@ const PostCard = ({ post }: PostCardProps) => {
   if (!post.creator) return null;
 
   return (
-    <div className="post-card">
-      <div className="flex-between">
+    <div className="post-card p-4 bg-white rounded-lg shadow-md">
+      <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-3">
           <Link to={`/profile/${post.creator.$id}`}>
             <img
@@ -24,42 +24,41 @@ const PostCard = ({ post }: PostCardProps) => {
                 "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="
               }
               alt="creator"
-              className="rounded-full w-12 lg:h-12"
+              className="rounded-full w-12 h-12"
             />
           </Link>
           <div className="flex flex-col">
-            <p className="base-medium lg:body-bold text-light-1">
+            <p className="font-medium text-gray-900">
               {post.creator.name}
             </p>
-            <div className="flex-center gap-2 text-light-3">
-              <p className="subtle-semibold lg:small-regular">
+            <div className="flex items-center gap-2 text-gray-500">
+              <p className="text-sm">
                 {multiFormatDateString(post.$createdAt)}
               </p>
-              -
-              <p className="subtle-semibold lg:small-regular">
+              <span>-</span>
+              <p className="text-sm">
                 {post.location}
               </p>
             </div>
           </div>
         </div>
-        <Link
-          to={`/update-post/${post.$id}`}
-          className={`${user.id !== post.creator.$id && "hidden"}`}
-        >
-          <img
-            src="https://img.icons8.com/?size=50&id=FM7OHrqvInFE&format=png"
-            alt="edit"
-            width={35}
-            height={35}
-          />
-        </Link>
+        {user.id === post.creator.$id && (
+          <Link to={`/update-post/${post.$id}`}>
+            <img
+              src="https://img.icons8.com/?size=50&id=FM7OHrqvInFE&format=png"
+              alt="edit"
+              width={35}
+              height={35}
+            />
+          </Link>
+        )}
       </div>
-      <Link to={`/posts/${post.$id}`}>
-        <div className="small-medium lg:base-medium py-5">
-          <p>{post.caption}</p>
-          <ul className="flex gap-1 mt-2">
+      <Link to={`/posts/${post.$id}`} className="block">
+        <div className="mb-4">
+          <p className="text-lg font-semibold text-gray-800">{post.caption}</p>
+          <ul className="flex gap-2 mt-2">
             {post.tags.map((tag: string) => (
-              <li key={tag} className="text-light-3">
+              <li key={tag} className="text-gray-500">
                 #{tag}
               </li>
             ))}
@@ -70,10 +69,10 @@ const PostCard = ({ post }: PostCardProps) => {
             post.imageUrl ||
             "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="
           }
-          className="post-card_img"
+          className="w-full h-64 object-cover rounded-lg mb-4"
           alt="post image"
         />
-        <div className="post-content mt-4 mb-4 text-gray-50 leading-relaxed text-justify">
+        <div className="post-content mt-4 text-gray-700 leading-relaxed">
           <p>{post.content}</p>
         </div>
       </Link>
