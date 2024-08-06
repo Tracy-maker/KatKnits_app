@@ -62,6 +62,7 @@ export async function signInAccount(user: { email: string; password: string }) {
     // Check if there is an active session
     const currentAccount = await account.get();
     if (currentAccount) {
+      console.log("Active session exists:", currentAccount);
       return currentAccount;
     }
 

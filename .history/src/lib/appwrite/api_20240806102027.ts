@@ -60,11 +60,11 @@ export async function saveUserToDB(user: {
 export async function signInAccount(user: { email: string; password: string }) {
   try {
     // Check if there is an active session
-    const currentAccount = await account.get();
-    if (currentAccount) {
-      return currentAccount;
+    const sessions = await account.getSessions();
+    if (sessions.total > 0) {
+      console.log("Active session exists:", sessions.sessions[0]);
+      return sessions.sessions[0];
     }
-
     // Create a new session if no active session exists
     const session = await account.createEmailSession(user.email, user.password);
     return session;
