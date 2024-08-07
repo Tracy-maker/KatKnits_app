@@ -111,10 +111,10 @@ const PostDetails = () => {
 
             <hr className="border w-full border-dark-4/80 " />
             <div className="flex flex-col w-full small-medium lg:base-regular mb-6">
-              <p className="caption text-light-1 font-semibold text-lg lg:text-xl xl:text-2xl mb-4">
+              <p className="caption text-light-1 font-semibold text-lg mb-4">
                 {post?.caption}
               </p>
-              <p className="content text-light-2 mb-4 lg:mb-6 xl:mb-8 text-justify">
+              <p className="content text-light-2 mb-4 text-justify">
                 {post?.content}
               </p>
               <ul className="flex gap-2 mt-2 flex-wrap">
