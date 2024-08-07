@@ -158,12 +158,12 @@
 
 
 .post_details-img {
-  @apply m-[2%] h-80 lg:h-[480px] xl:w-[48%] rounded-t-[30px] xl:rounded-l-[24px] xl:rounded-tr-none object-cover p-5 bg-dark-1;
+  @apply mt-[2。5%] h-80 lg:h-[480px] xl:w-[48%] rounded-t-[30px] xl:rounded-l-[24px] xl:rounded-tr-none object-cover p-5 bg-dark-1;
 }
 
 @media (min-width: 1280px) {
   .post_details-img {
-    height: 700px; 
+    height: 650px; 
   }
 }
 

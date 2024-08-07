@@ -67,7 +67,7 @@ const PostDetails = () => {
                   <p className="base-medium lg:body-bold text-light-1">
                     {post?.creator.name}
                   </p>
-                  <div className="flex-center gap-2 text-light-3">
+                  <div className="flex-center  text-light-3">
                     <p className="subtle-semibold lg:small-regular">
                       {multiFormatDateString(post?.$createdAt)}
                     </p>
@@ -109,19 +109,16 @@ const PostDetails = () => {
               </div>
             </div>
 
-            <hr className="border w-full border-dark-4/80 " />
-            <div className="flex flex-col w-full small-medium lg:base-regular mb-6">
-              <p className="caption text-light-1 font-semibold text-lg mb-4">
-                {post?.caption}
-              </p>
-              <p className="content text-light-2 mb-4">
-                {post?.content}
-              </p>
-              <ul className="flex gap-2 mt-2 flex-wrap">
+            <hr className="border w-full border-dark-4/80 mb-4" />
+
+            <div className="flex flex-col flex-1 w-full small-medium lg:base-regular mb-4">
+              <p>{post?.caption}</p>
+              <p>{post?.content}</p>
+              <ul className="flex gap-1 mt-2">
                 {post?.tags.map((tag: string, index: string) => (
                   <li
                     key={`${tag}${index}`}
-                    className="text-light-3 small-regular bg-dark-3 px-2 py-1 rounded"
+                    className="text-light-3 small-regular"
                   >
                     #{tag}
                   </li>
@@ -129,9 +126,11 @@ const PostDetails = () => {
               </ul>
             </div>
 
-            <div className="w-full">
+            <div className="w-full mb-4">
               <PostStats post={post} userId={user.id} />
             </div>
+
+   
           </div>
         </div>
       )}

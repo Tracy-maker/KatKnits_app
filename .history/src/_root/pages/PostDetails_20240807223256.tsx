@@ -22,7 +22,7 @@ const PostDetails = () => {
   };
 
   return (
-    <div className="post_details-container">
+    <div className="post_details-container p-4">
       <div className="hidden md:flex max-w-5xl w-full mb-4">
         <Button
           onClick={() => navigate(-1)}
@@ -42,15 +42,17 @@ const PostDetails = () => {
       {isPending || !post ? (
         <Loader />
       ) : (
-        <div className="post_details-card">
-          <img
-            src={post?.imageUrl}
-            alt="creator"
-            className="post_details-img"
-          />
+        <div className="post_details-card bg-dark-2 rounded-xl p-6">
+          <div className="post_details-img-container mb-6 mt-4">
+            <img
+              src={post?.imageUrl}
+              alt="creator"
+              className="post_details-img w-full rounded-lg"
+            />
+          </div>
 
           <div className="post_details-info">
-            <div className="flex-between w-full mb-4">
+            <div className="flex justify-between items-center w-full mb-6">
               <Link
                 to={`/profile/${post?.creator.$id}`}
                 className="flex items-center gap-3"
@@ -61,13 +63,13 @@ const PostDetails = () => {
                     "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="
                   }
                   alt="creator"
-                  className="w-8 h-8 lg:w-12 lg:h-12 rounded-full"
+                  className="w-12 h-12 rounded-full"
                 />
                 <div className="flex gap-1 flex-col">
                   <p className="base-medium lg:body-bold text-light-1">
                     {post?.creator.name}
                   </p>
-                  <div className="flex-center gap-2 text-light-3">
+                  <div className="flex items-center gap-2 text-light-3">
                     <p className="subtle-semibold lg:small-regular">
                       {multiFormatDateString(post?.$createdAt)}
                     </p>
@@ -79,7 +81,7 @@ const PostDetails = () => {
                 </div>
               </Link>
 
-              <div className="flex-center gap-4">
+              <div className="flex items-center gap-4">
                 <Link
                   to={`/update-post/${post?.$id}`}
                   className={`${user.id !== post?.creator.$id && "hidden"}`}
@@ -95,7 +97,7 @@ const PostDetails = () => {
                 <Button
                   onClick={handleDeletePost}
                   variant="ghost"
-                  className={`ost_details-delete_btn ${
+                  className={`post_details-delete_btn ${
                     user.id !== post?.creator.$id && "hidden"
                   }`}
                 >
@@ -109,7 +111,8 @@ const PostDetails = () => {
               </div>
             </div>
 
-            <hr className="border w-full border-dark-4/80 " />
+            <hr className="border w-full border-dark-4/80 mb-6" />
+
             <div className="flex flex-col w-full small-medium lg:base-regular mb-6">
               <p className="caption text-light-1 font-semibold text-lg mb-4">
                 {post?.caption}
