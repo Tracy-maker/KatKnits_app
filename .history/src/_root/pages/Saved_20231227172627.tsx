@@ -17,8 +17,18 @@ const Saved = () => {
     .reverse();
 
   return (
-    <>
-       {!currentUser ? (
+    <div className="saved-container">
+      <div className="flex gap-2 w-full max-w-5xl">
+        <img
+          src="https://img.icons8.com/?size=64&id=42847&format=png"
+          width={60}
+          height={60}
+          alt="edit"
+        />
+        <h2 className="h3-bold md:h2-bold text-left w-full">Saved Posts</h2>
+      </div>
+
+      {!currentUser ? (
         <Loader />
       ) : (
         <ul className="w-full flex justify-center max-w-5xl gap-9">
@@ -29,7 +39,7 @@ const Saved = () => {
           )}
         </ul>
       )}
-    </>
+    </div>
   );
 };
 

@@ -17,8 +17,10 @@ const Saved = () => {
     .reverse();
 
   return (
-    <>
-       {!currentUser ? (
+    <div className="saved-container">
+    
+
+      {!currentUser ? (
         <Loader />
       ) : (
         <ul className="w-full flex justify-center max-w-5xl gap-9">
@@ -29,7 +31,7 @@ const Saved = () => {
           )}
         </ul>
       )}
-    </>
+    </div>
   );
 };
 

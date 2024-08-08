@@ -17,7 +17,7 @@ const Saved = () => {
     .reverse();
 
   return (
-    <>
+    <div className="saved-container">
        {!currentUser ? (
         <Loader />
       ) : (
@@ -29,7 +29,7 @@ const Saved = () => {
           )}
         </ul>
       )}
-    </>
+    </div>
   );
 };
 

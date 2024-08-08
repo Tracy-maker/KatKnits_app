@@ -3,8 +3,16 @@ import Loader from "@/components/shared/Loader";
 import StatBlock from "@/components/shared/StatBlock";
 import { useUserContext } from "@/context/AuthContext";
 import { useGetUserById } from "@/lib/react-query/queriesAndMutations";
-import { Link, Outlet, Route, Routes, useLocation, useParams } from "react-router-dom";
-import { LikedPosts, Saved, } from "."; 
+import {
+  Link,
+  Outlet,
+  Route,
+  Routes,
+  useLocation,
+  useParams,
+} from "react-router-dom";
+import { LikedPosts } from ".";
+
 
 const Profile = () => {
   const { id } = useParams();
@@ -44,6 +52,7 @@ const Profile = () => {
             </div>
             <div className="flex gap-8 mt-10 items-center justify-center xl:justify-start flex-wrap z-20">
               <StatBlock value={currentUser.posts.length} label="Posts" />
+             
             </div>
             <p className="small-medium md:base-medium text-center xl:text-left mt-7 max-w-screen-sm">
               {currentUser.bio}
@@ -68,6 +77,7 @@ const Profile = () => {
                 </p>
               </Link>
             </div>
+           
           </div>
         </div>
       </div>
@@ -90,7 +100,7 @@ const Profile = () => {
           </Link>
           <Link
             to={`/profile/${id}/liked-posts`}
-            className={`profile-tab ${
+            className={`profile-tab rounded-r-lg ${
               pathname === `/profile/${id}/liked-posts` && "!bg-dark-3"
             }`}
           >
@@ -102,14 +112,15 @@ const Profile = () => {
             />
             Liked Posts
           </Link>
+
           <Link
-            to={`/profile/${id}/saved-posts`}
+            to={`/profile/${id}/liked-posts`}
             className={`profile-tab rounded-r-lg ${
-              pathname === `/profile/${id}/saved-posts` && "!bg-dark-3"
+              pathname === `/profile/${id}/liked-posts` && "!bg-dark-3"
             }`}
           >
             <img
-              src="https://img.icons8.com/?size=64&id=42847&format=png"
+               src="https://img.icons8.com/?size=64&id=42847&format=png"
               alt="saved"
               width={30}
               height={30}
@@ -124,11 +135,9 @@ const Profile = () => {
           index
           element={<GridPostList posts={currentUser.posts} showUser={false} />}
         />
+
         {currentUser.$id === user.id && (
-          <>
-            <Route path="liked-posts" element={<LikedPosts />} />
-            <Route path="saved-posts" element={<Saved />} />
-          </>
+          <Route path="/liked-posts" element={<LikedPosts />} />
         )}
       </Routes>
       <Outlet />

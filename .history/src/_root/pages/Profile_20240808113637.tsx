@@ -4,7 +4,7 @@ import StatBlock from "@/components/shared/StatBlock";
 import { useUserContext } from "@/context/AuthContext";
 import { useGetUserById } from "@/lib/react-query/queriesAndMutations";
 import { Link, Outlet, Route, Routes, useLocation, useParams } from "react-router-dom";
-import { LikedPosts, Saved, } from "."; 
+import { LikedPosts, SavedPosts } from "."; // Assuming SavedPosts is correctly exported from the same directory
 
 const Profile = () => {
   const { id } = useParams();
@@ -127,7 +127,7 @@ const Profile = () => {
         {currentUser.$id === user.id && (
           <>
             <Route path="liked-posts" element={<LikedPosts />} />
-            <Route path="saved-posts" element={<Saved />} />
+            <Route path="saved-posts" element={<SavedPosts />} />
           </>
         )}
       </Routes>
