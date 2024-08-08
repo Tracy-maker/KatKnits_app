@@ -19,7 +19,6 @@ const GridPostList = ({
   const uniquePosts = posts.filter(
     (post, index, self) => index === self.findIndex((p) => p.$id === post.$id)
   );
-  console.log(uniquePosts);
 
   return (
     <ul className="grid-container">
@@ -34,7 +33,7 @@ const GridPostList = ({
           </Link>
 
           <div className="grid-post_user">
-            {showUser && (
+            {showUser && post.creator && (
               <div className="flex items-center justify-start gap-2 flex-1">
                 <img
                   src={
@@ -44,7 +43,7 @@ const GridPostList = ({
                   alt="creator"
                   className="h-10 w-10 rounded-full"
                 />
-                <p className="line-clamp-1">{post.creator.name}</p>
+                <p className="line-clamp-1">{post.creator.name || "Unknown"}</p>
               </div>
             )}
             {showStats && <PostStats post={post} userId={user.id} />}
