@@ -101,7 +101,13 @@ export async function signOutAccount() {
   }
 }
 
-
+function handleError(error: unknown) {
+  if (error instanceof Error) {
+    console.error("Error:", error.message);
+  } else {
+    console.error("An unexpected error occurred");
+  }
+}
 
 export async function createPost(post: INewPost) {
   try {

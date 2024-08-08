@@ -61,5 +61,5 @@ export type IContextType = {
   isAuthenticated: boolean;
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
   checkAuthUser: () => Promise<boolean>;
-  signOut: () => Promise<void>; // Added signOut method here
+  signOut: () => Promise<void>; 
 };

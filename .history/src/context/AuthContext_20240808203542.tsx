@@ -1,9 +1,9 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { IContextType, IUser } from "@/types";
-import { getCurrentUser, signOutAccount } from "@/lib/appwrite/api";
+import { getCurrentUser } from "@/lib/appwrite/api";
 import { useNavigate } from "react-router-dom";
 
-export const INITIAL_USER: IUser = {
+export const INITIAL_USER = {
   id: "",
   name: "",
   username: "",
@@ -19,7 +19,7 @@ const INITIAL_STATE: IContextType = {
   setUser: () => {},
   setIsAuthenticated: () => {},
   checkAuthUser: async () => false,
-  signOut: async () => {}, // Initialize with a placeholder function
+  signOut: async () => {},
 };
 
 const AuthContext = createContext<IContextType>(INITIAL_STATE);
@@ -55,13 +55,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const signOut = async () => {
-    await signOutAccount();
-    setUser(INITIAL_USER);
-    setIsAuthenticated(false);
-    navigate("/sign-in");
-  };
-
   useEffect(() => {
     const checkUserAuth = async () => {
       const isAuth = await checkAuthUser();
@@ -79,7 +72,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     isAuthenticated,
     setIsAuthenticated,
     checkAuthUser,
-    signOut,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

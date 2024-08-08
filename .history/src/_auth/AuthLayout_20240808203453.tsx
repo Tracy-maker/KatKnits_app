@@ -3,7 +3,7 @@ import { IContextType, IUser } from "@/types";
 import { getCurrentUser, signOutAccount } from "@/lib/appwrite/api";
 import { useNavigate } from "react-router-dom";
 
-export const INITIAL_USER: IUser = {
+export const INITIAL_USER = {
   id: "",
   name: "",
   username: "",
@@ -19,7 +19,7 @@ const INITIAL_STATE: IContextType = {
   setUser: () => {},
   setIsAuthenticated: () => {},
   checkAuthUser: async () => false,
-  signOut: async () => {}, // Initialize with a placeholder function
+  signOut: async () => {},
 };
 
 const AuthContext = createContext<IContextType>(INITIAL_STATE);
