@@ -72,7 +72,6 @@ export async function getAccount() {
   }
 }
 
-
 export async function getCurrentUser() {
   try {
     const currentAccount = await getAccount();
