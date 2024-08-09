@@ -18,6 +18,9 @@ const Home = () => {
         <div className="home-container">
           <p className="body-medium text-light-1">Something bad happened</p>
         </div>
+        <div className="home-creators">
+          <p className="body-medium text-light-1">Something bad happened</p>
+        </div>
       </div>
     );
   }
@@ -33,7 +36,7 @@ const Home = () => {
           {isPostLoading && !posts ? (
             <Loader />
           ) : (
-            <ul className="flex flex-col flex-1 gap-4 justify-center items-center w-full">
+            <ul className="flex flex-col flex-1 gap-9 w-full">
               {posts?.documents.map((post: Models.Document) => (
                 <PostCard post={post} key={post.caption} />
               ))}

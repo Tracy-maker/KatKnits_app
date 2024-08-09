@@ -33,7 +33,7 @@ const Home = () => {
           {isPostLoading && !posts ? (
             <Loader />
           ) : (
-            <ul className="flex flex-col flex-1 gap-4 justify-center items-center w-full">
+            <ul className="flex flex-col  gap-4 justify-center items-center w-full">
               {posts?.documents.map((post: Models.Document) => (
                 <PostCard post={post} key={post.caption} />
               ))}

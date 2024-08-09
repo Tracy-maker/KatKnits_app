@@ -28,7 +28,7 @@ const App = () => {
         <Route element={<RootLayout />}>
           <Route index element={<Home />} />
           <Route path="/explore" element={<Explore />} />
-          {/* chat room */}
+        {/* chat room */}
           {/* <Route path="/saved" element={<Saved />} /> */}
           <Route path="/all-users" element={<AllUsers />} />
           <Route path="/create-post" element={<CreatePost />} />
