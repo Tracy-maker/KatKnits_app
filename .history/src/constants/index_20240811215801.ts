@@ -38,6 +38,7 @@ export const bottombarLinks = [
     route: "/all-users",
     label: "Find People",
   },
+
   {
     imgURL: "https://img.icons8.com/?size=64&id=43150&format=png",
     route: "/create-post",

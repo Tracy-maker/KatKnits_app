@@ -83,7 +83,7 @@ const UpdateProfile = () => {
       <div className="common-container">
         <div className="flex-start gap-3 justify-start w-full max-w-5xl">
           <img
-             src="https://img.icons8.com/?size=50&id=FM7OHrqvInFE&format=png"
+            src="/assets/icons/edit.svg"
             width={36}
             height={36}
             alt="edit"
