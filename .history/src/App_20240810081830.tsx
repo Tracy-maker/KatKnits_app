@@ -15,7 +15,7 @@ import SignupForm from "./_auth/forms/SignupForm";
 import AuthLayout from "./_auth/AuthLayout";
 import RootLayout from "./_root/RootLayout";
 import { Toaster } from "@/components/ui/toaster";
-import ChatChannels from "./_root/pages/Saved";
+import ChatChannels from "./_root/pages/ChatChannels";
 
 const App = () => {
   return (

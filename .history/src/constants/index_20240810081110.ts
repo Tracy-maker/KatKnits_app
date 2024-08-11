@@ -17,7 +17,7 @@ export const sidebarLinks = [
   {
     imgURL: "https://img.icons8.com/?size=80&id=109688&format=png",
     route: "/chat channels",
-    label: " Chat Channels",
+    label: " Posts",
   },
   {
     imgURL: "https://img.icons8.com/?size=64&id=43150&format=png",
@@ -37,11 +37,11 @@ export const bottombarLinks = [
     route: "/explore",
     label: "Explore More",
   },
-  {
-    imgURL: "https://img.icons8.com/?size=80&id=109688&format=png",
-    route: "/chat-channels",
-    label: " Chat Channels",
-  },
+  // {
+  //   imgURL: "https://img.icons8.com/?size=80&id=109688&format=png",
+  //   route: "/saved",
+  //   label: "Saved Posts",
+  // },
   {
     imgURL: "https://img.icons8.com/?size=64&id=43150&format=png",
     route: "/create-post",

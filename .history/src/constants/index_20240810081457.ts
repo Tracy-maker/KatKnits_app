@@ -39,7 +39,7 @@ export const bottombarLinks = [
   },
   {
     imgURL: "https://img.icons8.com/?size=80&id=109688&format=png",
-    route: "/chat-channels",
+    route: "/chat channels",
     label: " Chat Channels",
   },
   {
