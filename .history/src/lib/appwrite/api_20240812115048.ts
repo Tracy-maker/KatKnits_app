@@ -11,7 +11,9 @@ export async function createUserAccount(user: INewUser) {
       user.name
     );
 
-    if (!newAccount) throw Error;
+    if (!newAccount) {
+      throw new Error("Account creation failed");
+    }
 
     const avatarUrl = avatars.getInitials(user.name);
 
@@ -23,12 +25,15 @@ export async function createUserAccount(user: INewUser) {
       imageUrl: avatarUrl,
     });
 
+    if (!newUser) {
+      throw new Error("User creation failed");
+    }
     return newUser;
   } catch (error) {
-    console.log(error);
-    return error;
+    handleError(error);
   }
 }
+
 
 export async function saveUserToDB(user: {
   accountId: string;
@@ -44,41 +49,34 @@ export async function saveUserToDB(user: {
       ID.unique(),
       user
     );
-
     return newUser;
   } catch (error) {
-    console.log(error);
+    handleError(error);
   }
 }
-
 
 export async function signInAccount(user: { email: string; password: string }) {
   try {
     const session = await account.createEmailSession(user.email, user.password);
-
     return session;
   } catch (error) {
-    console.log(error);
+    handleError(error);
   }
 }
-
 
 export async function getAccount() {
   try {
     const currentAccount = await account.get();
-
     return currentAccount;
   } catch (error) {
-    console.log(error);
+    handleError(error);
   }
 }
-
 
 export async function getCurrentUser() {
   try {
     const currentAccount = await getAccount();
-
-    if (!currentAccount) throw Error;
+    if (!currentAccount) throw new Error("No active account");
 
     const currentUser = await databases.listDocuments(
       appwriteConfig.databaseId,
@@ -86,23 +84,20 @@ export async function getCurrentUser() {
       [Query.equal("accountId", currentAccount.$id)]
     );
 
-    if (!currentUser) throw Error;
+    if (!currentUser.documents.length) throw new Error("User not found");
 
     return currentUser.documents[0];
   } catch (error) {
-    console.log(error);
-    return null;
+    handleError(error);
   }
 }
 
-
 export async function signOutAccount() {
   try {
-    const session = await account.deleteSession("current");
-
-    return session;
+    await account.deleteSession("current");
+    console.log("User logged out successfully");
   } catch (error) {
-    console.log(error);
+    handleError(error);
   }
 }
 

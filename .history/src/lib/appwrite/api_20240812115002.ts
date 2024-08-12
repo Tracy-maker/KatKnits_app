@@ -1,7 +1,6 @@
 import { ID, Query } from "appwrite";
 import { appwriteConfig, account, databases, storage, avatars } from "./config";
 import { IUpdatePost, INewPost, INewUser, IUpdateUser } from "@/types";
-
 export async function createUserAccount(user: INewUser) {
   try {
     const newAccount = await account.create(
@@ -30,6 +29,7 @@ export async function createUserAccount(user: INewUser) {
   }
 }
 
+// ============================== SAVE USER TO DB
 export async function saveUserToDB(user: {
   accountId: string;
   email: string;
@@ -51,7 +51,7 @@ export async function saveUserToDB(user: {
   }
 }
 
-
+// ============================== SIGN IN
 export async function signInAccount(user: { email: string; password: string }) {
   try {
     const session = await account.createEmailSession(user.email, user.password);
@@ -62,7 +62,7 @@ export async function signInAccount(user: { email: string; password: string }) {
   }
 }
 
-
+// ============================== GET ACCOUNT
 export async function getAccount() {
   try {
     const currentAccount = await account.get();
@@ -73,7 +73,7 @@ export async function getAccount() {
   }
 }
 
-
+// ============================== GET USER
 export async function getCurrentUser() {
   try {
     const currentAccount = await getAccount();
@@ -95,7 +95,7 @@ export async function getCurrentUser() {
   }
 }
 
-
+// ============================== SIGN OUT
 export async function signOutAccount() {
   try {
     const session = await account.deleteSession("current");

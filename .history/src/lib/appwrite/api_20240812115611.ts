@@ -73,7 +73,7 @@ export async function getAccount() {
   }
 }
 
-
+// ============================== GET USER
 export async function getCurrentUser() {
   try {
     const currentAccount = await getAccount();
