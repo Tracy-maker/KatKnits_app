@@ -1,10 +1,9 @@
-import { useNavigate } from "react-router-dom";
 import { createContext, useContext, useEffect, useState } from "react";
+import { IContextType, IUser } from "@/types";
+import { getCurrentUser, signOutAccount } from "@/lib/appwrite/api";
+import { useNavigate } from "react-router-dom";
 
-import { IUser } from "@/types";
-import { getCurrentUser } from "@/lib/appwrite/api";
-
-export const INITIAL_USER = {
+export const INITIAL_USER: IUser = {
   id: "",
   name: "",
   username: "",
@@ -13,22 +12,14 @@ export const INITIAL_USER = {
   bio: "",
 };
 
-const INITIAL_STATE = {
+const INITIAL_STATE: IContextType = {
   user: INITIAL_USER,
   isLoading: false,
   isAuthenticated: false,
   setUser: () => {},
   setIsAuthenticated: () => {},
-  checkAuthUser: async () => false as boolean,
-};
-
-type IContextType = {
-  user: IUser;
-  isLoading: boolean;
-  setUser: React.Dispatch<React.SetStateAction<IUser>>;
-  isAuthenticated: boolean;
-  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
-  checkAuthUser: () => Promise<boolean>;
+  checkAuthUser: async () => false,
+  signOut: async () => {}, 
 };
 
 const AuthContext = createContext<IContextType>(INITIAL_STATE);
@@ -53,10 +44,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           bio: currentAccount.bio,
         });
         setIsAuthenticated(true);
-
         return true;
       }
-
       return false;
     } catch (error) {
       console.error(error);
@@ -66,18 +55,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  useEffect(() => {
-    const cookieFallback = localStorage.getItem("cookieFallback");
-    if (
-      cookieFallback === "[]" ||
-      cookieFallback === null ||
-      cookieFallback === undefined
-    ) {
-      navigate("/sign-in");
-    }
+  const signOut = async () => {
+    await signOutAccount();
+    setUser(INITIAL_USER);
+    setIsAuthenticated(false);
+    navigate("/sign-in");
+  };
 
-    checkAuthUser();
-  }, []);
+  useEffect(() => {
+    const checkUserAuth = async () => {
+      const isAuth = await checkAuthUser();
+      if (!isAuth) {
+        navigate("/sign-in");
+      }
+    };
+    checkUserAuth();
+  }, [navigate]);
 
   const value = {
     user,
@@ -86,6 +79,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     isAuthenticated,
     setIsAuthenticated,
     checkAuthUser,
+    signOut,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
