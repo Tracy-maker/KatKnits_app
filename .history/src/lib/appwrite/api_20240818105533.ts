@@ -55,10 +55,10 @@ export async function saveUserToDB(user: {
 export async function signInAccount(user: { email: string; password: string }) {
   try {
     const session = await account.createEmailSession(user.email, user.password);
-    if (!session) throw new Error("Failed to create session");
-
-    console.log("User signed in successfully:", session);
-    // Additional logic to ensure the session has the necessary scopes/permissions
+    if (session) {
+      console.log("User signed in successfully:", session);
+      // Additional logic to check if the session has the necessary scopes
+    }
     return session;
   } catch (error) {
     console.error("Error during sign in:", error);
@@ -66,7 +66,6 @@ export async function signInAccount(user: { email: string; password: string }) {
     return null;
   }
 }
-
 
 export async function getAccount() {
   try {
@@ -76,14 +75,13 @@ export async function getAccount() {
     if (error.code === 401) {
       console.error("Unauthorized: Please log in.");
       // Redirect to login page or show login modal
-      window.location.href = "/sign-in";  // Change this to your login page route
+      window.location.href = "/sign-in";
     } else {
       console.error("Failed to get account:", error);
     }
     return null;
   }
 }
-
 
 export async function getCurrentUser() {
   try {

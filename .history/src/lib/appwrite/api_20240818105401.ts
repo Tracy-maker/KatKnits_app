@@ -55,10 +55,10 @@ export async function saveUserToDB(user: {
 export async function signInAccount(user: { email: string; password: string }) {
   try {
     const session = await account.createEmailSession(user.email, user.password);
-    if (!session) throw new Error("Failed to create session");
-
-    console.log("User signed in successfully:", session);
-    // Additional logic to ensure the session has the necessary scopes/permissions
+    if (session) {
+      console.log("User signed in successfully:", session);
+      // Additional logic to check if the session has the necessary scopes
+    }
     return session;
   } catch (error) {
     console.error("Error during sign in:", error);
@@ -67,7 +67,6 @@ export async function signInAccount(user: { email: string; password: string }) {
   }
 }
 
-
 export async function getAccount() {
   try {
     const currentAccount = await account.get();
@@ -75,19 +74,20 @@ export async function getAccount() {
   } catch (error: any) {
     if (error.code === 401) {
       console.error("Unauthorized: Please log in.");
-      // Redirect to login page or show login modal
-      window.location.href = "/sign-in";  // Change this to your login page route
+      // Redirect to login page or trigger a login modal
+      window.location.href = "/sign-in";
     } else {
-      console.error("Failed to get account:", error);
+      handleError(error);
     }
     return null;
   }
 }
 
 
+
 export async function getCurrentUser() {
   try {
-    const currentAccount = await getAccount(); // Use getAccount to leverage its error handling
+    const currentAccount = await getAccount(); // Use getAccount() to leverage its error handling
 
     if (!currentAccount) throw new Error("No active account");
 
@@ -107,17 +107,6 @@ export async function getCurrentUser() {
     return null;
   }
 }
-
-function handleError(error: unknown) {
-  if (error instanceof Error) {
-    console.error("Error:", error.message);
-    alert("An error occurred: " + error.message);
-  } else {
-    console.error("An unexpected error occurred");
-    alert("An unexpected error occurred.");
-  }
-}
-
 
 
 export async function signOutAccount() {
@@ -494,3 +483,12 @@ export async function updateUser(user: IUpdateUser) {
   }
 }
 
+function handleError(error: unknown) {
+  if (error instanceof Error) {
+    console.error("Error:", error.message);
+    alert("An error occurred: " + error.message);
+  } else {
+    console.error("An unexpected error occurred");
+    alert("An unexpected error occurred.");
+  }
+}

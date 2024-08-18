@@ -11,25 +11,24 @@ export async function createUserAccount(user: INewUser) {
       user.name
     );
 
-    if (!newAccount) throw new Error("Failed to create account");
+    if (!newAccount) throw Error;
 
     const avatarUrl = avatars.getInitials(user.name);
-
+    
     const newUser = await saveUserToDB({
       accountId: newAccount.$id,
-      name: newAccount.name,
-      email: newAccount.email,
-      username: user.username,
-      imageUrl: avatarUrl,
-    });
+      name:newAccount.name,
+      email:newAccount.email,
+      username:user.username,
+      imageUrl:avatarUrl,
+    })
 
     return newUser;
   } catch (error) {
-    handleError(error);
-    return null;
+    console.log(error);
+    return error;
   }
 }
-
 
 export async function saveUserToDB(user: {
   accountId: string;
@@ -55,10 +54,9 @@ export async function saveUserToDB(user: {
 export async function signInAccount(user: { email: string; password: string }) {
   try {
     const session = await account.createEmailSession(user.email, user.password);
-    if (!session) throw new Error("Failed to create session");
-
-    console.log("User signed in successfully:", session);
-    // Additional logic to ensure the session has the necessary scopes/permissions
+    if (session) {
+      console.log("User signed in successfully:", session);
+    }
     return session;
   } catch (error) {
     console.error("Error during sign in:", error);
@@ -67,27 +65,20 @@ export async function signInAccount(user: { email: string; password: string }) {
   }
 }
 
-
 export async function getAccount() {
   try {
     const currentAccount = await account.get();
     return currentAccount;
-  } catch (error: any) {
-    if (error.code === 401) {
-      console.error("Unauthorized: Please log in.");
-      // Redirect to login page or show login modal
-      window.location.href = "/sign-in";  // Change this to your login page route
-    } else {
-      console.error("Failed to get account:", error);
-    }
+  } catch (error) {
+    console.error("Failed to get account:", error);
+    alert("Please log in to continue.");
     return null;
   }
 }
 
-
-export async function getCurrentUser() {
+export async function getCurrentUser(){
   try {
-    const currentAccount = await getAccount(); // Use getAccount to leverage its error handling
+    const currentAccount = await account.get();
 
     if (!currentAccount) throw new Error("No active account");
 
@@ -97,41 +88,28 @@ export async function getCurrentUser() {
       [Query.equal("accountId", currentAccount.$id)]
     );
 
-    if (!currentUser || currentUser.documents.length === 0) {
+    if (!currentUser) {
       throw new Error("User not found");
     }
 
     return currentUser.documents[0];
   } catch (error) {
-    handleError(error);
+   console.log(error);
     return null;
   }
 }
-
-function handleError(error: unknown) {
-  if (error instanceof Error) {
-    console.error("Error:", error.message);
-    alert("An error occurred: " + error.message);
-  } else {
-    console.error("An unexpected error occurred");
-    alert("An unexpected error occurred.");
-  }
-}
-
 
 
 export async function signOutAccount() {
   try {
     const session = await account.deleteSession("current");
-    if (!session) throw new Error("Failed to delete session");
 
-    console.log("User signed out successfully");
     return session;
   } catch (error) {
-    handleError(error);
-    return null;
+    console.log(error);
   }
 }
+
 
 
 export async function createPost(post: INewPost) {
@@ -154,7 +132,7 @@ export async function createPost(post: INewPost) {
       {
         creator: post.userId,
         caption: post.caption,
-        content: post.content,
+        content: post.content,    
         imageUrl: fileUrl,
         imageId: uploadedFile.$id,
         location: post.location,
@@ -369,11 +347,7 @@ export async function getUserPosts(userId?: string) {
 }
 
 export async function getInfinitePosts({ pageParam }: { pageParam: number }) {
-  const queries: (
-    | string
-    | ReturnType<typeof Query.orderDesc>
-    | ReturnType<typeof Query.limit>
-  )[] = [Query.orderDesc("$updatedAt"), Query.limit(9)];
+  const queries: (string | ReturnType<typeof Query.orderDesc> | ReturnType<typeof Query.limit>)[] = [Query.orderDesc("$updatedAt"), Query.limit(9)];
 
   if (pageParam) {
     queries.push(Query.cursorAfter(pageParam.toString()));
@@ -406,11 +380,7 @@ export async function searchPosts(searchTerm: string) {
 }
 
 export async function getUsers(limit?: number) {
-  const queries: (
-    | string
-    | ReturnType<typeof Query.limit>
-    | ReturnType<typeof Query.orderDesc>
-  )[] = [Query.orderDesc("$createdAt")];
+  const queries: (string | ReturnType<typeof Query.limit> | ReturnType<typeof Query.orderDesc>)[] = [Query.orderDesc("$createdAt")];
 
   if (limit) {
     queries.push(Query.limit(limit));
@@ -494,3 +464,12 @@ export async function updateUser(user: IUpdateUser) {
   }
 }
 
+function handleError(error: unknown) {
+  if (error instanceof Error) {
+    console.error("Error:", error.message);
+    alert("An error occurred: " + error.message); 
+  } else {
+    console.error("An unexpected error occurred");
+    alert("An unexpected error occurred.");
+  }
+}
